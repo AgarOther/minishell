@@ -8,8 +8,7 @@ NAME				=	minishell
 
 # Sources & Includes
 SRCS				= 	srcs/main.c \
-						srcs/ft_echo.c \
-						srcs/minishell_utils.c
+						srcs/ft_echo.c
 
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a

@@ -2,3 +2,4 @@
 minishell
 *.o
 *.a
+srcs/main.c

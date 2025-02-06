@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 14:11:45 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:34:58 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,11 @@ void	ft_echo(char *str, int has_newline)
 		if (str[i] == '$')
 		{
 			len = ft_strcharindex(&str[i], ' ');
-			sub = ft_substr(str, i + 1, len);
+			sub = ft_substr(str, i + 1, len - 1);
 			tmp = getenv(sub);
 			if (tmp)
 				write(1, tmp, ft_strlen(tmp));
-			i += len;
+			i += len - 1;
 		}
 		else
 			write(1, &str[i], 1);

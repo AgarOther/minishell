@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 14:11:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:39:58 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,6 @@
 void	ft_echo(char *str, int has_newline);
 char	*grep_env(t_data data, char *to_grep);
 
-// exit (MATHIS)
-// echo -n (SEB)
+
 
 #endif
