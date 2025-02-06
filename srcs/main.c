@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 14:11:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:55:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,13 @@ int	main(int ac, char **av, char **envp)
 	(void) envp;
 	data.envp = ft_tabdup(envp, ft_tablen((const char **)envp));
 	tmp = readline(PROMPT);
-	ft_printf("%s", grep_env(data, "SHLVL="));
+	add_history(tmp);
+	//ft_printf("%s", grep_env(data, "SHLVL="));
 	while (tmp)
 	{
 		free(tmp);
 		tmp = readline(PROMPT);
+		add_history(tmp);
 		if (tmp)
 		{
 			if (ft_strncmp(tmp, "echo", 4) == 0)
