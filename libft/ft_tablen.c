@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:37:19 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/11/06 10:40:56 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:38:11 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-size_t	ft_tablen(const char **s)
+size_t	ft_tablen(char **s)
 {
 	int	i;
 

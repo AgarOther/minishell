@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 14:55:07 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:49:25 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,28 +14,39 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	char	*tmp;
-	t_data	data;
+	char	*input;
+	t_data	*data;
 
+	data = ft_calloc(sizeof(t_data), 1);
+	if (!data)
+		return (1);
 	(void) ac;
 	(void) av;
-	(void) envp;
-	data.envp = ft_tabdup(envp, ft_tablen((const char **)envp));
-	tmp = readline(PROMPT);
-	add_history(tmp);
-	//ft_printf("%s", grep_env(data, "SHLVL="));
-	while (tmp)
+	data->envp = ft_tabdup(envp, ft_tablen(envp));
+	if (!data->envp)
 	{
-		free(tmp);
-		tmp = readline(PROMPT);
-		add_history(tmp);
-		if (tmp)
-		{
-			if (ft_strncmp(tmp, "echo", 4) == 0)
-				ft_echo(&tmp[5], 1);
-			else
-				ft_printf("%s: command not found\n", tmp);
-		}
+		free(data);
+		return (2);
 	}
-	free(tmp);
+	while (1)
+	{
+		input = readline(PROMPT);
+		if (!input)
+			break ;
+		add_history(input);
+		data->cmds = ft_split(input, '|');
+		if (!data->cmds)
+		{
+			// Free all
+			return (3);
+		}
+		data->pids = ft_calloc(sizeof(pid_t), ft_tablen(data->cmds) + 1);
+		if (!data->pids)
+		{
+			// Free all
+			return (4);
+		}
+		exec_cmds(data);
+		free(input);
+	}
 }

@@ -6,12 +6,15 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 14:39:58 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:39:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MINISHELL_H
 # define MINISHELL_H
+
+// Defines
+# define PROMPT "minicraquotte> "
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -32,11 +35,10 @@
 // Includes Minishell
 # include "struct.h"
 
-# define PROMPT "minicraquotte> "
-
+// Built-ins
 void	ft_echo(char *str, int has_newline);
-char	*grep_env(t_data data, char *to_grep);
 
-
+// Utils
+char	**grep_var(char **envp, char *to_grep);
 
 #endif

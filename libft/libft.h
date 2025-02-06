@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/01/29 14:39:50 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 16:38:52 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ char	*ft_strdup(const char *s);
 size_t	ft_strlcat(char *dst, const char *src, size_t size);
 size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 size_t	ft_strlen(const char *s);
-size_t	ft_tablen(const char **s);
+size_t	ft_tablen(char **s);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);
 int		ft_strlencmp(const char *s1, const char *s2, int s2_crop);
 char	*ft_strnstr(const char *big, const char *little, size_t len);
