@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 11:11:48 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/06 14:11:46 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,15 @@
 # include "../libft/get_next_line/get_next_line.h"
 # include "../libft/ft_printf/includes/ft_printf.h"
 
-# define PROMPT "minishell> "
+// Includes Minishell
+# include "struct.h"
+
+# define PROMPT "minicraquotte> "
+
+void	ft_echo(char *str, int has_newline);
+char	*grep_env(t_data data, char *to_grep);
+
+// exit (MATHIS)
+// echo -n (SEB)
+
 #endif

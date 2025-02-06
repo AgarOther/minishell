@@ -7,7 +7,10 @@ RLFLAGS				=	-L/usr/include -lreadline
 NAME				=	minishell
 
 # Sources & Includes
-SRCS				= 	srcs/main.c
+SRCS				= 	srcs/main.c \
+						srcs/ft_echo.c \
+						srcs/minishell_utils.c
+
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a
 INCLUDES			=	includes

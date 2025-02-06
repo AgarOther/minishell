@@ -1,39 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 14:11:24 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/06 14:11:45 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	main(int ac, char **av, char **envp)
+void	ft_echo(char *str, int has_newline)
 {
+	int		i;
+	int		len;
 	char	*tmp;
-	t_data	data;
+	char	*sub;
 
-	(void) ac;
-	(void) av;
-	(void) envp;
-	data.envp = ft_tabdup(envp, ft_tablen((const char **)envp));
-	tmp = readline(PROMPT);
-	ft_printf("%s", grep_env(data, "SHLVL="));
-	while (tmp)
+	i = 0;
+	while (str[i])
 	{
-		free(tmp);
-		tmp = readline(PROMPT);
-		if (tmp)
+		if (str[i] == '$')
 		{
-			if (ft_strncmp(tmp, "echo", 4) == 0)
-				ft_echo(&tmp[5], 1);
-			else
-				ft_printf("%s: command not found\n", tmp);
+			len = ft_strcharindex(&str[i], ' ');
+			sub = ft_substr(str, i + 1, len);
+			tmp = getenv(sub);
+			if (tmp)
+				write(1, tmp, ft_strlen(tmp));
+			i += len;
 		}
+		else
+			write(1, &str[i], 1);
+		i++;
 	}
-	free(tmp);
+	if (has_newline)
+		ft_putchar_fd('\n', 1);
 }
