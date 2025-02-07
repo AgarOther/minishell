@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:37:19 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 16:38:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:05:18 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ size_t	ft_tablen(char **s)
 	int	i;
 
 	i = 0;
+	if (!s | !*s)
+		return (i);
 	while (s[i])
 		i++;
 	return (i);

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 16:39:40 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/07 15:59:42 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # include <stdlib.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <signal.h>
 
 // Includes Project
 # include "../libft/libft.h"
@@ -40,5 +41,11 @@ void	ft_echo(char *str, int has_newline);
 
 // Utils
 char	**grep_var(char **envp, char *to_grep);
+int		free_data(t_data *data, int free_envp);
+t_data	*fill_data(t_data *data, int i);
+t_data	*setup_data(char **envp);
+
+// Parsing
+int		cmd_valid(char *str);
 
 #endif

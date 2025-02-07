@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:31:27 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/06 17:17:12 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:07:34 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 pid_t	forkcmd(t_data *data, char *path, char **cmd)
 {
 	pid_t	pid;
-	
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -67,7 +67,7 @@ void	exec_cmds(t_data *data)
 	char	**cmd;
 	int		i;
 	char	**path;
-	
+
 	while (data->cmds[i])
 	{
 		cmd = ft_split(data->cmds[i], ' ');

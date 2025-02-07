@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/06 10:37:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/01/31 13:23:19 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/07 16:03:43 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@ void	ft_tabfree(char **tab, int size)
 	while (i < size)
 	{
 		free(tab[i]);
+		tab[i] = 0;
 		i++;
 	}
 	free(tab);
