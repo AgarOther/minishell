@@ -1,23 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_newtoken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/07 15:31:38 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/10 15:17:46 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/10 15:38:32 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	cmd_valid(char *str)
+t_token	*ft_newtoken(char *arg, t_TYPE type)
 {
-	int	i;
+	t_token	*node;
 
-	i = 0;
-	if (ft_stroccur(str, '\'') % 2 || ft_stroccur(str, '\"') % 2)
-		return (0);
-	return (1);
+	node = malloc(sizeof(t_token));
+	if (!node)
+		return (NULL);
+	node->arg = arg;
+	node->type = type;
+	node->next = NULL;
+	return (node);
 }

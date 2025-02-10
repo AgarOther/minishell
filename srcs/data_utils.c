@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/07 15:58:57 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/10 15:51:51 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_data	*setup_data(char **envp)
 
 	data = ft_calloc(sizeof(t_data), 1);
 	data->in = 0;
-	data->out = 0;
+	data->out = 1;
 	if (!data)
 		return (NULL);
 	data->envp = ft_tabdup(envp, ft_tablen(envp));

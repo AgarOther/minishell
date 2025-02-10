@@ -9,9 +9,16 @@ NAME				=	minishell
 # Sources & Includes
 SRCS				= 	srcs/main.c \
 						srcs/ft_echo.c \
-						srcs/parsing.c \
+						srcs/tokenizer.c \
 						srcs/minishell_utils.c \
-						srcs/data_utils.c
+						srcs/data_utils.c \
+						srcs/cmdhelper.c \
+						srcs/ft_tokenadd_back.c \
+						srcs/ft_newtoken.c \
+						srcs/ft_tokenclear.c \
+						srcs/debug.c \
+						srcs/parsing_utils.c \
+						srcs/ft_pwd.c
 
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a

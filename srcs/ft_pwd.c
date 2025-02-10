@@ -1,45 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/10 15:09:09 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/10 17:32:59 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/10 17:37:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "../includes/minishell.h"
 
-typedef struct s_data
+int	ft_pwd(t_data *data)
 {
-	char	**envp;
-	char	**cmds;
-	char	*input;
-	int		**pipes;
-	int		in;
-	int		out;
-	int		nb_cmds;
-	int		exit_code;
-	pid_t	*pids;
-}				t_data;
+	int	i;
 
-typedef enum e_type
-{
-	COMMAND,
-	ARG,
-	PIPE,
-	INFILE,
-	OUTFILE
-}	t_TYPE;
-
-typedef struct s_token
-{
-	char			*arg;
-	t_TYPE			type;
-	struct s_token	*next;
-}			t_token;
-
-#endif
+	i = 0;
+	while (data->envp[i] && ft_strncmp(data->envp[i], "PWD=", 4))
+		i++;
+	ft_putendl_fd(&data->envp[i][4], data->out);
+	return (0);
+}
