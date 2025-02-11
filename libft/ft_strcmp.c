@@ -1,47 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_strcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/11 20:49:38 by scraeyme         ###   ########.fr       */
+/*   Created: 2024/10/07 18:36:42 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/11 21:14:45 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "libft.h"
 
-# include "../includes/minishell.h"
-
-typedef struct s_data
+int	ft_strcmp(const char *s1, const char *s2)
 {
-	char	**envp;
-	char	**cmds;
-	char	*input;
-	int		**pipes;
-	int		in;
-	int		out;
-	int		nb_cmds;
-	int		exit_code;
-	pid_t	*pids;
-}				t_data;
+	size_t	i;
 
-typedef enum e_type
-{
-	COMMAND,
-	ARG,
-	PIPE,
-	INFILE,
-	OUTFILE
-}	t_TYPE;
-
-typedef struct s_token
-{
-	char			*arg;
-	t_TYPE			type;
-	struct s_token	*next;
-}			t_token;
-
-#endif
+	i = 0;
+	while ((s1[i] || s2[i]))
+	{
+		if (s1[i] != s2[i])
+			return ((unsigned char) s1[i] - (unsigned char) s2[i]);
+		i++;
+	}
+	return (0);
+}

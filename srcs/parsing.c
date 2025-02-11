@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:20:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 15:48:14 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:10:28 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	get_parsed_input(t_data **data, t_token *tokens)
 	t_token	*tmp;
 	int		i;
 
-	(*data)->nb_cmds = ft_tokencountpipes(tokens);
+	(*data)->nb_cmds = ft_tokencount(tokens, COMMAND);
 	(*data)->cmds = ft_calloc((*data)->nb_cmds + 1, sizeof(char *));
 	if (!(*data)->cmds)
 		return ;
@@ -36,6 +36,4 @@ void	get_parsed_input(t_data **data, t_token *tokens)
 			(*data)->cmds[i] = ft_strjoin_free((*data)->cmds[i], " ");
 		tmp = tmp->next;
 	}
-	ft_tabprint((*data)->cmds, 0);
-	ft_putchar_fd('\n', 1);
 }
