@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 16:16:42 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:34:51 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,11 @@ t_data	*setup_data(char **envp);
 t_token	*ft_newtoken(char *arg, t_TYPE type);
 void	ft_tokenadd_back(t_token **token, t_token *new);
 void	ft_tokenclear(t_token **token);
-int		ft_tokencountpipes(t_token *tokens);
+int		ft_tokencount(t_token *tokens, t_TYPE type);
 t_token	*get_tokens(t_data *data);
 
 // Parsing
-int		cmd_valid(char *str);
+int		has_invalid_quotes(char *str);
 void	get_parsed_input(t_data **data, t_token *tokens);
 void	split_cmds(t_data *data);
 int		has_valid_input(t_token *tokens);

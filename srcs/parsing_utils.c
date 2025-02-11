@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 16:16:30 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 21:34:00 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,59 +26,50 @@ int	has_valid_input(t_token *tokens)
 	return (1);
 }
 
-static int	has_invalid_quotes(char *str, char quote, char other_quote)
+int	has_invalid_quotes(char *str)
 {
-	int	i;
-	int	found_quote;
-	int	found_other_quote;
-	
+	int		i;
+	int		count;
+	char	quote;
+
 	i = 0;
-	found_quote = 0;
-	found_other_quote = 0;
+	count = 0;
+	quote = 0;
 	while (str[i])
 	{
-		if (str[i] == quote && !found_quote)
-			found_quote = 1;
-		else if (str[i] == other_quote && found_quote && !found_other_quote)
-			found_other_quote = 1;
-		else if (str[i] == other_quote && found_quote && found_other_quote)
-			found_other_quote = 0;
-		else if (str[i] == other_quote && found_quote && !found_other_quote)
-			return (1);
-		else if (str[i] == quote && found_quote)
-			return (0);
+		if (!quote && ((str[i] == '\'') || (str[i] == '\"')))
+			quote = str[i];
+		if (quote)
+		{
+			if (str[i] == quote)
+				count++;
+			if (count == 2)
+			{
+				count = 0;
+				quote = 0;
+			}
+		}
 		i++;
 	}
-	return (0);
-}
-
-int	cmd_valid(char *str)
-{
-	int	i;
-
-	i = 0;
-	if (ft_stroccur(str, '\'') % 2 || ft_stroccur(str, '\"') % 2)
-		return (0);
-	else if (has_invalid_quotes(str, '\'', '\"') || has_invalid_quotes(str, '\"', '\''))
-		return (0);
-	return (1);
+	return (count == 0);
 }
 
 void	split_cmds(t_data *data)
 {
-	int 	i;
+	int		i;
 	char	**cmd;
+
 	i = 0;
 	while (i < data->nb_cmds)
 	{
 		cmd = ft_split(data->cmds[i], ' ');
-		if (ft_strlencmp(cmd[i], "cd", 0))
+		if (!ft_strcmp(cmd[i], "cd"))
 			ft_cd(data);
-		else if (ft_strlencmp(cmd[i], "echo", 0))
+		else if (!ft_strcmp(cmd[i], "echo"))
 			ft_echo(data->cmds[i], 0);
-		else if (ft_strlencmp(cmd[i], "env", 0))
+		else if (!ft_strcmp(cmd[i], "env"))
 			ft_env(data);
-		else if (ft_strlencmp(cmd[i], "pwd", 0))
+		else if (!ft_strcmp(cmd[i], "pwd"))
 			ft_pwd(data);
 		i++;
 	}

@@ -1,25 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokencountpipes.c                               :+:      :+:    :+:   */
+/*   ft_tokencount.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:21:40 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 15:22:59 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:59:15 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-int	ft_tokencountpipes(t_token *tokens)
+int	ft_tokencount(t_token *tokens, t_TYPE type)
 {
 	int	nb_cmds;
 
-	nb_cmds = 1;
+	nb_cmds = 0;
 	while (tokens)
 	{
-		if (tokens->type == PIPE)
+		if (tokens->type == type)
 			nb_cmds++;
 		tokens = tokens->next;
 	}
