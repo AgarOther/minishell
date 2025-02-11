@@ -6,11 +6,25 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 15:59:59 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:16:30 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+int	has_valid_input(t_token *tokens)
+{
+	while (tokens)
+	{
+		if (!tokens->next && tokens->type == PIPE)
+			return (0);
+		else if (tokens->next && tokens->type == PIPE
+			&& tokens->next->type == PIPE)
+			return (0);
+		tokens = tokens->next;
+	}
+	return (1);
+}
 
 static int	has_invalid_quotes(char *str, char quote, char other_quote)
 {

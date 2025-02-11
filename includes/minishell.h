@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 16:00:39 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:16:42 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ t_token	*get_tokens(t_data *data);
 int		cmd_valid(char *str);
 void	get_parsed_input(t_data **data, t_token *tokens);
 void	split_cmds(t_data *data);
+int		has_valid_input(t_token *tokens);
 
 // Debug --------------------------------------------------------------------------------
 void	print_tokens(t_token *tokens);
