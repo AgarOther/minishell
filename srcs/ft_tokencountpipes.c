@@ -1,45 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   struct.h                                           :+:      :+:    :+:   */
+/*   ft_tokencountpipes.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/11 14:48:24 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/11 15:21:40 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/11 15:22:59 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef STRUCT_H
-# define STRUCT_H
+#include "../includes/minishell.h"
 
-typedef struct s_data
+int	ft_tokencountpipes(t_token *tokens)
 {
-	char	**envp; 
-	char	**cmds;
-	char	*input;
-	int		**pipes;
-	int		in;
-	int		out;
-	int		nb_cmds;
-	int		exit_code;
-	pid_t	*pids;
-}				t_data;
+	int	nb_cmds;
 
-typedef enum e_type
-{
-	COMMAND,
-	ARG,
-	PIPE,
-	INFILE,
-	OUTFILE
-}	t_TYPE;
-
-typedef struct s_token
-{
-	char			*arg;
-	t_TYPE			type;
-	struct s_token	*next;
-}			t_token;
-
-#endif
+	nb_cmds = 1;
+	while (tokens)
+	{
+		if (tokens->type == PIPE)
+			nb_cmds++;
+		tokens = tokens->next;
+	}
+	return (nb_cmds);
+}

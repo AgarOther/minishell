@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/10 17:32:21 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:43:04 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,17 +81,21 @@ static char	*add_spaces_to_pipes(char *src, int len)
 	return (str);
 }
 
-static char	*fix_pipes(char *str)
+static char	*fix_pipes(char *str, int len, int i)
 {
-	int		i;
-	int		len;
 	int		spaces_needed;
+	int		is_quoted;
 
-	i = 0;
-	len = ft_strlen(str);
 	spaces_needed = 0;
-	while (str[i])
+	is_quoted = 0;
+	while (str[++i])
 	{
+		if ((str[i] == '\'' || str[i] == '\"') && is_quoted)
+			is_quoted = 0;
+		else if ((str[i] == '\'' || str[i] == '\"') && !is_quoted)
+			is_quoted = 1;
+		if (is_quoted)
+			continue ;
 		if (str[i] == '|')
 		{
 			if (i > 0 && !ft_isspace(str[i - 1]))
@@ -99,7 +103,6 @@ static char	*fix_pipes(char *str)
 			if (i + 1 < len && !ft_isspace(str[i + 1]))
 				spaces_needed++;
 		}
-		i++;
 	}
 	if (!spaces_needed)
 		return (str);
@@ -114,7 +117,7 @@ t_token	*get_tokens(t_data *data)
 	tokens = ft_calloc(data->nb_cmds, sizeof(t_token));
 	if (!tokens)
 		return (NULL);
-	data->input = fix_pipes(data->input);
+	data->input = fix_pipes(data->input, ft_strlen(data->input), -1);
 	input = ft_split(data->input, ' ');
 	if (!input)
 	{
@@ -123,6 +126,5 @@ t_token	*get_tokens(t_data *data)
 	}
 	tokens = NULL;
 	tokens = iterate_input(input, tokens, 0);
-	ft_tabfree(input, ft_tablen(input));
 	return (tokens);
 }
