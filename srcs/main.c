@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 15:48:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:20:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,12 @@ int	main(int ac, char **av, char **envp)
 		if (!ft_strncmp(data->input, "pwd", 3))
 			ft_pwd(data);
 		tokens = get_tokens(data);
-		get_parsed_input(&data, tokens);
-		print_tokens(tokens);
-		ft_tokenclear(&tokens);
+		if (tokens)
+		{
+			get_parsed_input(&data, tokens);
+			print_tokens(tokens);
+			ft_tokenclear(&tokens);
+		}
 		free_data(data, 0);
 	}
 }
