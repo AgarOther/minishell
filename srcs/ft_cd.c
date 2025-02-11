@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:45:07 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/10 18:01:37 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/11 15:59:27 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
 
 void	change_pwd(t_data *data, char *pwd)
 {
@@ -50,6 +49,25 @@ void	cd_goto(t_data *data, char *pwd)
 	free(tmp);
 		
 }
+
+void	change_old_pwd(t_data *data, char *pwd)
+{
+	int		i;
+	int		j;
+	int		k;
+
+	i = 0;
+	j = 0;
+	k = 7;
+	while (ft_strncmp(data->envp[i], "OLDPWD=", 7) != 0)
+		i++;
+	while (pwd[j])
+	{
+		data->envp[i][k] = pwd[j];
+		j++;
+		k++;
+	}
+}
 void	ft_cd(t_data *data)
 {
 	char	**tab;
@@ -59,7 +77,8 @@ void	ft_cd(t_data *data)
 
 	tab = grep_var(data->envp, "PWD=");
 	pwd = tab[0];
-	if (ft_strcmp(data->input, "cd ..") == 0)
+	change_old_pwd(data, pwd);
+	if (ft_strlencmp(data->input, "cd ..", 0) == 0)
 	{	
 		len2 = ft_strlen(pwd) - 1;
 		while (len2 >= 0 && pwd[len2] != '/')

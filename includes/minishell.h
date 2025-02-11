@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 15:37:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:00:39 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@
 // Built-ins
 void	ft_echo(char *str, int has_newline);
 int		ft_pwd(t_data *data);
+void	ft_cd(t_data *data);
+void	ft_env(t_data *data);
 
 // Utils
 char	**grep_var(char **envp, char *to_grep);
@@ -56,6 +58,7 @@ t_token	*get_tokens(t_data *data);
 // Parsing
 int		cmd_valid(char *str);
 void	get_parsed_input(t_data **data, t_token *tokens);
+void	split_cmds(t_data *data);
 
 // Debug --------------------------------------------------------------------------------
 void	print_tokens(t_token *tokens);
