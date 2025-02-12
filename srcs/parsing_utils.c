@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 21:34:00 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:16:17 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	has_valid_input(t_token *tokens)
 {
+	if (!tokens || tokens->type != COMMAND)
+		return (0);
 	while (tokens)
 	{
 		if (!tokens->next && tokens->type == PIPE)
@@ -63,14 +65,20 @@ void	split_cmds(t_data *data)
 	while (i < data->nb_cmds)
 	{
 		cmd = ft_split(data->cmds[i], ' ');
-		if (!ft_strcmp(cmd[i], "cd"))
+		if (!ft_strcmp(cmd[0], "cd"))
 			ft_cd(data);
-		else if (!ft_strcmp(cmd[i], "echo"))
+		else if (!ft_strcmp(cmd[0], "echo"))
 			ft_echo(data->cmds[i], 0);
-		else if (!ft_strcmp(cmd[i], "env"))
+		else if (!ft_strcmp(cmd[0], "env"))
 			ft_env(data);
-		else if (!ft_strcmp(cmd[i], "pwd"))
+		else if (!ft_strcmp(cmd[0], "pwd"))
 			ft_pwd(data);
+		else if (!ft_strcmp(cmd[0], "exit"))
+		{
+			ft_tabfree(cmd, ft_tablen(cmd));
+			ft_exit(data);
+		}
+		ft_tabfree(cmd, ft_tablen(cmd));
 		i++;
 	}
 }

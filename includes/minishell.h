@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 21:34:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:19:57 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	ft_echo(char *str, int has_newline);
 int		ft_pwd(t_data *data);
 void	ft_cd(t_data *data);
 void	ft_env(t_data *data);
+void	ft_exit(t_data *data);
 
 // Utils
 char	**grep_var(char **envp, char *to_grep);
@@ -53,13 +54,16 @@ t_token	*ft_newtoken(char *arg, t_TYPE type);
 void	ft_tokenadd_back(t_token **token, t_token *new);
 void	ft_tokenclear(t_token **token);
 int		ft_tokencount(t_token *tokens, t_TYPE type);
-t_token	*get_tokens(t_data *data);
+void	get_tokens(t_data **data);
 
 // Parsing
 int		has_invalid_quotes(char *str);
 void	get_parsed_input(t_data **data, t_token *tokens);
 void	split_cmds(t_data *data);
 int		has_valid_input(t_token *tokens);
+
+// Signals
+void	handle_signals();
 
 // Debug --------------------------------------------------------------------------------
 void	print_tokens(t_token *tokens);

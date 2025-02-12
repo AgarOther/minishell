@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 21:35:48 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:53:53 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,19 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data		*data;
-	t_token		*tokens;
+	t_data				*data;
 
 	data = setup_data(envp);
 	if (!data)
 		return (1);
+	signal(SIGQUIT, SIG_IGN);
 	while (1 && ac != ((int)**av) + ac) // tkt
 	{
 		data->input = readline(PROMPT);
-		if (!data->input)
-			continue ;
-		else if (!data->input[0])
+		if (!data->input || !data->input[0])
 			continue ;
 		add_history(data->input);
-		//data = fill_data(data, 0);
+		data = fill_data(data, 0);
 		if (!has_invalid_quotes(data->input))
 		{
 			ft_putendl_fd("Error: Invalid quotes.", 2);
@@ -36,13 +34,12 @@ int	main(int ac, char **av, char **envp)
 			free_data(data, 0);
 			continue ;
 		}
-		tokens = get_tokens(data);
-		if (tokens)
+		get_tokens(&data);
+		if (data->tokens)
 		{
-			get_parsed_input(&data, tokens);
-			print_tokens(tokens);
+			get_parsed_input(&data, data->tokens);
+			print_tokens(data->tokens);
 			split_cmds(data);
-			ft_tokenclear(&tokens);
 		}
 		free_data(data, 0);
 	}

@@ -6,18 +6,20 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 16:23:53 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 16:47:09 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static t_token	*iterate_input(char **input, t_token *tokens, int i)
+static t_token	*iterate_input(char **input, int i)
 {
 	t_token	*new;
+	t_token	*tokens;
 	int		has_piped;
 
-	while (input[i])
+	tokens = NULL;
+	while (input[++i])
 	{
 		if ((!i || has_piped) && !(ft_strchr(input[i], '|')
 				&& ft_strlen(input[i]) == 1))
@@ -36,7 +38,6 @@ static t_token	*iterate_input(char **input, t_token *tokens, int i)
 			tokens = new;
 		else
 			ft_tokenadd_back(&tokens, new);
-		i++;
 	}
 	return (tokens);
 }
@@ -109,29 +110,23 @@ static char	*fix_pipes(char *str, int len, int i)
 	return (add_spaces_to_pipes(str, len + spaces_needed));
 }
 
-t_token	*get_tokens(t_data *data)
+void	get_tokens(t_data **data)
 {
 	t_token	*tokens;
 	char	**input;
 
-	tokens = ft_calloc(data->nb_cmds, sizeof(t_token));
-	if (!tokens)
-		return (NULL);
-	data->input = fix_pipes(data->input, ft_strlen(data->input), -1);
-	input = ft_split(data->input, ' ');
+	(*data)->input = fix_pipes((*data)->input, ft_strlen((*data)->input), -1);
+	input = ft_split((*data)->input, ' ');
 	if (!input)
-	{
-		free(tokens);
-		return (NULL);
-	}
-	tokens = NULL;
-	tokens = iterate_input(input, tokens, 0);
+		return ;
+	tokens = iterate_input(input, -1);
 	if (!has_valid_input(tokens))
 	{
 		ft_putendl_fd("Error: Invalid piping.", 2);
 		ft_tokenclear(&tokens);
-		data->cmds = NULL;
-		return (NULL);
+		(*data)->cmds = NULL;
+		return ;
 	}
-	return (tokens);
+	ft_tabfree(input, ft_tablen(input));
+	(*data)->tokens = tokens;
 }

@@ -6,14 +6,14 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:14:58 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 16:10:00 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:11:12 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "skibidi.h"
+#include "../includes/minishell.h"
 
-int skibidi(int skibidi)
+void	ft_exit(t_data *data)
 {
-	skibidi = skibidi; // (skibidi)
-	return (skibidi);
+	free_data(data, 1);
+	exit(0);
 }

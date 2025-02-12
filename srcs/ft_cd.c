@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:45:07 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/11 21:18:49 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:58:12 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ void	ft_cd(t_data *data)
 			change_env(data, "PWD=", "/");
 		else
 			change_env(data, "PWD=", pwd);
+		free(pwd);
 	}
 	else
 		cd_goto(data, pwd);
+	ft_tabfree(tab, ft_tablen(tab));
 }
