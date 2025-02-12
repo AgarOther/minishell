@@ -19,7 +19,7 @@ SRCS				= 	srcs/main.c \
 						srcs/debug.c \
 						srcs/parsing_utils.c \
 						srcs/ft_pwd.c \
-						srcs/ft_tokencountpipes.c \
+						srcs/ft_tokencount.c \
 						srcs/parsing.c \
 						srcs/ft_env.c \
 						srcs/ft_cd.c

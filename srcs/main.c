@@ -24,22 +24,26 @@ int	main(int ac, char **av, char **envp)
 	{
 		data->input = readline(PROMPT);
 		if (!data->input)
-			break ;
+			continue ;
 		else if (!data->input[0])
 			continue ;
 		add_history(data->input);
 		data = fill_data(data, 0);
-		if (!cmd_valid(data->input))
+		if (!has_invalid_quotes(data->input))
 		{
 			ft_putendl_fd("Error: Invalid quotes.", 2);
+			data->cmds = NULL;
 			free_data(data, 0);
 			continue ;
 		}
 		tokens = get_tokens(data);
-		get_parsed_input(&data, tokens);
-		// print_tokens(tokens);
-		split_cmds(data);
-		ft_tokenclear(&tokens);
+		if (tokens)
+		{
+			get_parsed_input(&data, tokens);
+			print_tokens(tokens);
+			split_cmds(data);
+			ft_tokenclear(&tokens);
+		}
 		free_data(data, 0);
 	}
 }

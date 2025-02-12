@@ -12,48 +12,53 @@
 
 #include "../includes/minishell.h"
 
-static int	has_invalid_quotes(char *str, char quote, char other_quote)
+int	has_valid_input(t_token *tokens)
 {
-	int	i;
-	int	found_quote;
-	int	found_other_quote;
-	
-	i = 0;
-	found_quote = 0;
-	found_other_quote = 0;
-	while (str[i])
+	while (tokens)
 	{
-		if (str[i] == quote && !found_quote)
-			found_quote = 1;
-		else if (str[i] == other_quote && found_quote && !found_other_quote)
-			found_other_quote = 1;
-		else if (str[i] == other_quote && found_quote && found_other_quote)
-			found_other_quote = 0;
-		else if (str[i] == other_quote && found_quote && !found_other_quote)
-			return (1);
-		else if (str[i] == quote && found_quote)
+		if (!tokens->next && tokens->type == PIPE)
 			return (0);
-		i++;
+		else if (tokens->next && tokens->type == PIPE
+			&& tokens->next->type == PIPE)
+			return (0);
+		tokens = tokens->next;
 	}
-	return (0);
+	return (1);
 }
 
-int	cmd_valid(char *str)
+int	has_invalid_quotes(char *str)
 {
-	int	i;
+	int		i;
+	int		count;
+	char	quote;
 
 	i = 0;
-	if (ft_stroccur(str, '\'') % 2 || ft_stroccur(str, '\"') % 2)
-		return (0);
-	else if (has_invalid_quotes(str, '\'', '\"') || has_invalid_quotes(str, '\"', '\''))
-		return (0);
-	return (1);
+	count = 0;
+	quote = 0;
+	while (str[i])
+	{
+		if (!quote && ((str[i] == '\'') || (str[i] == '\"')))
+			quote = str[i];
+		if (quote)
+		{
+			if (str[i] == quote)
+				count++;
+			if (count == 2)
+			{
+				count = 0;
+				quote = 0;
+			}
+		}
+		i++;
+	}
+	return (count == 0);
 }
 
 void	split_cmds(t_data *data)
 {
-	int 	i;
+	int		i;
 	char	**cmd;
+
 	i = 0;
 	while (i < data->nb_cmds)
 	{

@@ -6,16 +6,18 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/11 14:48:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 20:49:38 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
+# include "../includes/minishell.h"
+
 typedef struct s_data
 {
-	char	**envp; 
+	char	**envp;
 	char	**cmds;
 	char	*input;
 	int		**pipes;
