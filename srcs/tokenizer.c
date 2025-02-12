@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 16:47:09 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:06:38 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,6 +125,7 @@ void	get_tokens(t_data **data)
 		ft_putendl_fd("Error: Invalid piping.", 2);
 		ft_tokenclear(&tokens);
 		(*data)->cmds = NULL;
+		ft_tabfree(input, ft_tablen(input));
 		return ;
 	}
 	ft_tabfree(input, ft_tablen(input));

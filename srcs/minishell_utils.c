@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/12 15:56:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 20:05:06 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,10 @@ int	free_data(t_data *data, int free_envp)
 		data->pipes = NULL;
 	}
 	if (data->pids)
+	{
 		free(data->pids);
+		data->pids = NULL;
+	}
 	if (data->input)
 		free(data->input);
 	if (free_envp)
