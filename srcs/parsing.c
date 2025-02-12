@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:20:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 15:48:14 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:07:22 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,6 @@ void	get_parsed_input(t_data **data, t_token *tokens)
 			(*data)->cmds[i] = ft_strjoin_free((*data)->cmds[i], " ");
 		tmp = tmp->next;
 	}
-	ft_tabprint((*data)->cmds, 0);
-	ft_putchar_fd('\n', 1);
+	// ft_tabprint((*data)->cmds, 0);
+	// ft_putchar_fd('\n', 1);
 }

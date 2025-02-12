@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 15:59:59 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:40:55 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,14 +58,15 @@ void	split_cmds(t_data *data)
 	while (i < data->nb_cmds)
 	{
 		cmd = ft_split(data->cmds[i], ' ');
-		if (ft_strlencmp(cmd[i], "cd", 0))
+		if (!ft_strcmp(cmd[0], "cd"))
 			ft_cd(data);
-		else if (ft_strlencmp(cmd[i], "echo", 0))
+		else if (!ft_strcmp(cmd[0], "echo"))
 			ft_echo(data->cmds[i], 0);
-		else if (ft_strlencmp(cmd[i], "env", 0))
+		else if (!ft_strcmp(cmd[0], "env"))
 			ft_env(data);
-		else if (ft_strlencmp(cmd[i], "pwd", 0))
+		else if (!ft_strcmp(cmd[0], "pwd"))
 			ft_pwd(data);
 		i++;
 	}
+	ft_tabfree(cmd, ft_tablen(cmd));
 }

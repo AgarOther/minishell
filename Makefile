@@ -20,7 +20,9 @@ SRCS				= 	srcs/main.c \
 						srcs/parsing_utils.c \
 						srcs/ft_pwd.c \
 						srcs/ft_tokencountpipes.c \
-						srcs/parsing.c
+						srcs/parsing.c \
+						srcs/ft_env.c \
+						srcs/ft_cd.c
 
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a
