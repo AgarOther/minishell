@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 21:35:48 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/11 16:40:11 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int ac, char **av, char **envp)
 		else if (!data->input[0])
 			continue ;
 		add_history(data->input);
-		//data = fill_data(data, 0);
+		data = fill_data(data, 0);
 		if (!has_invalid_quotes(data->input))
 		{
 			ft_putendl_fd("Error: Invalid quotes.", 2);
