@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 17:18:27 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:13:04 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@ void	ft_export(t_data *data, char *arg)
 		return (print_sorted(data)); // Sort oscour
 	else if (!ft_strchr(arg, '='))
 		return ;
+	else if (ft_strstartswith(arg, "="))
+	{
+		ft_putendl_fd("Error: Bad assignment.", 2);
+		return ;
+	}
 	env = get_env_as_lst(data);
 	sign_pos = ft_strcharindex(arg, '=') - 1;
 	tmp = ft_substr(arg, 0, sign_pos);

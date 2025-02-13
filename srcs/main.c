@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 15:04:28 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:04:22 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ int	main(int ac, char **av, char **envp)
 	while (1 && ac != ((int)**av) + ac) // tkt
 	{
 		data->input = readline(PROMPT);
-		if (!data->input || !data->input[0])
+		if (!data->input)
 			break ;
+		else if (!data->input[0])
+			continue ;
 		add_history(data->input);
 		if (!has_invalid_quotes(data->input))
 		{

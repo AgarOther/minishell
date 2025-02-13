@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/08 22:14:37 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 15:07:45 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 23:12:11 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@ static int	is_whitelist(char current, char *whitelist)
 	int	i;
 
 	if (!whitelist)
-		return (1);
+		return (0);
 	i = 0;
 	while (whitelist[i])
 	{
@@ -35,7 +35,7 @@ int	ft_isfilled(char *str, int c, char *whitelist)
 	i = 0;
 	while (str[i])
 	{
-		if (str[i] != c && !is_whitelist(str[i], whitelist))
+		if (str[i] != c && (!is_whitelist(str[i], whitelist)))
 			return (0);
 		i++;
 	}
