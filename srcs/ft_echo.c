@@ -3,24 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 13:57:35 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:41:14 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_echo(char *str, int has_newline)
+void	ft_echo(char *str, int has_newline, int i)
 {
-	int		i;
 	int		len;
 	char	*tmp;
 	char	*sub;
 
-	i = 0;
-	while (str[i])
+	if (!ft_strncmp(str, "-n", 2) && (str[2] == ' ' || str[2] == 0))
+	{
+		i = 2;
+		has_newline = 0;
+	}
+	while (str[++i])
 	{
 		if (str[i] == '$')
 		{
@@ -33,8 +36,7 @@ void	ft_echo(char *str, int has_newline)
 		}
 		else
 			write(1, &str[i], 1);
-		i++;
 	}
-	if (!has_newline)
+	if (!str || has_newline)
 		ft_putchar_fd('\n', 1);
 }

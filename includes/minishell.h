@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 14:14:57 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:36:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # include "struct.h"
 
 // Built-ins
-void	ft_echo(char *str, int has_newline);
+void	ft_echo(char *str, int has_newline, int i);
 int		ft_pwd(t_data *data);
 void	ft_cd(t_data *data);
 void	ft_env(t_data *data);
@@ -63,9 +63,6 @@ void	get_parsed_input(t_data **data, t_token *tokens);
 void	split_cmds(t_data *data);
 int		has_valid_input(t_token *tokens);
 t_list	*get_env_as_lst(t_data *data);
-
-// Signals
-void	handle_signals();
 
 // Debug --------------------------------------------------------------------------------
 void	print_tokens(t_token *tokens);

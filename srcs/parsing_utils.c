@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 14:14:39 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:37:16 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	split_cmds(t_data *data)
 		if (!ft_strcmp(cmd[0], "cd"))
 			ft_cd(data);
 		else if (!ft_strcmp(cmd[0], "echo"))
-			ft_echo(&data->cmds[i][5], 0);
+			ft_echo(&data->cmds[i][5], 1, -1);
 		else if (!ft_strcmp(cmd[0], "env"))
 			ft_env(data);
 		else if (!ft_strcmp(cmd[0], "pwd"))
