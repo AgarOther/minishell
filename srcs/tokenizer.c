@@ -6,17 +6,16 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 20:06:38 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:42:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-static t_token	*iterate_input(char **input, int i)
+static t_token	*iterate_input(char **input, int i, int has_piped)
 {
 	t_token	*new;
 	t_token	*tokens;
-	int		has_piped;
 
 	tokens = NULL;
 	while (input[++i])
@@ -119,7 +118,7 @@ void	get_tokens(t_data **data)
 	input = ft_split((*data)->input, ' ');
 	if (!input)
 		return ;
-	tokens = iterate_input(input, -1);
+	tokens = iterate_input(input, -1, 0);
 	if (!has_valid_input(tokens))
 	{
 		ft_putendl_fd("Error: Invalid piping.", 2);

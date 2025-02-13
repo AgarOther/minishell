@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 15:37:16 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 15:45:33 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ void	split_cmds(t_data *data)
 		}
 		else if (!ft_strcmp(cmd[0], "unset"))
 			ft_unset(data, cmd[1]);
+		ft_tabfree(cmd, ft_tablen(cmd));
 		i++;
 	}
-	ft_tabfree(cmd, ft_tablen(cmd));
 }
 
 t_list	*get_env_as_lst(t_data *data)
