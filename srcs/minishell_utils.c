@@ -6,11 +6,34 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/13 15:43:22 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 17:08:51 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
+
+void	update_env(t_list *lst, t_data *data)
+{
+	size_t	i;
+
+	i = 0;
+	while (lst)
+	{
+		if (data->envp[i] != lst->str)
+		{
+			free(data->envp[i]);
+			data->envp[i] = ft_strdup(lst->str);
+		}
+		lst = lst->next;
+		i++;
+	}
+	while (data->envp[i])
+	{
+		free(data->envp[i]);
+		data->envp[i] = 0;
+		i++;
+	}
+}
 
 static void	free_pipes(t_data *data)
 {

@@ -24,7 +24,8 @@ SRCS				= 	srcs/main.c \
 						srcs/ft_env.c \
 						srcs/ft_cd.c \
 						srcs/ft_exit.c \
-						srcs/ft_unset.c
+						srcs/ft_unset.c \
+						srcs/ft_export.c
 
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a

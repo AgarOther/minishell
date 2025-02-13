@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 15:36:50 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 16:46:05 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,14 @@ void	ft_cd(t_data *data);
 void	ft_env(t_data *data);
 void	ft_exit(t_data *data);
 void	ft_unset(t_data *data, char *var);
+void	ft_export(t_data *data, char *arg);
 
 // Utils
 char	**grep_var(char **envp, char *to_grep);
 int		free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data, int i);
 t_data	*setup_data(char **envp);
+void	update_env(t_list *lst, t_data *data);
 
 // Tokens
 t_token	*ft_newtoken(char *arg, t_TYPE type);
