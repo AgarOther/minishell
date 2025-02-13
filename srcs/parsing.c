@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:20:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 16:07:22 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:15:51 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	get_parsed_input(t_data **data, t_token *tokens)
 		else if (!(*data)->cmds[i])
 			(*data)->cmds[i] = ft_strdup(tmp->arg);
 		else
-			(*data)->cmds[i] = ft_strjoin((*data)->cmds[i], tmp->arg);
+			(*data)->cmds[i] = ft_strjoin_free((*data)->cmds[i], tmp->arg);
 		if (tmp->type != PIPE && tmp->next)
 			(*data)->cmds[i] = ft_strjoin_free((*data)->cmds[i], " ");
 		tmp = tmp->next;

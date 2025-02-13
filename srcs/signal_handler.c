@@ -1,29 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenclear.c                                    :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:37:13 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 16:01:02 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/12 15:01:45 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/12 16:30:15 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	ft_tokenclear(t_token **token)
+void	handle_signals()
 {
-	t_token	*tmp;
-
-	if (!token)
-		return ;
-	while (*token)
-	{
-		tmp = *token;
-		*token = (*token)->next;
-		free(tmp->arg);
-		free(tmp);
-	}
-	token = NULL;
+	signal(SIGQUIT, SIG_IGN);
 }

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/10 15:51:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:16:30 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 
 t_data	*fill_data(t_data *data, int i)
 {
-	data->cmds = ft_split(data->input, '|');
-	if (!data->cmds)
-	{
-		free_data(data, 0);
-		return (NULL);
-	}
 	data->nb_cmds = ft_tablen(data->cmds);
 	data->pids = ft_calloc(sizeof(pid_t), data->nb_cmds + 1);
 	if (!data->pids)

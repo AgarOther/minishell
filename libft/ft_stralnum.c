@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenclear.c                                    :+:      :+:    :+:   */
+/*   ft_stralnum.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:37:13 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 16:01:02 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/13 13:34:49 by maregnie          #+#    #+#             */
+/*   Updated: 2025/02/13 13:39:31 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	ft_tokenclear(t_token **token)
+int	ft_stralnum(char *str)
 {
-	t_token	*tmp;
+	int	i;
 
-	if (!token)
-		return ;
-	while (*token)
+	i = 0;
+	while (str[i])
 	{
-		tmp = *token;
-		*token = (*token)->next;
-		free(tmp->arg);
-		free(tmp);
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
+		i++;
 	}
-	token = NULL;
+	return (1);
 }
