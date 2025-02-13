@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/11 20:49:38 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:16:14 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_data
 	int		nb_cmds;
 	int		exit_code;
 	pid_t	*pids;
+	t_list	*list;
 }				t_data;
 
 typedef enum e_type

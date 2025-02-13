@@ -22,7 +22,8 @@ SRCS				= 	srcs/main.c \
 						srcs/ft_tokencount.c \
 						srcs/parsing.c \
 						srcs/ft_env.c \
-						srcs/ft_cd.c
+						srcs/ft_cd.c \
+						srcs/ft_unset.c
 
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a

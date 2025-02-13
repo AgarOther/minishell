@@ -1,33 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strdup.c                                        :+:      :+:    :+:   */
+/*   ft_stralnum.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/10/08 10:04:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 13:21:37 by maregnie         ###   ########.fr       */
+/*   Created: 2025/02/13 13:34:49 by maregnie          #+#    #+#             */
+/*   Updated: 2025/02/13 13:39:31 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strdup(const char *s)
+int	ft_stralnum(char *str)
 {
-	int		i;
-	char	*str;
+	int	i;
 
-	if (!s)
-		return (NULL);
-	str = malloc(ft_strlen(s) + 1);
-	if (!str)
-		return (NULL);
 	i = 0;
-	while (s[i])
+	while (str[i])
 	{
-		str[i] = s[i];
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
 		i++;
 	}
-	str[i] = '\0';
-	return (str);
+	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/06 14:34:58 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/12 13:57:35 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	ft_echo(char *str, int has_newline)
 			write(1, &str[i], 1);
 		i++;
 	}
-	if (has_newline)
+	if (!has_newline)
 		ft_putchar_fd('\n', 1);
 }

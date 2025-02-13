@@ -6,7 +6,7 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 16:40:11 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/12 15:58:03 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ int	main(int ac, char **av, char **envp)
 {
 	t_data		*data;
 	t_token		*tokens;
-
+	
 	data = setup_data(envp);
 	if (!data)
 		return (1);
