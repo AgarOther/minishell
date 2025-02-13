@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 15:19:57 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:14:57 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		ft_pwd(t_data *data);
 void	ft_cd(t_data *data);
 void	ft_env(t_data *data);
 void	ft_exit(t_data *data);
+void	ft_unset(t_data *data, char *var);
 
 // Utils
 char	**grep_var(char **envp, char *to_grep);
@@ -61,6 +62,7 @@ int		has_invalid_quotes(char *str);
 void	get_parsed_input(t_data **data, t_token *tokens);
 void	split_cmds(t_data *data);
 int		has_valid_input(t_token *tokens);
+t_list	*get_env_as_lst(t_data *data);
 
 // Signals
 void	handle_signals();

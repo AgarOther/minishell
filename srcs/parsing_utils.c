@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 15:16:17 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:14:39 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ void	split_cmds(t_data *data)
 		if (!ft_strcmp(cmd[0], "cd"))
 			ft_cd(data);
 		else if (!ft_strcmp(cmd[0], "echo"))
-			ft_echo(data->cmds[i], 0);
+			ft_echo(&data->cmds[i][5], 0);
 		else if (!ft_strcmp(cmd[0], "env"))
 			ft_env(data);
 		else if (!ft_strcmp(cmd[0], "pwd"))
@@ -78,7 +78,31 @@ void	split_cmds(t_data *data)
 			ft_tabfree(cmd, ft_tablen(cmd));
 			ft_exit(data);
 		}
-		ft_tabfree(cmd, ft_tablen(cmd));
+		else if (!ft_strcmp(cmd[0], "unset"))
+			ft_unset(data, cmd[1]);
 		i++;
 	}
+	ft_tabfree(cmd, ft_tablen(cmd));
+}
+
+t_list	*get_env_as_lst(t_data *data)
+{
+	t_list	*env;
+	char	*tmp;
+	int		i;
+
+	i = 0;
+	env = NULL;
+	while (!env || tmp)
+	{
+		tmp = ft_strdup(data->envp[i]);
+		if (!tmp)
+			break ;
+		if (!env)
+			env = ft_lstnew(tmp);
+		else
+			ft_lstadd_back(&env, ft_lstnew(tmp));
+		i++;
+	}
+	return (env);
 }

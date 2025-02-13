@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcmp.c                                        :+:      :+:    :+:   */
+/*   ft_stralnum.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/12 12:54:33 by maregnie          #+#    #+#             */
-/*   Updated: 2024/08/14 09:47:57 by maregnie         ###   ########.fr       */
+/*   Created: 2025/02/13 13:34:49 by maregnie          #+#    #+#             */
+/*   Updated: 2025/02/13 13:39:31 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strcmp(char *s1, char *s2)
+#include "libft.h"
+
+int	ft_stralnum(char *str)
 {
-	int		i;
+	int	i;
 
 	i = 0;
-	while (s1[i] || s2[i])
+	while (str[i])
 	{
-		if (s1[i] != s2[i])
-		{
-			return (s1[i] - s2[i]);
-		}
+		if (!ft_isalnum(str[i]) && str[i] != '_')
+			return (0);
 		i++;
 	}
-	return (s1[i] - s2[i]);
+	return (1);
 }
