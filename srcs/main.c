@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 14:16:14 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/13 14:19:08 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,8 @@
 
 int	main(int ac, char **av, char **envp)
 {
-	t_data		*data;
-	t_token		*tokens;
-	
+	t_data				*data;
+
 	data = setup_data(envp);
 	if (!data)
 		return (1);
@@ -27,7 +26,6 @@ int	main(int ac, char **av, char **envp)
 		if (!data->input || !data->input[0])
 			continue ;
 		add_history(data->input);
-		data = fill_data(data, 0);
 		if (!has_invalid_quotes(data->input))
 		{
 			ft_putendl_fd("Error: Invalid quotes.", 2);
