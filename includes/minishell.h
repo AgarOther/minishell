@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 16:46:05 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/14 23:40:34 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # include "struct.h"
 
 // Built-ins
-void	ft_echo(char *str, int has_newline, int i);
+void	ft_echo(t_data *data, char *str, int has_newline, int i);
 int		ft_pwd(t_data *data);
 void	ft_cd(t_data *data);
 void	ft_env(t_data *data);
