@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/13 23:08:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/14 23:42:55 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,14 +74,16 @@ char	**grep_var(char **envp, char *to_grep)
 {
 	char	**paths;
 	int		i;
+	int		len;
 
 	paths = NULL;
 	i = -1;
+	len = ft_strlen(to_grep);
 	while (envp[++i])
 	{
-		if (ft_strncmp(envp[i], to_grep, ft_strlen(to_grep)) == 0)
+		if (ft_strncmp(envp[i], to_grep, len) == 0)
 		{
-			paths = ft_split(&envp[i][ft_strlen(to_grep)], ':');
+			paths = ft_split(&envp[i][len], ':');
 			break ;
 		}
 	}
