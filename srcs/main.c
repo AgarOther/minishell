@@ -6,21 +6,22 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 23:04:22 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:34:04 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
-void	signal_handler()
+void	signal_handler(int sig)
 {
+	(void) sig;
 	ft_putchar_fd('\n', 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);
 	rl_redisplay();
 }
 
-void	handle_signals()
+void	intercept_signals(void)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
@@ -33,7 +34,7 @@ int	main(int ac, char **av, char **envp)
 	data = setup_data(envp);
 	if (!data)
 		return (1);
-	handle_signals();
+	intercept_signals();
 	while (1 && ac != ((int)**av) + ac) // tkt
 	{
 		data->input = readline(PROMPT);
