@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/14 23:40:34 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:19:33 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ int		free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data, int i);
 t_data	*setup_data(char **envp);
 void	update_env(t_list *lst, t_data *data);
+t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
 
 // Tokens
 t_token	*ft_newtoken(char *arg, t_TYPE type);

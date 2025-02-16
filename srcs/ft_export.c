@@ -6,16 +6,53 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/15 22:12:08 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/16 15:30:01 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+static t_list	*get_highest(t_list *envp)
+{
+	t_list	*tmp;
+	t_list	*highest;
+
+	tmp = envp;
+	highest = tmp;
+	while (tmp)
+	{
+		if (ft_strncmp(tmp->str, highest->str,
+				ft_strcharindex(tmp->str, '=')) < 0)
+			highest = tmp;
+		tmp = tmp->next;
+	}
+	return (highest);
+}
+
 static void	print_sorted(t_data *data)
 {
-	(void)data;
-	ft_printf("NOOOOOOOOOOOOOOOOOOON\n");
+	t_list	*envp;
+	t_list	*sorted;
+	t_list	*highest;
+	char	*to_add;
+
+	envp = get_env_as_lst(data);
+	if (!envp)
+		return ;
+	sorted = NULL;
+	while (envp)
+	{
+		highest = get_highest(envp);
+		to_add = ft_strjoin("declare -x ", highest->str);
+		if (!sorted)
+			sorted = ft_lstnew(to_add);
+		else
+			ft_lstadd_back(&sorted, ft_lstnew(to_add));
+		envp = ft_list_remove_if(highest->str, envp, 0);
+	}
+	ft_lstprint(sorted, 1);
+	ft_lstclear(&sorted);
+	ft_lstclear(&envp);
 }
 
 static void	modify_var(t_list **envp, char *to_grep, char *arg)
@@ -46,7 +83,7 @@ void	ft_export(t_data *data, char *arg)
 	int		sign_index;
 
 	if (!arg)
-		return (print_sorted(data)); // Sort oscour
+		return (print_sorted(data));
 	else if (!ft_strchr(arg, '='))
 		return ;
 	else if (ft_strstartswith(arg, "="))
