@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/13 14:17:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:36:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,14 @@ typedef enum e_type
 	COMMAND,
 	ARG,
 	PIPE,
+	INFILE_NEXT,
 	INFILE,
-	OUTFILE
+	OUTFILE_NEXT,
+	OUTFILE,
+	HEREDOC,
+	HEREDOC_LIMITER,
+	APPEND_NEXT,
+	APPEND
 }	t_TYPE;
 
 typedef struct s_token
