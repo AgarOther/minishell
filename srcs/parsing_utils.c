@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/18 11:30:40 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/18 14:25:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	has_valid_input(t_token *tokens)
 {
-	if (!tokens || tokens->type != COMMAND)
+	if (!tokens || tokens->type == PIPE || tokens->type == OUTFILE_NEXT)
 		return (0);
 	while (tokens)
 	{
