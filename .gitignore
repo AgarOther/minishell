@@ -3,3 +3,4 @@ minishell
 *.o
 *.a
 srcs/main.c
+readline.supp

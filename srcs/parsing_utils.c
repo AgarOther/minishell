@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/15 22:11:18 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:30:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ int	has_invalid_quotes(char *str)
 	return (count == 0);
 }
 
-void	split_cmds(t_data *data)
+int	split_cmds(t_data *data)
 {
 	int		i;
 	char	**cmd;
@@ -82,9 +82,15 @@ void	split_cmds(t_data *data)
 			ft_unset(data, cmd[1]);
 		else if (!ft_strcmp(cmd[0], "export"))
 			ft_export(data, ft_strdup(cmd[1]));
+		else
+		{
+			ft_tabfree(cmd, ft_tablen(cmd));
+			return (0);
+		}
 		ft_tabfree(cmd, ft_tablen(cmd));
 		i++;
 	}
+	return (1);
 }
 
 t_list	*get_env_as_lst(t_data *data)

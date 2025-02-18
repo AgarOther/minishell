@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/16 15:19:33 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:13:46 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	get_tokens(t_data **data);
 // Parsing
 int		has_invalid_quotes(char *str);
 void	get_parsed_input(t_data **data, t_token *tokens);
-void	split_cmds(t_data *data);
+int		split_cmds(t_data *data);
 int		has_valid_input(t_token *tokens);
 t_list	*get_env_as_lst(t_data *data);
 
