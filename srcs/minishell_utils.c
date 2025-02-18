@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/14 23:42:55 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/18 11:28:27 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,12 @@ static void	free_pipes(t_data *data)
 int	free_data(t_data *data, int free_envp)
 {
 	if (data->cmds)
+	{
 		ft_tabfree(data->cmds, ft_tablen(data->cmds));
+		data->cmds = NULL;
+	}
 	if (data->tokens)
 		ft_tokenclear(&data->tokens);
-	if (free_envp && data->envp)
-		ft_tabfree(data->envp, ft_tablen(data->envp));
 	if (data->pipes)
 		free_pipes(data);
 	if (data->pids)
@@ -65,6 +66,12 @@ int	free_data(t_data *data, int free_envp)
 	}
 	if (data->input)
 		free(data->input);
+	if (data->list)
+		ft_lstclear(&data->list);
+	if (data->tokens)
+		ft_tokenclear(&data->tokens);
+	if (free_envp && data->envp)
+		ft_tabfree(data->envp, ft_tablen(data->envp));
 	if (free_envp)
 		free(data);
 	return (0);
