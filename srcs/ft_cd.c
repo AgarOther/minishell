@@ -6,30 +6,57 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:45:07 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/18 12:44:02 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/18 15:11:15 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
 
+int	ft_chdir(t_data *data, char *path)
+{
+	char	**var;
+	int		retval;
+
+	var = grep_var(data->envp, path);
+	if (!var)
+		return (-1);
+	retval = chdir(var[0]);
+	if (retval == -1)
+		ft_putendl_fd("ah oui ok d'accord", 2);
+	ft_tabfree(var, ft_tablen(var));
+	return (retval);
+}
+
 void	change_env(t_data *data, char *env, char *new)
 {
-	int	i;
-	int	j;
-	int	k;
+	int		i;
+	int		j;
+	int		k;
+	char	*tmp;
 
 	i = 0;
 	j = 0;
 	k = ft_strlen(env);
 	while (ft_strncmp(data->envp[i], env, k) != 0)
 		i++;
+	tmp = ft_strdup(data->envp[i]);
+	free(data->envp[i]);
+	data->envp[i] = ft_calloc(k + ft_strlen(new) + 1, 1);
+	ft_strlcpy(data->envp[i], tmp, ft_strlen(env) + 1);
+	free(tmp);
 	while (new[j])
 	{
 		data->envp[i][k] = new[j];
 		j++;
 		k++;
 	}
-	data->envp[i][k] = 0;
+}
+
+static void	free_vars(char **args, char *tmp, char *pwd)
+{
+	ft_tabfree(args, ft_tablen(args));
+	free(tmp);
+	free(pwd);
 }
 
 void	cd_goto(t_data *data, char *pwd)
@@ -38,21 +65,24 @@ void	cd_goto(t_data *data, char *pwd)
 	char	*tmp;
 
 	args = ft_split(data->input, ' ');
-	if (pwd[ft_strlen(pwd) - 1] != '/')
-		pwd = ft_strjoin_free(pwd, "/");
+	pwd = ft_strjoin_free(ft_strdup(pwd), "/");
 	tmp = ft_strjoin(pwd, args[1]);
-	ft_printf("%s\n", tmp);
 	if (!access(tmp, F_OK))
 	{
-		pwd = ft_strjoin(pwd, "/");
 		pwd = ft_strjoin_free(pwd, args[1]);
-		chdir(grep_var(data->envp, "PWD=")[0]);
+		if (pwd[ft_strlen(pwd) - 1] == '/')
+			pwd = ft_strcrop(pwd, 1);
+		if (chdir(tmp))
+		{
+			ft_putendl_fd("ah oui ok d'accord", 2);
+			free_vars(args, tmp, pwd);
+			return ;
+		}
 		change_env(data, "PWD=", pwd);
-		free(pwd);
 	}
 	else
 		ft_putendl_fd("Error: Directory doesn't exist.", 2);
-	free(tmp);
+	free_vars(args, tmp, pwd);
 }
 
 void	ft_cd(t_data *data)
@@ -76,8 +106,10 @@ void	ft_cd(t_data *data)
 			change_env(data, "PWD=", "/");
 		else
 			change_env(data, "PWD=", pwd);
-		chdir(grep_var(data->envp, "PWD=")[0]);
+		ft_chdir(data, "PWD=");
+		free(pwd);
 	}
 	else
 		cd_goto(data, pwd);
+	ft_tabfree(tab, ft_tablen(tab));
 }
