@@ -1,28 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenadd_back.c                                 :+:      :+:    :+:   */
+/*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:28:59 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/10 15:31:37 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
+/*   Updated: 2025/02/19 17:06:01 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	ft_tokenadd_back(t_token **token, t_token *new)
+void	ft_unset(t_data *data, char *var)
 {
-	t_token	*tmp;
+	t_list		*current;
 
-	if (*token)
+	if (!var)
+		return ;
+	else if (!ft_stralnum(var))
 	{
-		tmp = *token;
-		while (tmp && tmp->next)
-			tmp = tmp->next;
-		tmp->next = new;
+		ft_putendl_fd("Error: Invalid parameter name.", 2);
+		return ;
 	}
-	else
-		*token = new;
+	var = ft_strjoin(var, "=");
+	current = get_env_as_lst(data);
+	current = ft_list_remove_if(var, current, 1);
+	update_env(current, data);
+	ft_lstclear(&current);
 }

@@ -6,14 +6,14 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/18 15:36:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:06:17 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-# include "../includes/minishell.h"
+# include "minishell.h"
 
 typedef enum e_type
 {

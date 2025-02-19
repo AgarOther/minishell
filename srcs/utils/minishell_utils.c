@@ -6,11 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/18 11:28:27 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:05:41 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	update_env(t_list *lst, t_data *data)
 {

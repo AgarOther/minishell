@@ -6,11 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/16 15:34:15 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:06:08 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static void	expand_value(char *str, int *i, t_data *data)
 {
