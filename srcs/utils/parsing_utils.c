@@ -6,11 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/18 14:25:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:05:33 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	has_valid_input(t_token *tokens)
 {

@@ -1,31 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_tokencount.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/16 15:19:19 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/11 15:21:40 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/19 17:05:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	ft_unset(t_data *data, char *var)
+int	ft_tokencount(t_token *tokens, t_TYPE type)
 {
-	t_list		*current;
+	int	nb_cmds;
 
-	if (!var)
-		return ;
-	else if (!ft_stralnum(var))
+	nb_cmds = 0;
+	while (tokens)
 	{
-		ft_putendl_fd("Error: Invalid parameter name.", 2);
-		return ;
+		if (tokens->type == type)
+			nb_cmds++;
+		tokens = tokens->next;
 	}
-	var = ft_strjoin(var, "=");
-	current = get_env_as_lst(data);
-	current = ft_list_remove_if(var, current, 1);
-	update_env(current, data);
-	ft_lstclear(&current);
+	return (nb_cmds);
 }

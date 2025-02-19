@@ -1,19 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_newtoken.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 13:14:58 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 15:11:12 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/10 15:17:46 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/19 17:05:55 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	ft_exit(t_data *data)
+t_token	*ft_newtoken(char *arg, t_TYPE type)
 {
-	free_data(data, 1);
-	exit(0);
+	t_token	*node;
+
+	node = malloc(sizeof(t_token));
+	if (!node)
+		return (NULL);
+	node->arg = ft_strdup(arg);
+	node->type = type;
+	node->next = NULL;
+	return (node);
 }

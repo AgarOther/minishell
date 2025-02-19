@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokencount.c                                    :+:      :+:    :+:   */
+/*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 15:21:40 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 20:59:15 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/10 17:32:59 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/19 17:06:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-int	ft_tokencount(t_token *tokens, t_TYPE type)
+int	ft_pwd(t_data *data)
 {
-	int	nb_cmds;
+	int	i;
 
-	nb_cmds = 0;
-	while (tokens)
-	{
-		if (tokens->type == type)
-			nb_cmds++;
-		tokens = tokens->next;
-	}
-	return (nb_cmds);
+	i = 0;
+	while (data->envp[i] && ft_strncmp(data->envp[i], "PWD=", 4))
+		i++;
+	ft_putendl_fd(&data->envp[i][4], data->out);
+	return (0);
 }

@@ -6,11 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:32:44 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/18 15:47:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:05:29 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	print_tokens(t_token *tokens)
 {
