@@ -6,30 +6,77 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/13 15:42:40 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:13:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 static t_token	*iterate_input(char **input, int i, int has_piped)
 {
 	t_token	*new;
 	t_token	*tokens;
+	int		file_index;
+	int		here_doc;
+	int		append;
 
 	tokens = NULL;
+	file_index = 0;
+	here_doc = 0;
+	append = 0;
 	while (input[++i])
 	{
-		if ((!i || has_piped) && !(ft_strchr(input[i], '|')
-				&& ft_strlen(input[i]) == 1))
-		{
-			has_piped = 0;
-			new = ft_newtoken(input[i], COMMAND);
-		}
-		else if (ft_strlen(input[i]) == 1 && ft_strchr(input[i], '|'))
+		if (!ft_strcmp(input[i], "|"))
 		{
 			has_piped = 1;
 			new = ft_newtoken(input[i], PIPE);
+		}
+		else if (!ft_strcmp(input[i], "<"))
+		{
+			file_index = 1;
+			new = ft_newtoken(input[i], INFILE_NEXT);
+		}
+		else if (file_index == 1)
+		{
+			file_index = 3;
+			new = ft_newtoken(input[i], INFILE);
+		}
+		else if (!ft_strcmp(input[i], ">"))
+		{
+			file_index = 2;
+			new = ft_newtoken(input[i], OUTFILE_NEXT);
+		}
+		else if (file_index == 2)
+		{
+			file_index = 3;
+			new = ft_newtoken(input[i], OUTFILE);
+		}
+		else if (!ft_strcmp(input[i], "<<"))
+		{
+			here_doc = 1;
+			new = ft_newtoken(input[i], HEREDOC);
+		}
+		else if (here_doc == 1)
+		{
+			here_doc = 2;
+			new = ft_newtoken(input[i], HEREDOC_LIMITER);
+		}
+		else if (!ft_strcmp(input[i], ">>"))
+		{
+			append = 1;
+			new = ft_newtoken(input[i], APPEND_NEXT);
+		}
+		else if (append)
+		{
+			append = 0;
+			new = ft_newtoken(input[i], APPEND);
+		}
+		else if (file_index == 3 || !i || has_piped || here_doc == 2)
+		{
+			has_piped = 0;
+			file_index = 0;
+			here_doc = 0;
+			new = ft_newtoken(input[i], COMMAND);
 		}
 		else
 			new = ft_newtoken(input[i], ARG);
@@ -121,7 +168,8 @@ void	get_tokens(t_data **data)
 	tokens = iterate_input(input, -1, 0);
 	if (!has_valid_input(tokens))
 	{
-		ft_putendl_fd("Error: Invalid piping.", 2);
+		print_tokens(tokens);
+		ft_putendl_fd("Error: Invalid input.", 2);
 		ft_tokenclear(&tokens);
 		(*data)->cmds = NULL;
 		ft_tabfree(input, ft_tablen(input));

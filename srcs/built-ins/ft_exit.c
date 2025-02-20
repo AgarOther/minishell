@@ -1,27 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokencount.c                                    :+:      :+:    :+:   */
+/*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/11 15:21:40 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/11 20:59:15 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/06 13:14:58 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/19 17:06:05 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-int	ft_tokencount(t_token *tokens, t_TYPE type)
+void	ft_exit(t_data *data)
 {
-	int	nb_cmds;
-
-	nb_cmds = 0;
-	while (tokens)
-	{
-		if (tokens->type == type)
-			nb_cmds++;
-		tokens = tokens->next;
-	}
-	return (nb_cmds);
+	free_data(data, 1);
+	exit(0);
 }

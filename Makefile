@@ -1,6 +1,6 @@
 # Compilation
 CC					=	cc
-CFLAGS				=	-Wall -Wextra -Werror -g
+CFLAGS				=	-Wall -Wextra -Werror -g -I $(INCLUDES)
 RLFLAGS				=	-L/usr/include -lreadline
 
 # Names
@@ -8,32 +8,32 @@ NAME				=	minishell
 
 # Sources & Includes
 SRCS				= 	srcs/main.c \
-						srcs/ft_echo.c \
-						srcs/tokenizer.c \
-						srcs/minishell_utils.c \
-						srcs/data_utils.c \
-						srcs/cmdhelper.c \
-						srcs/ft_tokenadd_back.c \
-						srcs/ft_newtoken.c \
-						srcs/ft_tokenclear.c \
 						srcs/debug.c \
-						srcs/parsing_utils.c \
-						srcs/ft_pwd.c \
-						srcs/ft_tokencount.c \
-						srcs/parsing.c \
-						srcs/ft_env.c \
-						srcs/ft_cd.c \
-						srcs/ft_exit.c \
-						srcs/ft_unset.c \
-						srcs/ft_export.c \
-						srcs/ft_list_remove_if.c
+						srcs/built-ins/ft_cd.c \
+						srcs/built-ins/ft_echo.c \
+						srcs/built-ins/ft_env.c \
+						srcs/built-ins/ft_exit.c \
+						srcs/built-ins/ft_export.c \
+						srcs/built-ins/ft_pwd.c \
+						srcs/built-ins/ft_unset.c \
+						srcs/parsing/parsing.c \
+						srcs/parsing/ft_list_remove_if.c \
+						srcs/tokenizer/ft_newtoken.c \
+						srcs/tokenizer/ft_tokenadd_back.c \
+						srcs/tokenizer/ft_tokenclear.c \
+						srcs/tokenizer/ft_tokencount.c \
+						srcs/tokenizer/tokenizer.c \
+						srcs/utils/commands_utils.c \
+						srcs/utils/data_utils.c \
+						srcs/utils/minishell_utils.c \
+						srcs/utils/parsing_utils.c
 
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a
 INCLUDES			=	includes
 
 # Objects
-OBJS				=	$(patsubst srcs/%.c, $(OBJ_FOLDER)/%.o, $(SRCS))
+OBJS				=	$(patsubst srcs/%, $(OBJ_FOLDER)/%, $(SRCS:.c=.o))
 
 # Custom Makefile Flags
 MAKEFLAGS			+=	--no-print-directory --silent
@@ -63,10 +63,11 @@ check_relink:
 	fi
 
 $(NAME): libft $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) $(LIB) $(RLFLAGS) -o $(NAME) -I $(INCLUDES)
+	@$(CC) $(CFLAGS) $(OBJS) $(LIB) $(RLFLAGS) -o $(NAME)
 	$(EXE_DONE)
 
 $(OBJ_FOLDER)/%.o: srcs/%.c
+	@mkdir -p $(dir $@)
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 libft : 

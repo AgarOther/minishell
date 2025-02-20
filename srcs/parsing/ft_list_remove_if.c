@@ -6,11 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/16 15:18:21 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/16 15:18:49 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:05:59 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 t_list	*ft_list_remove_if(char *var, t_list *current, int free_var)
 {

@@ -1,26 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_newtoken.c                                      :+:      :+:    :+:   */
+/*   ft_tokenadd_back.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:17:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 16:25:00 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/10 15:28:59 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/19 17:05:54 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-t_token	*ft_newtoken(char *arg, t_TYPE type)
+void	ft_tokenadd_back(t_token **token, t_token *new)
 {
-	t_token	*node;
+	t_token	*tmp;
 
-	node = malloc(sizeof(t_token));
-	if (!node)
-		return (NULL);
-	node->arg = ft_strdup(arg);
-	node->type = type;
-	node->next = NULL;
-	return (node);
+	if (*token)
+	{
+		tmp = *token;
+		while (tmp && tmp->next)
+			tmp = tmp->next;
+		tmp->next = new;
+	}
+	else
+		*token = new;
 }

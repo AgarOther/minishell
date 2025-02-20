@@ -1,19 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_tokenclear.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 13:14:58 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 15:11:12 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/10 15:37:13 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/19 17:05:52 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	ft_exit(t_data *data)
+void	ft_tokenclear(t_token **token)
 {
-	free_data(data, 1);
-	exit(0);
+	t_token	*tmp;
+
+	if (!token)
+		return ;
+	while (*token)
+	{
+		tmp = *token;
+		*token = (*token)->next;
+		free(tmp->arg);
+		free(tmp);
+	}
+	token = NULL;
 }

@@ -6,11 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:57:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/10 15:59:07 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:06:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 void	ft_env(t_data *data)
 {

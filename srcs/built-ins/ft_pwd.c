@@ -6,11 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:32:59 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/10 17:37:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:06:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
 int	ft_pwd(t_data *data)
 {

@@ -47,6 +47,7 @@ SRCS =	ft_atoi.c \
 		ft_strstartswith.c \
 		ft_strcontains.c \
 		ft_strcrop.c \
+		ft_realloc.c \
 		ft_memcmp.c \
 		ft_calloc.c \
 		ft_substr.c \

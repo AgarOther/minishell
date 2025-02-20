@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_realloc.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/16 15:19:19 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/18 14:05:33 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/18 14:12:38 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "libft.h"
 
-void	ft_unset(t_data *data, char *var)
+void	*ft_realloc(void *old, int old_size, int new_size)
 {
-	t_list		*current;
+	void	*new;
 
-	if (!var)
-		return ;
-	else if (!ft_stralnum(var))
-	{
-		ft_putendl_fd("Error: Invalid parameter name.", 2);
-		return ;
-	}
-	var = ft_strjoin(var, "=");
-	current = get_env_as_lst(data);
-	current = ft_list_remove_if(var, current, 1);
-	update_env(current, data);
-	ft_lstclear(&current);
+	if (!old || old_size <= 0 || new_size <= 0)
+		return (NULL);
+	new = ft_calloc(new_size, 1);
+	if (!new)
+		return (NULL);
+	if (old_size < new_size)
+		ft_memmove(new, old, old_size);
+	else
+		ft_memmove(new, old, new_size);
+	free(old);
+	return (new);
 }

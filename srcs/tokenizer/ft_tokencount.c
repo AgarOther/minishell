@@ -1,29 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_tokenclear.c                                    :+:      :+:    :+:   */
+/*   ft_tokencount.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:37:13 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/12 16:01:02 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/11 15:21:40 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/19 17:05:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
 
-void	ft_tokenclear(t_token **token)
+int	ft_tokencount(t_token *tokens, t_TYPE type)
 {
-	t_token	*tmp;
+	int	nb_cmds;
 
-	if (!token)
-		return ;
-	while (*token)
+	nb_cmds = 0;
+	while (tokens)
 	{
-		tmp = *token;
-		*token = (*token)->next;
-		free(tmp->arg);
-		free(tmp);
+		if (tokens->type == type)
+			nb_cmds++;
+		tokens = tokens->next;
 	}
-	token = NULL;
+	return (nb_cmds);
 }

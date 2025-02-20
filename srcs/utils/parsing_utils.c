@@ -6,25 +6,35 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/18 11:30:40 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/19 17:05:33 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/minishell.h"
+#include "minishell.h"
+
+static int	has_invalid_type(t_TYPE type)
+{
+	return (type == PIPE || type == OUTFILE_NEXT
+		|| type == APPEND_NEXT || type == HEREDOC);
+}
 
 int	has_valid_input(t_token *tokens)
 {
-	if (!tokens || tokens->type != COMMAND)
+	t_TYPE	type;
+
+	type = tokens->type;
+	if (!tokens || has_invalid_type(type))
 		return (0);
-	while (tokens)
+	while (tokens->next)
 	{
-		if (!tokens->next && tokens->type == PIPE)
-			return (0);
-		else if (tokens->next && tokens->type == PIPE
+		if (tokens->next && type == PIPE
 			&& tokens->next->type == PIPE)
 			return (0);
 		tokens = tokens->next;
+		type = tokens->type;
 	}
+	if (has_invalid_type(type) || type == INFILE_NEXT || type == INFILE)
+			return (0);
 	return (1);
 }
 
