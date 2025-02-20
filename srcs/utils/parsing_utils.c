@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:33 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:01:44 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 static int	has_invalid_type(t_TYPE type)
 {
 	return (type == PIPE || type == OUTFILE_NEXT
-		|| type == APPEND_NEXT || type == HEREDOC);
+		|| type == APPEND_NEXT);
 }
 
 int	has_valid_input(t_token *tokens)
@@ -33,7 +33,7 @@ int	has_valid_input(t_token *tokens)
 		tokens = tokens->next;
 		type = tokens->type;
 	}
-	if (has_invalid_type(type) || type == INFILE_NEXT || type == INFILE)
+	if (has_invalid_type(type) || type == INFILE_NEXT)
 			return (0);
 	return (1);
 }

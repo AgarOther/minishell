@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:13:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:09:43 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,13 +156,22 @@ static char	*fix_pipes(char *str, int len, int i)
 	return (add_spaces_to_pipes(str, len + spaces_needed));
 }
 
+// On readline
+// On expand
+// On tokenize
+// On check les tokens
+// On envoie à l'exec
+
+// Pas besoin d'ajouter les < << > >> en tokens, utiliser ce qu'il y a après directement.
+// Les espaces sont à gérer avec un while(isspace()) (en dehors des quotes)
+
 void	get_tokens(t_data **data)
 {
 	t_token	*tokens;
 	char	**input;
 
-	(*data)->input = fix_pipes((*data)->input, ft_strlen((*data)->input), -1);
-	input = ft_split((*data)->input, ' ');
+	(*data)->input = fix_pipes((*data)->input, ft_strlen((*data)->input), -1); // A tej wallah
+	input = ft_split((*data)->input, ' '); // On rigole un max
 	if (!input)
 		return ;
 	tokens = iterate_input(input, -1, 0);

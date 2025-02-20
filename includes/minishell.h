@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:19:54 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:09:04 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	ft_export(t_data *data, char *arg);
 
 // Utils
 char	**grep_var(char **envp, char *to_grep);
+char	*grep_var_as_string(char **envp, char *to_grep);
 int		free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data, int i);
 t_data	*setup_data(char **envp);
