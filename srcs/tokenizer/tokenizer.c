@@ -169,7 +169,7 @@ void	get_tokens(t_data **data)
 	if (!has_valid_input(tokens))
 	{
 		print_tokens(tokens);
-		ft_putendl_fd("Error: Invalid piping.", 2);
+		ft_putendl_fd("Error: Invalid input.", 2);
 		ft_tokenclear(&tokens);
 		(*data)->cmds = NULL;
 		ft_tabfree(input, ft_tablen(input));

@@ -12,19 +12,29 @@
 
 #include "minishell.h"
 
+static int	has_invalid_type(t_TYPE type)
+{
+	return (type == PIPE || type == OUTFILE_NEXT
+		|| type == APPEND_NEXT || type == HEREDOC);
+}
+
 int	has_valid_input(t_token *tokens)
 {
-	if (!tokens || tokens->type == PIPE || tokens->type == OUTFILE_NEXT)
+	t_TYPE	type;
+
+	type = tokens->type;
+	if (!tokens || has_invalid_type(type))
 		return (0);
-	while (tokens)
+	while (tokens->next)
 	{
-		if (!tokens->next && tokens->type == PIPE)
-			return (0);
-		else if (tokens->next && tokens->type == PIPE
+		if (tokens->next && type == PIPE
 			&& tokens->next->type == PIPE)
 			return (0);
 		tokens = tokens->next;
+		type = tokens->type;
 	}
+	if (has_invalid_type(type) || type == INFILE_NEXT || type == INFILE)
+			return (0);
 	return (1);
 }
 
