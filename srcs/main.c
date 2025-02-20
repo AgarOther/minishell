@@ -57,7 +57,7 @@ int	main(int ac, char **av, char **envp)
 			data = fill_data(data, 0);
 			print_tokens(data->tokens);
 			if (!split_cmds(data))
-				ft_putendl_fd("Error: Invalid input.", 2);
+				ft_putendl_fd("Error: Invalid command.", 2);
 		}
 		free_data(data, 0);
 	}
