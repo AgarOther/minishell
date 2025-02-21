@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 00:59:25 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int	main(int ac, char **av, char **envp)
 			free_data(data, 0);
 			continue ;
 		}
+		data->input = expand_command(data, data->input, 0, 0);
 		get_tokens(&data);
 		if (data->tokens)
 		{

@@ -6,11 +6,40 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:43 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 22:49:37 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	free_data(t_data *data, int free_envp)
+{
+	if (data->cmds)
+	{
+		ft_tabfree(data->cmds, ft_tablen(data->cmds));
+		data->cmds = NULL;
+	}
+	if (data->tokens)
+		ft_tokenclear(&data->tokens);
+	if (data->pipes)
+		free_pipes(data);
+	if (data->pids)
+	{
+		free(data->pids);
+		data->pids = NULL;
+	}
+	if (data->input)
+		free(data->input);
+	if (data->list)
+		ft_lstclear(&data->list);
+	if (data->tokens)
+		ft_tokenclear(&data->tokens);
+	if (free_envp && data->envp)
+		ft_tabfree(data->envp, ft_tablen(data->envp));
+	if (free_envp)
+		free(data);
+	return (0);
+}
 
 t_data	*fill_data(t_data *data, int i)
 {

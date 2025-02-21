@@ -6,45 +6,21 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:08 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 23:07:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	expand_value(char *str, int *i, t_data *data)
+void	ft_echo(t_data *data, char *str)
 {
-	int		len;
-	char	*sub;
-	char	**tmp;
+	int	has_newline;
 
-	len = ft_strcharindex(&str[*i], ' ');
-	sub = ft_substr(str, *i + 1, len - 1);
-	sub = ft_strjoin_free(sub, "=");
-	tmp = grep_var(data->envp, sub);
-	if (tmp)
-	{
-		ft_tabprint(tmp, 0);
-		ft_tabfree(tmp, ft_tablen(tmp));
-	}
-	free(sub);
-	*i += len - 1;
-}
-
-void	ft_echo(t_data *data, char *str, int has_newline, int i)
-{
 	if (!ft_strncmp(str, "-n", 2) && (str[2] == ' ' || str[2] == 0))
-	{
-		i = 2;
 		has_newline = 0;
-	}
-	while (str[++i])
-	{
-		if (str[i] == '$')
-			expand_value(str, &i, data);
-		else
-			write(1, &str[i], 1);
-	}
+	else
+		has_newline = 1;
+	ft_putstr_fd(str, data->out);
 	if (!str || has_newline)
 		ft_putchar_fd('\n', 1);
 }

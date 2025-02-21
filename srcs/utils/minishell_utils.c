@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/20 14:10:22 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 22:51:06 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	update_env(t_list *lst, t_data *data)
 	data->envp[i] = 0;
 }
 
-static void	free_pipes(t_data *data)
+void	free_pipes(t_data *data)
 {
 	int	i;
 
@@ -46,35 +46,6 @@ static void	free_pipes(t_data *data)
 	}
 	free(data->pipes);
 	data->pipes = NULL;
-}
-
-int	free_data(t_data *data, int free_envp)
-{
-	if (data->cmds)
-	{
-		ft_tabfree(data->cmds, ft_tablen(data->cmds));
-		data->cmds = NULL;
-	}
-	if (data->tokens)
-		ft_tokenclear(&data->tokens);
-	if (data->pipes)
-		free_pipes(data);
-	if (data->pids)
-	{
-		free(data->pids);
-		data->pids = NULL;
-	}
-	if (data->input)
-		free(data->input);
-	if (data->list)
-		ft_lstclear(&data->list);
-	if (data->tokens)
-		ft_tokenclear(&data->tokens);
-	if (free_envp && data->envp)
-		ft_tabfree(data->envp, ft_tablen(data->envp));
-	if (free_envp)
-		free(data);
-	return (0);
 }
 
 char	*grep_var_as_string(char **envp, char *to_grep)
