@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 01:06:54 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:10:16 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ static void	set_command_tokens(t_token **tokens)
 	prev = NULL;
 	while (tmp)
 	{
-		if ((!prev && tmp->type == ARG) || (prev && prev->type != ARG
-				&& prev->type != COMMAND))
+		if (tmp->type != PIPE && ((!prev && tmp->type == ARG)
+				|| (prev && prev->type != ARG && prev->type != COMMAND)))
 			tmp->type = COMMAND;
 		prev = tmp;
 		tmp = tmp->next;
@@ -33,21 +33,28 @@ t_token	*get_token(char *str, int *i, int *len, char *tmp)
 {
 	t_TYPE	type;
 	t_token	*new;
+	int		token_len;
+	int		is_allocable;
 
 	type = get_type(str);
 	if (type != PIPE)
 	{
 		while ((is_token(str[*i]) || ft_isspace(str[*i])) && str[*i])
 			*i = *i + 1;
-		*len = get_token_length(&str[*i]);
+		token_len = get_token_length(&str[*i]);
+		*len = token_len;
+		if (!token_len)
+			type = UNDEFINED;
 		tmp = ft_substr(&str[*i], 0, *len);
+		is_allocable = 0;
 	}
 	else
 	{
 		*len = 1;
-		tmp = ft_strdup("|");
+		tmp = "|";
+		is_allocable = 1;
 	}
-	new = ft_newtoken(tmp, type);
+	new = ft_newtoken(tmp, type, is_allocable);
 	return (new);
 }
 
@@ -67,7 +74,7 @@ static int	tokenize(t_token **tokens, char *str)
 	{
 		len = get_token_length(str);
 		tmp = ft_substr(str, 0, len);
-		new = ft_newtoken(tmp, ARG);
+		new = ft_newtoken(tmp, ARG, 1);
 		free(tmp);
 	}
 	if (!*tokens)

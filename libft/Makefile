@@ -54,6 +54,7 @@ SRCS =	ft_atoi.c \
 		ft_split.c \
 		ft_countwords.c \
 		ft_strtrim.c \
+		ft_strquote.c \
 		ft_tablen.c \
 		ft_tabfree.c \
 		ft_tabprint.c \

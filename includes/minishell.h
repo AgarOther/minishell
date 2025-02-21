@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/20 15:57:57 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:06:21 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,16 +53,17 @@ t_data	*fill_data(t_data *data, int i);
 t_data	*setup_data(char **envp);
 void	update_env(t_list *lst, t_data *data);
 t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
-pid_t	forkit(t_data *data, char **cmd);
+pid_t	forkit(t_data *data, char **cmds, char **to_free);
 char	*get_cmd_path(char **envp, char *cmd, int i);
 void	closeall(t_data *data);
 void	free_pipes(t_data *data);
 
 // Tokens
-t_token	*ft_newtoken(char *arg, t_TYPE type);
+t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc);
 void	ft_tokenadd_back(t_token **token, t_token *new);
 void	ft_tokenclear(t_token **token);
 int		ft_tokencount(t_token *tokens, t_TYPE type);
+int		ft_tokensize(t_token *token);
 void	get_tokens(t_data **data);
 int		is_token(char c);
 int		get_token_length(char *str);
@@ -76,6 +77,7 @@ int		split_cmds(t_data *data);
 int		has_valid_input(t_token *tokens);
 t_list	*get_env_as_lst(t_data *data);
 char	*expand_command(t_data *data, char *command, int i, int j);
+int		has_invalid_syntax(t_data *data);
 
 // Debug --------------------------------------------------------------------------------
 void	print_tokens(t_token *tokens);
