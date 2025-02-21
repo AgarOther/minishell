@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:45 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:59:09 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,7 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 		paths[i] = ft_strjoin(paths[i], "/");
 		path = ft_strjoin(paths[i], cmd);
 		if (!access(path, X_OK))
-		{
-			ft_tabfree(&paths[i], ft_tablen(&paths[i]));
 			return (path);
-		}
 		free(path);
 	}
 	free(paths);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 16:24:23 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ int	main(int ac, char **av, char **envp)
 		{
 			get_parsed_input(&data, data->tokens);
 			data = fill_data(data, 0);
-			print_tokens(data->tokens);
+			//print_tokens(data->tokens);
 			if (!split_cmds(data))
 				ft_putendl_fd("Error: Invalid command.", 2);
 		}

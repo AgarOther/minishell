@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:17 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 14:28:12 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_data
 	char	**cmds;
 	char	*input;
 	int		**pipes;
+	int		fd[2];
 	int		in;
 	int		out;
 	int		nb_cmds;

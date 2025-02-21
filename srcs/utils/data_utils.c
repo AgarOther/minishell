@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   data_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:43 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 13:18:59 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_data	*fill_data(t_data *data, int i)
 
 t_data	*setup_data(char **envp)
 {
-	t_data	*data;
+	t_data	*data; 
 
 	data = ft_calloc(sizeof(t_data), 1);
 	data->in = 0;

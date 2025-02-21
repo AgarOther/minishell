@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:33 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:42:11 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,20 @@ int	has_invalid_quotes(char *str)
 	return (count == 0);
 }
 
+void	split_more_cmds(t_data *data, char **cmd, int i)
+{
+	int pid[data->nb_cmds];
+	
+	if (!ft_strcmp(cmd[0], "unset"))
+		ft_unset(data, cmd[1]);
+	else if (!ft_strcmp(cmd[0], "export"))
+		ft_export(data, ft_strdup(cmd[1]));
+	else
+	{
+		pid[i] = forkit(data, data->cmds);
+		waitpid(pid[i], NULL, 0);
+	}
+}
 int	split_cmds(t_data *data)
 {
 	int		i;
@@ -88,18 +102,11 @@ int	split_cmds(t_data *data)
 			ft_tabfree(cmd, ft_tablen(cmd));
 			ft_exit(data);
 		}
-		else if (!ft_strcmp(cmd[0], "unset"))
-			ft_unset(data, cmd[1]);
-		else if (!ft_strcmp(cmd[0], "export"))
-			ft_export(data, ft_strdup(cmd[1]));
 		else
-		{
-			ft_tabfree(cmd, ft_tablen(cmd));
-			return (0);
-		}
-		ft_tabfree(cmd, ft_tablen(cmd));
+			split_more_cmds(data, cmd, i);
 		i++;
 	}
+	ft_tabfree(cmd, ft_tablen(cmd));
 	return (1);
 }
 
