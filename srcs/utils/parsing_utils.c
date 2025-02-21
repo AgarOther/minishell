@@ -3,14 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_utils.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/20 15:42:11 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:55:06 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	has_invalid_syntax(t_data *data)
+{
+	t_token	*tokens;
+	t_token	*prev;
+	int		size;
+
+	tokens = data->tokens;
+	prev = NULL;
+	size = ft_tokensize(tokens);
+	if (size == 1 && tokens->type == PIPE)
+		return (1);
+	while (tokens)
+	{
+		if (tokens->type == UNDEFINED)
+			return (1);
+		else if (!tokens->next && tokens->type == PIPE)
+			return (1);
+		else if (prev && prev->type == tokens->type)
+			return (1);
+		prev = tokens;
+		tokens = tokens->next;
+	}
+	return (0);
+}
 
 int	has_invalid_quotes(char *str)
 {
@@ -37,7 +62,7 @@ int	has_invalid_quotes(char *str)
 		}
 		i++;
 	}
-	return (count == 0);
+	return (count != 0);
 }
 
 void	split_more_cmds(t_data *data, char **cmd, int i)
@@ -50,7 +75,7 @@ void	split_more_cmds(t_data *data, char **cmd, int i)
 		ft_export(data, ft_strdup(cmd[1]));
 	else
 	{
-		pid[i] = forkit(data, data->cmds);
+		pid[i] = forkit(data, data->cmds, cmd);
 		waitpid(pid[i], NULL, 0);
 	}
 }

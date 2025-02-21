@@ -1,29 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_newtoken.c                                      :+:      :+:    :+:   */
+/*   ft_strquote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:17:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 15:06:15 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/21 15:29:02 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/21 15:37:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc)
+char	*ft_strquote(char *str, char quote, int free_str)
 {
-	t_token	*node;
+	char	*new;
+	int		len;
 
-	node = malloc(sizeof(t_token));
-	if (!node)
+	len = ft_strlen(str);
+	new = ft_calloc(len + 3, 1);
+	if (!new)
 		return (NULL);
-	if (need_alloc)
-		node->arg = ft_strdup(arg);
-	else
-		node->arg = arg;
-	node->type = type;
-	node->next = NULL;
-	return (node);
+	new[0] = quote;
+	ft_strlcat(&new[1], str, ft_strlen(&new[1]) + len + 1);
+	new[len + 1] = quote;
+	if (free_str)
+		free(str);
+	return (new);
 }

@@ -23,6 +23,7 @@ SRCS				= 	srcs/main.c \
 						srcs/tokenizer/ft_tokenadd_back.c \
 						srcs/tokenizer/ft_tokenclear.c \
 						srcs/tokenizer/ft_tokencount.c \
+						srcs/tokenizer/ft_tokensize.c \
 						srcs/tokenizer/tokenizer.c \
 						srcs/utils/commands_utils.c \
 						srcs/utils/data_utils.c \

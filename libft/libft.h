@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/18 14:13:52 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:37:08 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int		ft_stroccur(char *str, int c);
 int		ft_strcharindex(char *str, char c);
 int		ft_strstartswith(const char *str, const char *cmp_str);
 int		ft_strcontains(char *s1, char *s2);
+char	*ft_strquote(char *str, char quote, int free_str);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);

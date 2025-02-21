@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:21:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 01:04:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 13:55:35 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,8 @@ static int	get_sep_index(char *str)
 	i = 0;
 	if (!str)
 		return (i);
-	while (str[i])
-	{
-		if (str[i] == '$' || ft_isspace(str[i]))
-			return (i);
+	while (str[i] && (ft_isalnum(str[i]) || str[i] == '_'))
 		i++;
-	}
 	return (i);
 }
 
