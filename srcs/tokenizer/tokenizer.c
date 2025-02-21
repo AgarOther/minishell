@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 15:10:16 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:54:38 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,10 @@ static void	set_command_tokens(t_token **tokens)
 	{
 		if (tmp->type != PIPE && ((!prev && tmp->type == ARG)
 				|| (prev && prev->type != ARG && prev->type != COMMAND)))
-			tmp->type = COMMAND;
+		{
+			if (!prev || (prev && prev->type != tmp->type))
+				tmp->type = COMMAND;
+		}
 		prev = tmp;
 		tmp = tmp->next;
 	}
