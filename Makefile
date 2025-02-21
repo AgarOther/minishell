@@ -27,7 +27,8 @@ SRCS				= 	srcs/main.c \
 						srcs/utils/commands_utils.c \
 						srcs/utils/data_utils.c \
 						srcs/utils/minishell_utils.c \
-						srcs/utils/parsing_utils.c \
+						srcs/utils/parsing_utils.c	\
+						srcs/utils/classic_cmds.c \
 						srcs/utils/tokenizer_utils.c
 
 OBJ_FOLDER			=	objs
