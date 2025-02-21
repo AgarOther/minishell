@@ -3,9 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
+/*   Updated: 2025/02/21 14:28:48 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +23,8 @@ typedef enum e_type
 	INFILE,
 	OUTFILE,
 	HEREDOC,
-	APPENDFILE
+	APPENDFILE,
+	UNDEFINED
 }	t_TYPE;
 
 typedef struct s_token

@@ -1,29 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_newtoken.c                                      :+:      :+:    :+:   */
+/*   ft_tokensize.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 15:17:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 15:06:15 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/21 13:40:25 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/21 13:41:00 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc)
+int	ft_tokensize(t_token *token)
 {
-	t_token	*node;
+	int	count;
 
-	node = malloc(sizeof(t_token));
-	if (!node)
-		return (NULL);
-	if (need_alloc)
-		node->arg = ft_strdup(arg);
-	else
-		node->arg = arg;
-	node->type = type;
-	node->next = NULL;
-	return (node);
+	if (!token)
+		return (0);
+	count = 1;
+	while (token->next)
+	{
+		token = token->next;
+		count++;
+	}
+	return (count);
 }

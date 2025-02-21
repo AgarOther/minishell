@@ -3,20 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   classic_cmds.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/20 16:24:44 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:55:20 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	forkit(t_data *data, char **cmds)
+pid_t	forkit(t_data *data, char **cmds, char **to_free)
 {
 	pid_t	pid;
 	char 	*path;
 	char	**cmd;
+
 	pid = fork();
 	if (pid == 0)
 	{
@@ -32,10 +33,17 @@ pid_t	forkit(t_data *data, char **cmds)
 		//closeall(data);
 		if (!path || execve(path, cmd, data->envp) == -1)
 		{
+			if (path)
+				free(path);
 			ft_tabfree(cmd, ft_tablen(cmd));
+			ft_tabfree(to_free, ft_tablen(to_free));
+			free_data(data, 1);
 			exit(127);
 		}
+		if (path)
+			free(path);
 		ft_tabfree(cmd, ft_tablen(cmd));
+		ft_tabfree(to_free, ft_tablen(to_free));
 	}
 	// close(data->fd[1]);
 	return (pid);

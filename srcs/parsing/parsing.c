@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:20:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/20 23:22:48 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:11:49 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	get_parsed_input(t_data **data, t_token *tokens)
 	int		i;
 
 	(*data)->nb_cmds = ft_tokencount(tokens, COMMAND);
-	(*data)->cmds = ft_calloc((*data)->nb_cmds + 1, sizeof(char *));
+	if ((*data)->nb_cmds)
+		(*data)->cmds = ft_calloc((*data)->nb_cmds + 1, sizeof(char *));
 	if (!(*data)->cmds)
 		return ;
 	tmp = tokens;
