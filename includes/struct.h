@@ -6,7 +6,6 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/20 14:28:12 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,14 +19,10 @@ typedef enum e_type
 	COMMAND,
 	ARG,
 	PIPE,
-	INFILE_NEXT,
 	INFILE,
-	OUTFILE_NEXT,
 	OUTFILE,
 	HEREDOC,
-	HEREDOC_LIMITER,
-	APPEND_NEXT,
-	APPEND
+	APPENDFILE
 }	t_TYPE;
 
 typedef struct s_token

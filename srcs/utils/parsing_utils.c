@@ -12,32 +12,6 @@
 
 #include "minishell.h"
 
-static int	has_invalid_type(t_TYPE type)
-{
-	return (type == PIPE || type == OUTFILE_NEXT
-		|| type == APPEND_NEXT || type == HEREDOC);
-}
-
-int	has_valid_input(t_token *tokens)
-{
-	t_TYPE	type;
-
-	type = tokens->type;
-	if (!tokens || has_invalid_type(type))
-		return (0);
-	while (tokens->next)
-	{
-		if (tokens->next && type == PIPE
-			&& tokens->next->type == PIPE)
-			return (0);
-		tokens = tokens->next;
-		type = tokens->type;
-	}
-	if (has_invalid_type(type) || type == INFILE_NEXT || type == INFILE)
-			return (0);
-	return (1);
-}
-
 int	has_invalid_quotes(char *str)
 {
 	int		i;
@@ -92,7 +66,7 @@ int	split_cmds(t_data *data)
 		if (!ft_strcmp(cmd[0], "cd"))
 			ft_cd(data);
 		else if (!ft_strcmp(cmd[0], "echo"))
-			ft_echo(data, &data->cmds[i][5], 1, -1);
+			ft_echo(data, &data->cmds[i][5]);
 		else if (!ft_strcmp(cmd[0], "env"))
 			ft_env(data);
 		else if (!ft_strcmp(cmd[0], "pwd"))

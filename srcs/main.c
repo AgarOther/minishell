@@ -50,6 +50,7 @@ int	main(int ac, char **av, char **envp)
 			free_data(data, 0);
 			continue ;
 		}
+		data->input = expand_command(data, data->input, 0, 0);
 		get_tokens(&data);
 		if (data->tokens)
 		{

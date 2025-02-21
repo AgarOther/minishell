@@ -16,6 +16,7 @@ SRCS				= 	srcs/main.c \
 						srcs/built-ins/ft_export.c \
 						srcs/built-ins/ft_pwd.c \
 						srcs/built-ins/ft_unset.c \
+						srcs/parsing/expander.c \
 						srcs/parsing/parsing.c \
 						srcs/parsing/ft_list_remove_if.c \
 						srcs/tokenizer/ft_newtoken.c \
@@ -27,7 +28,8 @@ SRCS				= 	srcs/main.c \
 						srcs/utils/data_utils.c \
 						srcs/utils/minishell_utils.c \
 						srcs/utils/parsing_utils.c	\
-						srcs/utils/classic_cmds.c
+						srcs/utils/classic_cmds.c \
+						srcs/utils/tokenizer_utils.c
 
 OBJ_FOLDER			=	objs
 LIB					=	libft/libft.a

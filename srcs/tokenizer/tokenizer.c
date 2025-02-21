@@ -6,175 +6,101 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:13:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 01:06:54 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static t_token	*iterate_input(char **input, int i, int has_piped)
+static void	set_command_tokens(t_token **tokens)
+{
+	t_token	*tmp;
+	t_token	*prev;
+
+	tmp = *tokens;
+	prev = NULL;
+	while (tmp)
+	{
+		if ((!prev && tmp->type == ARG) || (prev && prev->type != ARG
+				&& prev->type != COMMAND))
+			tmp->type = COMMAND;
+		prev = tmp;
+		tmp = tmp->next;
+	}
+}
+
+t_token	*get_token(char *str, int *i, int *len, char *tmp)
+{
+	t_TYPE	type;
+	t_token	*new;
+
+	type = get_type(str);
+	if (type != PIPE)
+	{
+		while ((is_token(str[*i]) || ft_isspace(str[*i])) && str[*i])
+			*i = *i + 1;
+		*len = get_token_length(&str[*i]);
+		tmp = ft_substr(&str[*i], 0, *len);
+	}
+	else
+	{
+		*len = 1;
+		tmp = ft_strdup("|");
+	}
+	new = ft_newtoken(tmp, type);
+	return (new);
+}
+
+static int	tokenize(t_token **tokens, char *str)
 {
 	t_token	*new;
-	t_token	*tokens;
-	int		file_index;
-	int		here_doc;
-	int		append;
+	char	*tmp;
+	int		len;
+	int		i;
 
-	tokens = NULL;
-	file_index = 0;
-	here_doc = 0;
-	append = 0;
-	while (input[++i])
+	i = 0;
+	len = 0;
+	tmp = NULL;
+	if (is_token(str[i]))
+		new = get_token(str, &i, &len, tmp);
+	else
 	{
-		if (!ft_strcmp(input[i], "|"))
-		{
-			has_piped = 1;
-			new = ft_newtoken(input[i], PIPE);
-		}
-		else if (!ft_strcmp(input[i], "<"))
-		{
-			file_index = 1;
-			new = ft_newtoken(input[i], INFILE_NEXT);
-		}
-		else if (file_index == 1)
-		{
-			file_index = 3;
-			new = ft_newtoken(input[i], INFILE);
-		}
-		else if (!ft_strcmp(input[i], ">"))
-		{
-			file_index = 2;
-			new = ft_newtoken(input[i], OUTFILE_NEXT);
-		}
-		else if (file_index == 2)
-		{
-			file_index = 3;
-			new = ft_newtoken(input[i], OUTFILE);
-		}
-		else if (!ft_strcmp(input[i], "<<"))
-		{
-			here_doc = 1;
-			new = ft_newtoken(input[i], HEREDOC);
-		}
-		else if (here_doc == 1)
-		{
-			here_doc = 2;
-			new = ft_newtoken(input[i], HEREDOC_LIMITER);
-		}
-		else if (!ft_strcmp(input[i], ">>"))
-		{
-			append = 1;
-			new = ft_newtoken(input[i], APPEND_NEXT);
-		}
-		else if (append)
-		{
-			append = 0;
-			new = ft_newtoken(input[i], APPEND);
-		}
-		else if (file_index == 3 || !i || has_piped || here_doc == 2)
-		{
-			has_piped = 0;
-			file_index = 0;
-			here_doc = 0;
-			new = ft_newtoken(input[i], COMMAND);
-		}
-		else
-			new = ft_newtoken(input[i], ARG);
-		if (!tokens)
-			tokens = new;
-		else
-			ft_tokenadd_back(&tokens, new);
+		len = get_token_length(str);
+		tmp = ft_substr(str, 0, len);
+		new = ft_newtoken(tmp, ARG);
+		free(tmp);
 	}
-	return (tokens);
-}
-
-static void	iterate_for_spaces(int i, int j, char *src, char *str)
-{
-	int	len;
-
-	len = ft_strlen(src);
-	while (src[i])
-	{
-		if (src[i] == '|')
-		{
-			if (i > 0 && !ft_isspace(src[i - 1]))
-			{
-				str[j] = ' ';
-				j++;
-			}
-		}
-		str[j] = src[i];
-		j++;
-		if (src[i] == '|')
-		{
-			if (i + 1 < len && !ft_isspace(src[i + 1]))
-			{
-				str[j] = ' ';
-				j++;
-			}
-		}
-		i++;
-	}
-}
-
-static char	*add_spaces_to_pipes(char *src, int len)
-{
-	char	*str;
-
-	str = ft_calloc(len + 1, sizeof(char));
-	if (!str)
-		return (NULL);
-	iterate_for_spaces(0, 0, src, str);
-	return (str);
-}
-
-static char	*fix_pipes(char *str, int len, int i)
-{
-	int		spaces_needed;
-	int		is_quoted;
-
-	spaces_needed = 0;
-	is_quoted = 0;
-	while (str[++i])
-	{
-		if ((str[i] == '\'' || str[i] == '\"') && is_quoted)
-			is_quoted = 0;
-		else if ((str[i] == '\'' || str[i] == '\"') && !is_quoted)
-			is_quoted = 1;
-		if (is_quoted)
-			continue ;
-		if (str[i] == '|')
-		{
-			if (i > 0 && !ft_isspace(str[i - 1]))
-				spaces_needed++;
-			if (i + 1 < len && !ft_isspace(str[i + 1]))
-				spaces_needed++;
-		}
-	}
-	if (!spaces_needed)
-		return (str);
-	return (add_spaces_to_pipes(str, len + spaces_needed));
+	if (!*tokens)
+		*tokens = new;
+	else
+		ft_tokenadd_back(tokens, new);
+	return (len + i);
 }
 
 void	get_tokens(t_data **data)
 {
 	t_token	*tokens;
-	char	**input;
+	char	*input;
+	int		i;
+	char	quote;
 
-	(*data)->input = fix_pipes((*data)->input, ft_strlen((*data)->input), -1);
-	input = ft_split((*data)->input, ' ');
-	if (!input)
-		return ;
-	tokens = iterate_input(input, -1, 0);
-	if (!has_valid_input(tokens))
+	input = (*data)->input;
+	quote = 0;
+	tokens = NULL;
+	i = 0;
+	while (input[i])
 	{
-		print_tokens(tokens);
-		ft_putendl_fd("Error: Invalid input.", 2);
-		ft_tokenclear(&tokens);
-		(*data)->cmds = NULL;
-		ft_tabfree(input, ft_tablen(input));
-		return ;
+		if (input[i] == '\'' || input[i] == '\"')
+		{
+			if (!quote)
+				quote = input[i];
+			else if (quote == input[i])
+				quote = 0;
+		}
+		while (input[i] && ft_isspace(input[i]))
+			i++;
+		i += tokenize(&tokens, &input[i]);
 	}
-	ft_tabfree(input, ft_tablen(input));
+	set_command_tokens(&tokens);
 	(*data)->tokens = tokens;
 }

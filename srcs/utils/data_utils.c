@@ -12,6 +12,35 @@
 
 #include "minishell.h"
 
+int	free_data(t_data *data, int free_envp)
+{
+	if (data->cmds)
+	{
+		ft_tabfree(data->cmds, ft_tablen(data->cmds));
+		data->cmds = NULL;
+	}
+	if (data->tokens)
+		ft_tokenclear(&data->tokens);
+	if (data->pipes)
+		free_pipes(data);
+	if (data->pids)
+	{
+		free(data->pids);
+		data->pids = NULL;
+	}
+	if (data->input)
+		free(data->input);
+	if (data->list)
+		ft_lstclear(&data->list);
+	if (data->tokens)
+		ft_tokenclear(&data->tokens);
+	if (free_envp && data->envp)
+		ft_tabfree(data->envp, ft_tablen(data->envp));
+	if (free_envp)
+		free(data);
+	return (0);
+}
+
 t_data	*fill_data(t_data *data, int i)
 {
 	data->nb_cmds = ft_tablen(data->cmds);
