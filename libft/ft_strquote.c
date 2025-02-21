@@ -3,28 +3,35 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strquote.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 15:29:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 15:37:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:36:14 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	*ft_strquote(char *str, char quote, int free_str)
+char	*ft_strquote(char *str, char quote, char index1, char index2)
 {
+	int		i;
 	char	*new;
-	int		len;
-
-	len = ft_strlen(str);
-	new = ft_calloc(len + 3, 1);
+	int		j;
+	
+	i = 0;
+	j = 0;
+	new = ft_calloc(ft_strlen(str) + 3, 1);
 	if (!new)
 		return (NULL);
-	new[0] = quote;
-	ft_strlcat(&new[1], str, ft_strlen(&new[1]) + len + 1);
-	new[len + 1] = quote;
-	if (free_str)
-		free(str);
+	while (str[i])
+	{
+		if (str[i - 1] == index1 || str[i + 1] == index2)
+		{
+			new[j] = quote;
+			j++;
+		}
+		new[j++] = str[i++];
+	}
+	new[j] = 0;
 	return (new);
 }

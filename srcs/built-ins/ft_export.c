@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:04 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 16:34:55 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static void	print_sorted(t_data *data)
 	while (envp)
 	{
 		highest = get_highest(envp);
+		highest->str = ft_strquote(highest->str, '\"', '=', 0);
 		to_add = ft_strjoin("declare -x ", highest->str);
 		if (!sorted)
 			sorted = ft_lstnew(to_add);
@@ -84,8 +85,6 @@ void	ft_export(t_data *data, char *arg)
 
 	if (!arg)
 		return (print_sorted(data));
-	else if (!ft_strchr(arg, '='))
-		return ;
 	else if (ft_strstartswith(arg, "="))
 		return (ft_putendl_fd("Error: Bad assignment.", 2));
 	envp = get_env_as_lst(data);
