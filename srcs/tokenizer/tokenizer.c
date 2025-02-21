@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 01:02:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 01:06:54 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ static int	tokenize(t_token **tokens, char *str)
 		len = get_token_length(str);
 		tmp = ft_substr(str, 0, len);
 		new = ft_newtoken(tmp, ARG);
+		free(tmp);
 	}
 	if (!*tokens)
 		*tokens = new;

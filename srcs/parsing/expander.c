@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:21:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/20 23:54:37 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/21 01:04:51 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,6 @@ static int	get_expanded(t_data *data, char *value, char *new)
 
 	tmp = ft_substr(value, 1, get_sep_index(value + 1));
 	tmp = ft_strjoin_free(tmp, "=");
-	ft_printf("TMP is: %s\n", tmp);
 	if (!tmp)
 		return (0);
 	var = grep_var_as_string(data->envp, tmp);
