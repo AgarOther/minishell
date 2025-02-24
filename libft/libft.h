@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 15:37:08 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:12:25 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ int		ft_tolower(int c);
 int		ft_toupper(int c);
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
+int		ft_intlen(int n);
 int		ft_countwords(const char *str);
 char	*ft_substr(char const *s, unsigned int start, size_t len);
 char	*ft_strjoin(char const *s1, char const *s2);

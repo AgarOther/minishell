@@ -6,26 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 13:35:35 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/09 16:45:47 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:13:32 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-
-static int	ft_intlen(int n)
-{
-	int	len;
-
-	len = 1;
-	if (n < 0)
-		n *= -1;
-	while (n > 9)
-	{
-		n /= 10;
-		len++;
-	}
-	return (len);
-}
 
 static char	*make_str(char *res, int n, int len)
 {
