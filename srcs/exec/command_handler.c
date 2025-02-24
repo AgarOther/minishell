@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 16:05:58 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:07:44 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static void	process_tokens(t_data *data)
 
 void	handle_commands(t_data *data)
 {
-	data->input = expand_command(data, data->input, -1, 0);
+	data->input = expand_command(data, data->input, -1, -1);
 	get_tokens(&data);
 	if (data->tokens && has_invalid_syntax(data))
 	{
