@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 11:51:45 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:05:29 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static t_token	*get_token(char *str, int *i, int *len, char *tmp)
 	{
 		while ((is_token(str[*i]) || ft_isspace(str[*i])) && str[*i])
 			*i = *i + 1;
-		token_len = get_token_length(&str[*i]);
+		token_len = get_token_length(&str[*i], 0);
 		*len = token_len;
 		if (!token_len)
 			type = UNDEFINED;
@@ -62,7 +62,7 @@ static t_token	*get_token(char *str, int *i, int *len, char *tmp)
 	return (new);
 }
 
-static int	tokenize(t_token **tokens, char *str)
+static int	tokenize(t_token **tokens, char *str, int is_quoted)
 {
 	t_token	*new;
 	char	*tmp;
@@ -72,11 +72,11 @@ static int	tokenize(t_token **tokens, char *str)
 	i = 0;
 	len = 0;
 	tmp = NULL;
-	if (is_token(str[i]))
+	if (!is_quoted && is_token(str[i]))
 		new = get_token(str, &i, &len, tmp);
 	else
 	{
-		len = get_token_length(str);
+		len = get_token_length(str, is_quoted);
 		tmp = ft_substr(str, 0, len);
 		new = ft_newtoken(tmp, ARG, 1);
 		free(tmp);
@@ -101,6 +101,8 @@ void	get_tokens(t_data **data)
 	i = 0;
 	while (input[i])
 	{
+		while (input[i] && ft_isspace(input[i]))
+			i++;
 		if (input[i] == '\'' || input[i] == '\"')
 		{
 			if (!quote)
@@ -108,9 +110,7 @@ void	get_tokens(t_data **data)
 			else if (quote == input[i])
 				quote = 0;
 		}
-		while (input[i] && ft_isspace(input[i]))
-			i++;
-		i += tokenize(&tokens, &input[i]);
+		i += tokenize(&tokens, &input[i], quote);
 	}
 	set_command_tokens(&tokens);
 	(*data)->tokens = tokens;

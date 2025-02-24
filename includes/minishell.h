@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 14:57:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:59:55 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		ft_tokencount(t_token *tokens, t_TYPE type);
 int		ft_tokensize(t_token *token);
 void	get_tokens(t_data **data);
 int		is_token(char c);
-int		get_token_length(char *str);
+int		get_token_length(char *str, int is_quoted);
 t_TYPE	get_type(char *str);
 
 // Parsing

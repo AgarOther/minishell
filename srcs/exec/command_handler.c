@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 15:36:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 16:05:58 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	handle_commands(t_data *data)
 	else if (data->tokens)
 	{
 		get_parsed_input(&data, data->tokens);
-		print_tokens(data->tokens);
+		//print_tokens(data->tokens);
 		if (data->nb_cmds)
 		{
 			data = fill_data(data, 0);
