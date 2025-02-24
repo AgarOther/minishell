@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 22:39:59 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:15:38 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,6 @@ int	split_cmds(t_data *data)
 	}
 	ft_tabfree(cmd, ft_tablen(cmd));
 	return (1);
-}
-
-static void	process_tokens(t_data *data)
-{
-	if (!set_file_descriptors(&data))
-		return ;
 }
 
 void	handle_commands(t_data *data)

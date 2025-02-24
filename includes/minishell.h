@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 22:40:03 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:21:43 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ int		set_file_descriptors(t_data **data);
 
 // Execution
 void	handle_commands(t_data *data);
+void	process_tokens(t_data *data);
 
 // Tokens
 t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc);
