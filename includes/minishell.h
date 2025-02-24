@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 15:59:55 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:30:55 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ pid_t	forkit(t_data *data, char **cmds, char **to_free);
 char	*get_cmd_path(char **envp, char *cmd, int i);
 void	closeall(t_data *data);
 void	free_pipes(t_data *data);
+char	*addquotes(char *str);
 
 // File handling
 int		set_file_descriptors(t_data **data);

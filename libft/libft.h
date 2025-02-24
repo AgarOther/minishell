@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 13:12:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:35:21 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 typedef struct s_list
 {
 	char			*str;
+	char			**sptstr;
 	struct s_list	*next;
 }					t_list;
 
@@ -70,7 +71,7 @@ int		ft_stroccur(char *str, int c);
 int		ft_strcharindex(char *str, char c);
 int		ft_strstartswith(const char *str, const char *cmp_str);
 int		ft_strcontains(char *s1, char *s2);
-char	*ft_strquote(char *str, char quote, int free_str);
+char	*ft_strquote(char *str, char quote, char index1, char index2);
 void	ft_putchar_fd(char c, int fd);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putendl_fd(char *s, int fd);
