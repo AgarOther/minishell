@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:21:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 14:43:00 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:39:05 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_sep_index(char *str)
+static int	get_sepindex(char *str)
 {
 	int	i;
 
@@ -27,7 +27,7 @@ static int	get_sep_index(char *str)
 static void	handle_values(int *value, char *var, int *i, char *command)
 {
 	*value += ft_strlen(var);
-	*i = *i + get_sep_index(&command[*i + 1]) - 1;
+	*i = *i + get_sepindex(&command[*i + 1]) - 1;
 }
 
 static int	get_alloc_size(t_data *data, char *command, int i, int value)
@@ -38,12 +38,12 @@ static int	get_alloc_size(t_data *data, char *command, int i, int value)
 	while (command[++i])
 	{
 		if (command[i] == '$' && command[i + 1] && !ft_isspace(command[i + 1]))
-		{                                                                                                                                                                                                  
+		{
 			if (is_exit_code(&command[i]))
 				value += ft_intlen(data->exit_code);
 			else
 			{
-				tmp = ft_substr(&command[i], 1, get_sep_index(&command[i + 1]));
+				tmp = ft_substr(&command[i], 1, get_sepindex(&command[i + 1]));
 				tmp = ft_strjoin_free(tmp, "=");
 				if (tmp)
 				{
@@ -67,7 +67,7 @@ static int	get_expanded(t_data *data, char *value, char *new)
 	int		len;
 
 	is_alloc = 0;
-	tmp = ft_substr(value, 1, get_sep_index(value + 1));
+	tmp = ft_substr(value, 1, get_sepindex(value + 1));
 	tmp = ft_strjoin_free(tmp, "=");
 	if (!tmp)
 		return (0);
@@ -90,26 +90,27 @@ static int	get_expanded(t_data *data, char *value, char *new)
 
 char	*expand_command(t_data *data, char *command, int i, int j)
 {
-	int		is_quoted;
+	int		quotes[2];
 	char	*new;
 
-	is_quoted = 0;
+	quotes[0] = 0;
+	quotes[1] = 0;
 	new = ft_calloc(get_alloc_size(data, command, -1, 0) + 1, 1);
 	if (!new)
 		return (NULL);
-	while (command[i])
+	while (command[++i])
 	{
-		if (command[i] == '\'')
-			is_quoted = !is_quoted;
-		if (!is_quoted && command[i] == '$'
-			&& command[i] && command[i + 1])
+		if (command[i] == '\'' && !quotes[1])
+			quotes[0] = !quotes[0];
+		else if (command[i] == '\"')
+			quotes[1] = !quotes[1];
+		if (!quotes[0] && command[i] == '$' && command[i] && command[i + 1])
 		{
 			j += get_expanded(data, &command[i], new);
-			i += get_sep_index(&command[i + 1]);
+			i += get_sepindex(&command[i + 1]);
 		}
 		else
 			new[j] = command[i];
-		i++;
 		j++;
 	}
 	free(command);
