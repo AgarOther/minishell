@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/22 23:28:48 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:59:42 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,14 @@ int	is_token(char c)
 	return (c == '<' || c == '>' || c == '|');
 }
 
-int	get_token_length(char *str)
+int	get_token_length(char *str, int is_quoted)
 {
 	int	i;
 
 	i = 0;
 	while (str[i])
 	{
-		if (is_token(str[i]) || ft_isspace(str[i]))
+		if ((!is_quoted && is_token(str[i])) || ft_isspace(str[i]))
 			return (i);
 		i++;
 	}

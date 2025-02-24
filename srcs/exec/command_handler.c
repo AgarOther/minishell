@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/22 23:31:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:07:44 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	split_cmds(t_data *data)
 		if (!ft_strcmp(cmd[0], "cd"))
 			ft_cd(data);
 		else if (!ft_strcmp(cmd[0], "echo"))
-			ft_echo(data, &data->cmds[i][5]);
+			ft_echo(&data->cmds[i][5]);
 		else if (!ft_strcmp(cmd[0], "env"))
 			ft_env(data);
 		else if (!ft_strcmp(cmd[0], "pwd"))
@@ -64,7 +64,7 @@ static void	process_tokens(t_data *data)
 
 void	handle_commands(t_data *data)
 {
-	data->input = expand_command(data, data->input, 0, 0);
+	data->input = expand_command(data, data->input, -1, -1);
 	get_tokens(&data);
 	if (data->tokens && has_invalid_syntax(data))
 	{
@@ -75,7 +75,7 @@ void	handle_commands(t_data *data)
 	else if (data->tokens)
 	{
 		get_parsed_input(&data, data->tokens);
-		print_tokens(data->tokens);
+		//print_tokens(data->tokens);
 		if (data->nb_cmds)
 		{
 			data = fill_data(data, 0);

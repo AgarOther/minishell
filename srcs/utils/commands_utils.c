@@ -18,7 +18,7 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 	char	*path;
 
 	if (!access (cmd, X_OK))
-		return (cmd);
+		return (ft_strdup(cmd));
 	while (envp[++i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)

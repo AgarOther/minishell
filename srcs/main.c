@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/22 23:29:26 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 15:49:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **envp)
 		data->input = readline(PROMPT);
 		if (!data->input)
 			break ;
-		else if (!data->input[0])
+		else if (!data->input[0] || ft_isfilled(data->input, ' ', NULL))
 			continue ;
 		add_history(data->input);
 		if (has_invalid_quotes(data->input))

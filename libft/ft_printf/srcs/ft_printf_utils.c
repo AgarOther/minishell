@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/11 21:15:43 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/16 18:40:35 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 13:11:31 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,15 +67,6 @@ int	print_conversion(const char *str, va_list arg)
 		val += ft_putchar('%');
 	return (val);
 }
-
-/*int	is_corrupted(const char *str)
-{
-	if (!str || (ft_strlen(str) == 1 && str[0] == '%'))
-		return (1);
-	if (!is_conversion(str) && str[0] == '%')
-		return (1);
-	return (0);
-}*/
 
 int	is_corrupted(const char *str)
 {
