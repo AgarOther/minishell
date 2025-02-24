@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 13:04:26 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:18:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	close_fd(t_data *data)
+void	close_fd(t_data *data)
 {
 	if (data->in > 1)
 		close(data->in);
@@ -23,11 +23,8 @@ static void	close_fd(t_data *data)
 void	free_data(t_data *data, int free_envp)
 {
 	close_fd(data);
-	if (data->cmds)
-	{
-		ft_tabfree(data->cmds, ft_tablen(data->cmds));
-		data->cmds = NULL;
-	}
+	if (data->out_tmp > 1)
+		close(data->out_tmp);
 	if (data->tokens)
 		ft_tokenclear(&data->tokens);
 	if (data->pipes)
@@ -51,7 +48,6 @@ void	free_data(t_data *data, int free_envp)
 
 t_data	*fill_data(t_data *data, int i)
 {
-	data->nb_cmds = ft_tablen(data->cmds);
 	data->pids = ft_calloc(sizeof(pid_t), data->nb_cmds + 1);
 	if (!data->pids)
 	{
