@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/24 15:49:13 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:01:25 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 pid_t	forkit(t_data *data, char **cmds, char **to_free)
 {
 	pid_t	pid;
-	char 	*path;
+	char	*path;
 	char	**cmd;
 
 	pid = fork();
