@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/11 15:21:40 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:05:50 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/22 22:58:32 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 int	ft_tokencount(t_token *tokens, t_TYPE type)
 {
-	int	nb_cmds;
+	int	count;
 
-	nb_cmds = 0;
+	count = 0;
 	while (tokens)
 	{
 		if (tokens->type == type)
-			nb_cmds++;
+			count++;
 		tokens = tokens->next;
 	}
-	return (nb_cmds);
+	return (count);
 }

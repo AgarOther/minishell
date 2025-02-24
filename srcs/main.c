@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 15:37:21 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/22 23:29:26 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-void	signal_handler(int sig)
+static void	signal_handler(int sig)
 {
 	(void) sig;
 	ft_putchar_fd('\n', 1);
@@ -21,7 +21,7 @@ void	signal_handler(int sig)
 	rl_redisplay();
 }
 
-void	intercept_signals(void)
+static void	intercept_signals(void)
 {
 	signal(SIGQUIT, SIG_IGN);
 	signal(SIGINT, signal_handler);
@@ -50,25 +50,7 @@ int	main(int ac, char **av, char **envp)
 			free_data(data, 0);
 			continue ;
 		}
-		data->input = expand_command(data, data->input, 0, 0);
-		get_tokens(&data);
-		if (data->tokens && has_invalid_syntax(data))
-		{
-			print_tokens(data->tokens);
-			ft_putendl_fd("Error: Invalid syntax.", 2);
-			data->cmds = NULL;
-		}
-		else if (data->tokens)
-		{
-			get_parsed_input(&data, data->tokens);
-			print_tokens(data->tokens);
-			if (data->nb_cmds)
-			{
-				data = fill_data(data, 0);
-				if (!split_cmds(data))
-					ft_putendl_fd("Error: Invalid command.", 2);
-			}
-		}
+		handle_commands(data);
 		free_data(data, 0);
 	}
 	free_data(data, 1);
