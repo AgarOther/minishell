@@ -6,11 +6,38 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 01:01:31 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/22 23:28:48 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+t_list	*ft_list_remove_if(char *var, t_list *current, int free_var)
+{
+	t_list	*head;
+	t_list	*prev;
+
+	head = current;
+	prev = NULL;
+	while (current)
+	{
+		if (!ft_strncmp(var, current->str, ft_strcharindex(current->str, '=')))
+		{
+			if (prev == NULL)
+				head = current->next;
+			else
+				prev->next = current->next;
+			free(current->str);
+			free(current);
+			break ;
+		}
+		prev = current;
+		current = current->next;
+	}
+	if (free_var)
+		free(var);
+	return (head);
+}
 
 int	is_token(char c)
 {

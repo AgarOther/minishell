@@ -16,9 +16,11 @@ SRCS				= 	srcs/main.c \
 						srcs/built-ins/ft_export.c \
 						srcs/built-ins/ft_pwd.c \
 						srcs/built-ins/ft_unset.c \
+						srcs/exec/classic_cmds.c \
+						srcs/exec/command_handler.c \
 						srcs/parsing/expander.c \
+						srcs/parsing/file_handler.c \
 						srcs/parsing/parsing.c \
-						srcs/parsing/ft_list_remove_if.c \
 						srcs/tokenizer/ft_newtoken.c \
 						srcs/tokenizer/ft_tokenadd_back.c \
 						srcs/tokenizer/ft_tokenclear.c \
@@ -28,8 +30,7 @@ SRCS				= 	srcs/main.c \
 						srcs/utils/commands_utils.c \
 						srcs/utils/data_utils.c \
 						srcs/utils/minishell_utils.c \
-						srcs/utils/parsing_utils.c	\
-						srcs/utils/classic_cmds.c \
+						srcs/utils/parsing_utils.c \
 						srcs/utils/tokenizer_utils.c
 
 OBJ_FOLDER			=	objs
@@ -48,7 +49,7 @@ LIGHT_GREEN			=	\033[1;32m
 RESET				=	\033[0m
 
 # Custom messages
-EXE_DONE			=	@echo "🎉$(PURPLE) $(NAME) compiled! 🎉$(RESET)\n"
+EXE_DONE			=	@echo "$(PURPLE)🎉 $(NAME) compiled! 🎉$(RESET)\n"
 ALL_CLEAN			=	@echo "🧹$(LIGHT_GREEN) Project's objects cleaned! 🧹$(RESET)\n"
 ALL_FCLEAN			=	@echo "🧹$(LIGHT_GREEN) Project's objects & Executables cleaned! 🧹$(RESET)\n"
 
@@ -80,12 +81,12 @@ libft :
 	fi
 
 clean :
-	$(MAKE) clean -C ./libft
+	make clean -C ./libft
 	@rm -rf $(OBJ_FOLDER)
 	$(ALL_CLEAN)
 
 fclean :
-	$(MAKE) fclean -C ./libft
+	make fclean -C ./libft
 	@rm -f $(NAME)
 	@rm -f $(NAME_BONUS)
 	@rm -rf $(OBJ_FOLDER)

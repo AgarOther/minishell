@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 15:06:21 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/22 23:25:32 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // Defines
-# define PROMPT "minicraquotte> "
+# define PROMPT "\033[35;1mmini\033[34;49mcraquotte> \033[0m"
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -48,7 +48,7 @@ void	ft_export(t_data *data, char *arg);
 // Utils
 char	**grep_var(char **envp, char *to_grep);
 char	*grep_var_as_string(char **envp, char *to_grep);
-int		free_data(t_data *data, int free_envp);
+void	free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data, int i);
 t_data	*setup_data(char **envp);
 void	update_env(t_list *lst, t_data *data);
@@ -57,6 +57,12 @@ pid_t	forkit(t_data *data, char **cmds, char **to_free);
 char	*get_cmd_path(char **envp, char *cmd, int i);
 void	closeall(t_data *data);
 void	free_pipes(t_data *data);
+
+// File handling
+int		set_file_descriptors(t_data **data);
+
+// Execution
+void	handle_commands(t_data *data);
 
 // Tokens
 t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc);
@@ -71,10 +77,8 @@ t_TYPE	get_type(char *str);
 
 // Parsing
 int		has_invalid_quotes(char *str);
-int		is_starting_with_sep(char *str);
 void	get_parsed_input(t_data **data, t_token *tokens);
 int		split_cmds(t_data *data);
-int		has_valid_input(t_token *tokens);
 t_list	*get_env_as_lst(t_data *data);
 char	*expand_command(t_data *data, char *command, int i, int j);
 int		has_invalid_syntax(t_data *data);
