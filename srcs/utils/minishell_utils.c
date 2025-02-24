@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/24 12:58:28 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:25:25 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ void	free_pipes(t_data *data)
 		free(data->pipes[i]);
 	}
 	free(data->pipes);
-	data->pipes = NULL;
 }
 
 char	*grep_var_as_string(char **envp, char *to_grep)

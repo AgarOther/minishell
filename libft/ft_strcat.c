@@ -1,20 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_exit.c                                          :+:      :+:    :+:   */
+/*   ft_strcat.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 13:14:58 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 23:27:14 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/24 22:46:36 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/24 22:48:43 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_exit(t_data *data, char **cmd)
+char	*ft_strcat(char *dst, char *src)
 {
-	ft_tabfree(cmd, ft_tablen(cmd));
-	free_data(data, 1);
-	exit(0);
+	int	i;
+	int	j;
+
+	if (!src)
+		return (dst);
+	i = 0;
+	j = ft_strlen(dst);
+	while (src[i])
+	{
+		dst[j] = src[i];
+		j++;
+		i++;
+	}
+	dst[j] = 0;
+	return (dst);
 }

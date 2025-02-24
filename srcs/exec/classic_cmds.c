@@ -6,44 +6,37 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/24 15:49:13 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:24:29 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-pid_t	forkit(t_data *data, char **cmds, char **to_free)
+pid_t	forkit(t_data *data, char **cmd, char *to_free)
 {
 	pid_t	pid;
-	char 	*path;
-	char	**cmd;
+	char	*path;
 
 	pid = fork();
 	if (pid == 0)
 	{
-		cmd = ft_split(cmds[0], ' ');
+		if (dup2(data->in, STDIN_FILENO) == -1 ||
+				dup2(data->out, STDOUT_FILENO) == -1)
+			return (1);
+		close_fd(data);
+		close(data->out_tmp);
+		free(to_free);
+		free_pipes(data);
 		path = get_cmd_path(data->envp, cmd[0], -1);
 		if (!path || execve(path, cmd, data->envp) == -1)
 		{
 			if (path)
 				free(path);
 			ft_tabfree(cmd, ft_tablen(cmd));
-			ft_tabfree(to_free, ft_tablen(to_free));
 			free_data(data, 1);
 			exit(127);
 		}
 	}
+	close_fd(data);
 	return (pid);
-}
-
-void	closeall(t_data *data)
-{
-	if (data->fd[0])
-		close(data->fd[0]);
-	if (data->fd[1])
-		close(data->fd[1]);
-	if (data->in != -1)
-		close(data->in);
-	if (data->out != -1)
-		close(data->out);
 }

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 15:03:01 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 23:00:33 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@ void	ft_echo(char *str)
 		has_newline = 0;
 	else
 		has_newline = 1;
-	i = 0;
+	i = -1;
 	quote = 0;
-	while (str[i])
+	while (str[++i])
 	{
 		if ((!quote && (str[i] == '\'' || str[i] == '\"'))
 			|| (quote && str[i] == quote))
@@ -36,7 +36,6 @@ void	ft_echo(char *str)
 		}
 		else
 			write(1, &str[i], 1);
-		i++;
 	}
 	if (!str || has_newline)
 		ft_putchar_fd('\n', 1);
