@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 17:07:44 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 22:39:59 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	handle_commands(t_data *data)
 		{
 			data = fill_data(data, 0);
 			if (!split_cmds(data))
-				ft_putendl_fd("Error: Invalid command.", 2);
+				ft_putstr_fd("Error: Invalid command:", 2);
 		}
 	}
 	process_tokens(data);
