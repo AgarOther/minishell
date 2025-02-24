@@ -6,11 +6,21 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/22 23:35:26 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:06:05 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_exit_code(char *str)
+{
+	if (!ft_strlencmp(str, "$?", 0))
+		return (1);
+	else if (!ft_strncmp(str, "$?", 2)
+		&& (str[2] == '$' || ft_isspace(str[2])))
+		return (1);
+	return (0);
+}
 
 int	has_invalid_syntax(t_data *data)
 {

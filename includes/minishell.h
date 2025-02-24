@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/22 23:25:32 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:06:16 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define MINISHELL_H
 
 // Defines
-# define PROMPT "\033[35;1mmini\033[34;49mcraquotte> \033[0m"
+# define PROMPT "minishlel> "
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -82,6 +82,7 @@ int		split_cmds(t_data *data);
 t_list	*get_env_as_lst(t_data *data);
 char	*expand_command(t_data *data, char *command, int i, int j);
 int		has_invalid_syntax(t_data *data);
+int		is_exit_code(char *str);
 
 // Debug --------------------------------------------------------------------------------
 void	print_tokens(t_token *tokens);

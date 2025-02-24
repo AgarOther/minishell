@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/22 23:37:20 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 11:51:45 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	set_command_tokens(t_token **tokens)
 	}
 }
 
-t_token	*get_token(char *str, int *i, int *len, char *tmp)
+static t_token	*get_token(char *str, int *i, int *len, char *tmp)
 {
 	t_TYPE	type;
 	t_token	*new;
