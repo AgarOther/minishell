@@ -3,14 +3,38 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:04 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:33:10 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_lstprint_export(t_list *lst)
+{
+	t_list	*tmp;
+	char	*to_sub;
+
+	tmp = lst;
+	while (tmp)
+	{
+		to_sub = ft_substr(&tmp->str[ft_strcharindex(tmp->str, '=')], 2,
+				ft_strlen(&tmp->str[ft_strcharindex(tmp->str, '=')]));
+		tmp->sptstr = ft_split(tmp->str, '=');
+		free(tmp->str);
+		tmp->str = ft_strjoin("declare -x ", tmp->sptstr[0]);
+		to_sub = addquotes(to_sub);
+		tmp->str = ft_strjoin_free(tmp->str, "=");
+		tmp->str = ft_strjoin_free(tmp->str, to_sub);
+		tmp->str = ft_strjoin_free(tmp->str, "\"");
+		ft_putendl_fd(tmp->str, 1);
+		ft_tabfree(tmp->sptstr, ft_tablen(tmp->sptstr));
+		free(to_sub);
+		tmp = tmp->next;
+	}
+}
 
 static t_list	*get_highest(t_list *envp)
 {
@@ -43,14 +67,14 @@ static void	print_sorted(t_data *data)
 	while (envp)
 	{
 		highest = get_highest(envp);
-		to_add = ft_strjoin("declare -x ", highest->str);
+		to_add = ft_strdup(highest->str);
 		if (!sorted)
 			sorted = ft_lstnew(to_add);
 		else
 			ft_lstadd_back(&sorted, ft_lstnew(to_add));
 		envp = ft_list_remove_if(highest->str, envp, 0);
 	}
-	ft_lstprint(sorted, 1);
+	ft_lstprint_export(sorted);
 	ft_lstclear(&sorted);
 	ft_lstclear(&envp);
 }
@@ -84,8 +108,6 @@ void	ft_export(t_data *data, char *arg)
 
 	if (!arg)
 		return (print_sorted(data));
-	else if (!ft_strchr(arg, '='))
-		return ;
 	else if (ft_strstartswith(arg, "="))
 		return (ft_putendl_fd("Error: Bad assignment.", 2));
 	envp = get_env_as_lst(data);

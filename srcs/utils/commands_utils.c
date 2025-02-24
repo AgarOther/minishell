@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 15:52:10 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/24 17:29:45 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,23 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 	if (paths)
 		ft_tabfree(paths, i);
 	return (NULL);
+}
+
+char	*addquotes(char *str)
+{
+	char	*cpy;
+	int		i;
+	int 	j;
+	
+	i = 0;
+	j = 1;
+	if (!str)
+		return (NULL);
+	cpy = malloc(ft_strlen(str) + 3);
+	cpy[0] = 34;
+	while (str[i])
+		cpy[j++] = str[i++];
+	cpy[j] = 0;
+	free(str);
+	return (cpy);
 }
