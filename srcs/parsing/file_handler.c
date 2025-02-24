@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 13:17:27 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 00:13:19 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	set_appendfile(t_data **data)
 		}
 		tokens = tokens->next;
 	}
+	(*data)->out_tmp = (*data)->out;
 	return (1);
 }
 
@@ -61,6 +62,7 @@ static int	set_outfile(t_data **data)
 		}
 		tokens = tokens->next;
 	}
+	(*data)->out_tmp = (*data)->out;
 	return (1);
 }
 
@@ -93,6 +95,7 @@ int	set_file_descriptors(t_data **data)
 {
 	(*data)->in = 0;
 	(*data)->out = 1;
+	(*data)->out_tmp = 1;
 	if (!set_infile(data))
 	{
 		ft_putendl_fd("Error: Invalid infile.", 2);
