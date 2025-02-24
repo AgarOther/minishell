@@ -6,7 +6,7 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/21 16:33:47 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/24 14:35:21 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 typedef struct s_list
 {
 	char			*str;
+	char			**sptstr;
 	struct s_list	*next;
 }					t_list;
 
