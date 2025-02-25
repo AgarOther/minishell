@@ -6,33 +6,37 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 00:21:28 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:44:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	set_pipes(t_data **data, int cmd_count)
+static void	set_pipes(t_data **data, char **cmd, char *raw_cmd)
 {
 	if ((*data)->nb_cmds < 2)
-		return ;
-	else if (cmd_count == 0)
-		(*data)->out = (*data)->pipes[0][1];
-	else if (cmd_count < (*data)->nb_cmds - 1)
 	{
-		(*data)->in = (*data)->pipes[cmd_count][0];
-		(*data)->out = (*data)->pipes[cmd_count + 1][1];
+		(*data)->pids[(*data)->cmd_count] = forkit(*data, cmd, raw_cmd);
+		return ;
+	}
+	else if ((*data)->cmd_count == 0)
+		(*data)->out = (*data)->pipes[0][1];
+	else if ((*data)->cmd_count < (*data)->nb_cmds - 1)
+	{
+		(*data)->in = (*data)->pipes[(*data)->cmd_count - 1][0];
+		(*data)->out = (*data)->pipes[(*data)->cmd_count][1];
 	}
 	else
 	{
-		(*data)->in = (*data)->pipes[cmd_count - 1][0];
+		(*data)->in = (*data)->pipes[(*data)->cmd_count - 1][0];
 		(*data)->out = (*data)->out_tmp;
 	}
+	(*data)->pids[(*data)->cmd_count] = forkit(*data, cmd, raw_cmd);
+	(*data)->cmd_count++;
 }
 
 static int	execute_command(t_data *data, char *raw_cmd)
 {
-	static int	cmd_count = 0;
 	char		**cmd;
 
 	cmd = ft_split(raw_cmd, ' ');
@@ -51,10 +55,7 @@ static int	execute_command(t_data *data, char *raw_cmd)
 	else if (!ft_strcmp(cmd[0], "export"))
 		ft_export(data, ft_strdup(cmd[1]));
 	else
-	{
-		set_pipes(&data, cmd_count);
-		data->pids[cmd_count++] = forkit(data, cmd, raw_cmd);
-	}
+		set_pipes(&data, cmd, raw_cmd);
 	ft_tabfree(cmd, ft_tablen(cmd));
 	return (1);
 }
@@ -68,7 +69,7 @@ static char	*construct_command(t_token *tokens)
 	while (tokens)
 	{
 		if (tokens->type == PIPE || tokens->type == APPENDFILE
-				|| tokens->type == OUTFILE)
+			|| tokens->type == OUTFILE)
 			return (command);
 		else
 			command = ft_strjoin_free(command, " ");

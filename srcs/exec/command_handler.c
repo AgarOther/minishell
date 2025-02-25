@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 23:48:09 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:44:14 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@ void	handle_commands(t_data *data)
 	else if (data->tokens)
 	{
 		data->nb_cmds = ft_tokencount(data->tokens, COMMAND);
-		//print_tokens(data->tokens);
+		data->cmd_count = 0;
 		if (data->nb_cmds)
 		{
-			data = fill_data(data, 0);
+			data = fill_data(data);
 			process_tokens(&data);
 		}
 	}

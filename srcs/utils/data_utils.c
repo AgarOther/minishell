@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 00:18:40 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:32:00 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,14 @@
 
 void	close_fd(t_data *data)
 {
-	if (data->in > 1)
-		close(data->in);
-	if (data->out > 1)
-		close(data->out);
+	safe_close(data->in);
+	safe_close(data->out);
 }
 
 void	free_data(t_data *data, int free_envp)
 {
 	close_fd(data);
-	if (data->out_tmp > 1)
-		close(data->out_tmp);
+	safe_close(data->out_tmp);
 	if (data->tokens)
 		ft_tokenclear(&data->tokens);
 	if (data->pipes)
@@ -46,9 +43,12 @@ void	free_data(t_data *data, int free_envp)
 		free(data);
 }
 
-t_data	*fill_data(t_data *data, int i)
+t_data	*fill_data(t_data *data)
 {
-	data->pids = ft_calloc(sizeof(pid_t), data->nb_cmds + 1);
+	int	i;
+
+	i = 0;
+	data->pids = ft_calloc(sizeof(pid_t), data->nb_cmds);
 	if (!data->pids)
 	{
 		free_data(data, 0);
@@ -60,7 +60,12 @@ t_data	*fill_data(t_data *data, int i)
 		while (i < data->nb_cmds - 1)
 		{
 			data->pipes[i] = malloc(sizeof(int) * 2);
-			pipe(data->pipes[i]);
+			if (pipe(data->pipes[i]) == -1)
+			{
+				ft_putendl_fd("Error opening pipes. Aborting.", 2);
+				ft_tabfree((char **)data->pipes, i);
+				return (NULL);
+			}
 			i++;
 		}
 	}

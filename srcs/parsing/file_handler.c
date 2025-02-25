@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 00:13:19 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:32:38 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ static int	set_appendfile(t_data **data)
 	{
 		if (tokens->type == APPENDFILE)
 		{
-			if ((*data)->out > 1)
-				close((*data)->out);
+			safe_close((*data)->out);
 			(*data)->out = open(tokens->arg,
 					O_WRONLY | O_APPEND | O_CREAT, 0777);
 		}
@@ -50,8 +49,7 @@ static int	set_outfile(t_data **data)
 	{
 		if (tokens->type == OUTFILE)
 		{
-			if ((*data)->out > 1)
-				close((*data)->out);
+			safe_close((*data)->out);
 			(*data)->out = open(tokens->arg,
 					O_WRONLY | O_TRUNC | O_CREAT, 0777);
 		}
@@ -77,8 +75,7 @@ static int	set_infile(t_data **data)
 	{
 		if (tokens->type == INFILE)
 		{
-			if ((*data)->in > 0)
-				close((*data)->in);
+			safe_close((*data)->in);
 			(*data)->in = open(tokens->arg, O_RDONLY);
 		}
 		if ((*data)->in == -1)
