@@ -6,27 +6,36 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 14:32:38 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:12:31 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	set_appendfile(t_data **data)
+static void	handle_outfiles(t_token *tokens, t_data **data, t_TYPE type)
+{
+	int	o_flags;
+
+	safe_close((*data)->out);
+	if (type == OUTFILE)
+		o_flags = O_WRONLY | O_TRUNC | O_CREAT;
+	else
+		o_flags = O_WRONLY | O_APPEND | O_CREAT;
+	(*data)->out = open(tokens->arg, o_flags, 0777);
+}
+
+int	set_outfile(t_data **data)
 {
 	t_token	*tokens;
 
 	tokens = (*data)->tokens;
-	if (ft_tokencount(tokens, APPENDFILE) == 0)
+	if (ft_tokencount(tokens, OUTFILE) == 0
+		&& ft_tokencount(tokens, APPENDFILE) == 0)
 		return (1);
 	while (tokens)
 	{
-		if (tokens->type == APPENDFILE)
-		{
-			safe_close((*data)->out);
-			(*data)->out = open(tokens->arg,
-					O_WRONLY | O_APPEND | O_CREAT, 0777);
-		}
+		if (tokens->type == OUTFILE || tokens->type == APPENDFILE)
+			handle_outfiles(tokens, data, tokens->type);
 		if ((*data)->out == -1)
 		{
 			(*data)->exit_code = 1;
@@ -38,75 +47,58 @@ static int	set_appendfile(t_data **data)
 	return (1);
 }
 
-static int	set_outfile(t_data **data)
+static void	ft_heredoc(char *limiter, t_data **data)
 {
-	t_token	*tokens;
+	char	*str;
+	int		tmp_fd;
 
-	tokens = (*data)->tokens;
-	if (ft_tokencount(tokens, OUTFILE) == 0)
-		return (1);
-	while (tokens)
+	str = NULL;
+	ft_putstr_fd("> ", 1);
+	tmp_fd = open(TMP_FILEPATH, O_CREAT | O_WRONLY | O_TRUNC, 0777);
+	if (tmp_fd < 0)
+		exit(-1);
+	while (1)
 	{
-		if (tokens->type == OUTFILE)
-		{
-			safe_close((*data)->out);
-			(*data)->out = open(tokens->arg,
-					O_WRONLY | O_TRUNC | O_CREAT, 0777);
-		}
-		if ((*data)->out == -1)
-		{
-			(*data)->exit_code = 1;
-			return (0);
-		}
-		tokens = tokens->next;
+		if (str)
+			ft_putstr_fd("> ", 1);
+		str = get_next_line(1);
+		if (ft_strlencmp(str, limiter, 1) == 0)
+			break ;
+		write(tmp_fd, str, ft_strlen(str));
+		free(str);
 	}
-	(*data)->out_tmp = (*data)->out;
-	return (1);
+	free(str);
+	close(tmp_fd);
+	(*data)->in = open(TMP_FILEPATH, O_RDONLY);
 }
 
-static int	set_infile(t_data **data)
+static void	handle_infiles(t_token *tokens, t_data **data, t_TYPE type)
+{
+	safe_close((*data)->in);
+	if (type == HEREDOC)
+		ft_heredoc(tokens->arg, data);
+	else
+		(*data)->in = open(tokens->arg, O_RDONLY);
+}
+
+int	set_infile(t_data **data)
 {
 	t_token	*tokens;
 
 	tokens = (*data)->tokens;
-	if (ft_tokencount(tokens, INFILE) == 0)
+	if (ft_tokencount(tokens, INFILE) == 0
+		&& ft_tokencount(tokens, HEREDOC) == 0)
 		return (1);
 	while (tokens)
 	{
-		if (tokens->type == INFILE)
-		{
-			safe_close((*data)->in);
-			(*data)->in = open(tokens->arg, O_RDONLY);
-		}
+		if (tokens->type == INFILE || tokens->type == HEREDOC)
+			handle_infiles(tokens, data, tokens->type);
 		if ((*data)->in == -1)
 		{
 			(*data)->exit_code = 1;
 			return (0);
 		}
 		tokens = tokens->next;
-	}
-	return (1);
-}
-
-int	set_file_descriptors(t_data **data)
-{
-	(*data)->in = 0;
-	(*data)->out = 1;
-	(*data)->out_tmp = 1;
-	if (!set_infile(data))
-	{
-		ft_putendl_fd("Error: Invalid infile.", 2);
-		return (0);
-	}
-	else if (!set_outfile(data))
-	{
-		ft_putendl_fd("Error: Invalid outfile.", 2);
-		return (0);
-	}
-	else if (!set_appendfile(data))
-	{
-		ft_putendl_fd("Error: Invalid append outfile.", 2);
-		return (0);
 	}
 	return (1);
 }
