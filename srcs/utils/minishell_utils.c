@@ -6,11 +6,17 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/25 00:25:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:31:21 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	safe_close(int fd)
+{
+	if (fd > 1)
+		close(fd);
+}
 
 void	update_env(t_list *lst, t_data *data)
 {
@@ -36,6 +42,8 @@ void	free_pipes(t_data *data)
 	int	i;
 
 	i = -1;
+	if (!data->pipes)
+		return ;
 	while (++i < data->nb_cmds - 1)
 	{
 		if (data->pipes[i][0] >= 0)
@@ -45,6 +53,7 @@ void	free_pipes(t_data *data)
 		free(data->pipes[i]);
 	}
 	free(data->pipes);
+	data->pipes = NULL;
 }
 
 char	*grep_var_as_string(char **envp, char *to_grep)
