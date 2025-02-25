@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 14:31:30 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 14:58:12 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 // Defines
 # define PROMPT "minishlel> "
+# define TMP_FILEPATH "/tmp/.minishlel"
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -62,6 +63,8 @@ void	safe_close(int fd);
 
 // File handling
 int		set_file_descriptors(t_data **data);
+int		set_outfile(t_data **data);
+int		set_infile(t_data **data);
 
 // Execution
 void	handle_commands(t_data *data);
