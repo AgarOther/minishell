@@ -6,7 +6,7 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 17:33:10 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/02/25 15:11:14 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,22 @@ void	ft_lstprint_export(t_list *lst)
 		to_sub = ft_substr(&tmp->str[ft_strcharindex(tmp->str, '=')], 2,
 				ft_strlen(&tmp->str[ft_strcharindex(tmp->str, '=')]));
 		tmp->sptstr = ft_split(tmp->str, '=');
+		if (!tmp->sptstr[1])
+		{
+			if (ft_strchr(tmp->str, '='))
+			{
+				tmp->str = ft_strjoin_free(tmp->str, "=");
+				tmp->str = ft_strjoin_free(tmp->str, "\"");
+				tmp->str = ft_strjoin_free(tmp->str, "\"");
+			}
+			free(tmp->str);
+			tmp->str = ft_strjoin("declare -x ", tmp->sptstr[0]);
+			ft_putendl_fd(tmp->str, 1);
+			ft_tabfree(tmp->sptstr, ft_tablen(tmp->sptstr));
+			free(to_sub);
+			tmp = tmp->next;
+			continue ;
+		}
 		free(tmp->str);
 		tmp->str = ft_strjoin("declare -x ", tmp->sptstr[0]);
 		to_sub = addquotes(to_sub);
