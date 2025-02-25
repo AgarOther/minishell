@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 15:12:31 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/25 16:04:37 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,7 @@ int	set_outfile(t_data **data)
 	t_token	*tokens;
 
 	tokens = (*data)->tokens;
-	if (ft_tokencount(tokens, OUTFILE) == 0
-		&& ft_tokencount(tokens, APPENDFILE) == 0)
+	if (!ft_tokencount(tokens, OUTFILE) && !ft_tokencount(tokens, APPENDFILE))
 		return (1);
 	while (tokens)
 	{
@@ -86,8 +85,7 @@ int	set_infile(t_data **data)
 	t_token	*tokens;
 
 	tokens = (*data)->tokens;
-	if (ft_tokencount(tokens, INFILE) == 0
-		&& ft_tokencount(tokens, HEREDOC) == 0)
+	if (!ft_tokencount(tokens, INFILE) && !ft_tokencount(tokens, HEREDOC))
 		return (1);
 	while (tokens)
 	{
