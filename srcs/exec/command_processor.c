@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 14:44:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:48:25 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,30 +32,17 @@ static void	set_pipes(t_data **data, char **cmd, char *raw_cmd)
 		(*data)->out = (*data)->out_tmp;
 	}
 	(*data)->pids[(*data)->cmd_count] = forkit(*data, cmd, raw_cmd);
-	(*data)->cmd_count++;
 }
 
 static int	execute_command(t_data *data, char *raw_cmd)
 {
 	char		**cmd;
-
+	
 	cmd = ft_split(raw_cmd, ' ');
-	if (!ft_strcmp(cmd[0], "cd"))
-		ft_cd(data);
-	else if (!ft_strcmp(cmd[0], "echo"))
-		ft_echo(&raw_cmd[5]);
-	else if (!ft_strcmp(cmd[0], "env"))
-		ft_env(data);
-	else if (!ft_strcmp(cmd[0], "pwd"))
-		ft_pwd(data);
-	else if (!ft_strcmp(cmd[0], "exit"))
+	if (!ft_strcmp(cmd[0], "exit"))
 		ft_exit(data, cmd);
-	else if (!ft_strcmp(cmd[0], "unset"))
-		ft_unset(data, cmd[1]);
-	else if (!ft_strcmp(cmd[0], "export"))
-		ft_export(data, ft_strdup(cmd[1]));
-	else
-		set_pipes(&data, cmd, raw_cmd);
+	set_pipes(&data, cmd, raw_cmd);
+	data->cmd_count++;
 	ft_tabfree(cmd, ft_tablen(cmd));
 	return (1);
 }
@@ -85,9 +72,14 @@ static int	wait_children(t_data *data)
 	int	status;
 
 	i = 0;
+	status = 0;
 	while (i < data->nb_cmds)
-		waitpid(data->pids[i++], &status, 0);
-	return (status);
+	{
+		if (data->pids[i])
+			waitpid(data->pids[i], &status, 0);
+		i++;
+	}
+	return (get_error_code(status));
 }
 
 void	process_tokens(t_data **data)

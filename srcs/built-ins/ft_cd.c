@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:45:07 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:50:52 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_chdir(t_data *data, char *path)
 		return (-1);
 	retval = chdir(var[0]);
 	if (retval == -1)
-		ft_putendl_fd("ah oui ok d'accord", 2);
+		ft_putendl_fd("Error: Not a file.", 2);
 	ft_tabfree(var, ft_tablen(var));
 	return (retval);
 }
@@ -74,7 +74,7 @@ void	cd_goto(t_data *data, char *pwd)
 			pwd = ft_strcrop(pwd, 1);
 		if (chdir(tmp))
 		{
-			ft_putendl_fd("ah oui ok d'accord", 2);
+			ft_putendl_fd("Error: Not a file.", 2);
 			free_vars(args, tmp, pwd);
 			return ;
 		}
