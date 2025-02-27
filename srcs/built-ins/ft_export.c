@@ -23,6 +23,22 @@ void	ft_lstprint_export(t_list *lst)
 		to_sub = ft_substr(&tmp->str[ft_strcharindex(tmp->str, '=')], 2,
 				ft_strlen(&tmp->str[ft_strcharindex(tmp->str, '=')]));
 		tmp->sptstr = ft_split(tmp->str, '=');
+		if (!tmp->sptstr[1])
+		{
+			if (ft_strchr(tmp->str, '='))
+			{
+				tmp->str = ft_strjoin_free(tmp->str, "=");
+				tmp->str = ft_strjoin_free(tmp->str, "\"");
+				tmp->str = ft_strjoin_free(tmp->str, "\"");
+			}
+			free(tmp->str);
+			tmp->str = ft_strjoin("declare -x ", tmp->sptstr[0]);
+			ft_putendl_fd(tmp->str, 1);
+			ft_tabfree(tmp->sptstr, ft_tablen(tmp->sptstr));
+			free(to_sub);
+			tmp = tmp->next;
+			continue ;
+		}
 		free(tmp->str);
 		tmp->str = ft_strjoin("declare -x ", tmp->sptstr[0]);
 		to_sub = addquotes(to_sub);

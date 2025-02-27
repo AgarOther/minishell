@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   commands_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
 /*   Updated: 2025/02/27 15:48:30 by scraeyme         ###   ########.fr       */
@@ -69,4 +69,21 @@ char	*addquotes(char *str)
 	cpy[j] = 0;
 	free(str);
 	return (cpy);
+}
+
+int	is_char_wl(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] != '\'' || str[i] != '_' || !ft_isalpha(str[i]))
+			return (0);
+		if (str[i] != '\'' || str[i] != '_' || !ft_isalnum(str[i]))
+			return (0);
+		else
+			i++;
+	}
+	return (1);
 }
