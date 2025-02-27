@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 16:06:29 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:48:36 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,12 +54,13 @@ t_data	*fill_data(t_data *data);
 t_data	*setup_data(char **envp);
 void	update_env(t_list *lst, t_data *data);
 t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
-pid_t	forkit(t_data *data, char **cmds, char *to_free);
+pid_t	forkit(t_data *data, char **cmds, char *raw_cmd);
 char	*get_cmd_path(char **envp, char *cmd, int i);
 void	free_pipes(t_data *data);
 char	*addquotes(char *str);
 void	close_fd(t_data *data);
 void	safe_close(int fd);
+int		get_error_code(int status);
 
 // File handling
 int		set_file_descriptors(t_data **data);

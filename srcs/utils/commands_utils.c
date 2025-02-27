@@ -6,11 +6,22 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 00:03:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/27 15:48:30 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	get_error_code(int status)
+{
+	if (WIFSIGNALED(status))
+		return (WTERMSIG(status));
+	else if (WIFEXITED(status))
+		return (WEXITSTATUS(status));
+	else if (WIFSTOPPED(status))
+		return (WSTOPSIG(status));
+	return (0);
+}
 
 char	*get_cmd_path(char **envp, char *cmd, int i)
 {
@@ -37,7 +48,7 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 		free(path);
 	}
 	if (paths)
-		ft_tabfree(paths, i);
+		ft_tabfree(paths, ft_tablen(paths));
 	return (NULL);
 }
 

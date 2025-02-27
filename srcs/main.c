@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/25 16:03:03 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/27 14:27:20 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,5 @@ int	main(int ac, char **av, char **envp)
 		free_data(data, 0);
 	}
 	free_data(data, 1);
+	return (data->exit_code);
 }
