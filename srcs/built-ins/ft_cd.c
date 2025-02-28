@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 17:00:44 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:05:47 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,14 +37,14 @@ static void	change_env(t_data *data, char *env, char *new)
 	}
 }
 
-void	ft_cd(t_data *data, char **cmd)
+void	ft_cd(t_data *data, char **cmd, char *pwd)
 {
 	int		len;
 	char	*old_pwd;
-	char	*pwd;
+	char	*path;
 
 	len = ft_tablen(cmd);
-	pwd = NULL;
+	path = delete_quotes(cmd[1]);
 	if (len < 2)
 		return ;
 	else if (len > 2)
@@ -53,11 +53,13 @@ void	ft_cd(t_data *data, char **cmd)
 		return ;
 	}
 	old_pwd = grep_var_as_string(data->envp, "PWD=");
-	if (chdir(cmd[1]) == -1)
+	if (chdir(path) == -1)
 	{
+		free(path);
 		ft_strerror(&data, 1, NO_SUCH_FILE_DIR);
 		return ;
 	}
+	free(path);
 	change_env(data, "OLDPWD=", old_pwd);
 	pwd = getcwd(pwd, 255);
 	if (pwd)
