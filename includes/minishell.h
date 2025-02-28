@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 12:02:10 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:58:21 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define NOT_A_DIR "Error: Not a directory."
 # define DIR_NOT_FOUND "Error: Directory not found."
 # define BAD_ASSIGNMENT "Error: Bad assignment."
+# define NO_SUCH_FILE_DIR "Error: No such file or directory."
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -50,9 +51,9 @@
 # include "struct.h"
 
 // Built-ins
-void	ft_echo(char *str);
+void	ft_echo(t_data **data, char *str, int i);
 int		ft_pwd(t_data *data);
-void	ft_cd(t_data *data);
+void	ft_cd(t_data *data, char **cmd);
 void	ft_env(t_data *data);
 void	ft_exit(t_data **data, char **cmd);
 void	ft_unset(t_data *data, char *var);

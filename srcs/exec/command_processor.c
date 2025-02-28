@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 12:07:40 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 16:53:35 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,15 +38,27 @@ static int	execute_command(t_data *data, char *raw_cmd)
 {
 	char		**cmd;
 	
-	cmd = ft_split(raw_cmd, ' ');
+	cmd = ft_split_quote(raw_cmd, ' ');
 	if (!ft_strcmp(cmd[0], "exit"))
 	{
+		free(raw_cmd);
 		ft_exit(&data, cmd);
+	}
+	else if (!ft_strcmp(cmd[0], "cd"))
+		ft_cd(data, cmd);
+	else if (!ft_strcmp(cmd[0], "unset"))
+		ft_unset(data, cmd[1]);
+	else if (!ft_strcmp(cmd[0], "export"))
+		ft_export(data, ft_strdup(cmd[1]));
+	else
+	{
+		set_pipes(&data, cmd, raw_cmd);
+		data->cmd_count++;
+		ft_tabfree(cmd, ft_tablen(cmd));
+		free(raw_cmd);
 		return (1);
 	}
-	set_pipes(&data, cmd, raw_cmd);
-	data->cmd_count++;
-	ft_tabfree(cmd, ft_tablen(cmd));
+	free(raw_cmd);
 	return (1);
 }
 
@@ -102,7 +114,6 @@ void	process_tokens(t_data **data)
 		{
 			cmd = construct_command(tokens);
 			execute_command((*data), cmd);
-			free(cmd);
 			while (tokens && tokens->type != PIPE && tokens->type != APPENDFILE
 				&& tokens->type != OUTFILE)
 				tokens = tokens->next;
