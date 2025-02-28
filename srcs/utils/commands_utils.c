@@ -6,11 +6,18 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/27 15:48:30 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:22:32 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	ft_strerror(t_data **data, int error, char *msg)
+{
+	if (!(*data)->outfile_err)
+		(*data)->exit_code = error;
+	ft_putendl_fd(msg, 2);
+}
 
 int	get_error_code(int status)
 {

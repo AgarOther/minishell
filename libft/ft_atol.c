@@ -1,31 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/28 11:15:18 by scraeyme         ###   ########.fr       */
+/*   Created: 2024/10/08 09:18:55 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/28 11:59:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_unset(t_data *data, char *var)
+long long	ft_atol(const char *nptr)
 {
-	t_list		*current;
+	int			i;
+	long long	res;
+	long long	neg;
 
-	if (!var)
-		return ;
-	else if (!ft_stralnum(var))
+	i = 0;
+	res = 0;
+	neg = 1;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
+		i++;
+	if (nptr[i] == '+' || nptr[i] == '-')
 	{
-		ft_putendl_fd(INVALID_PARAM, 2);
-		return ;
+		if (nptr[i] == '-')
+			neg = -1;
+		i++;
 	}
-	var = ft_strjoin(var, "=");
-	current = get_env_as_lst(data);
-	current = ft_list_remove_if(var, current, 1);
-	update_env(current, data);
-	ft_lstclear(&current);
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		res = res * 10 + nptr[i] - '0';
+		i++;
+	}
+	res *= neg;
+	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/27 15:48:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 12:07:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ static int	execute_command(t_data *data, char *raw_cmd)
 	
 	cmd = ft_split(raw_cmd, ' ');
 	if (!ft_strcmp(cmd[0], "exit"))
-		ft_exit(data, cmd);
+	{
+		ft_exit(&data, cmd);
+		return (1);
+	}
 	set_pipes(&data, cmd, raw_cmd);
 	data->cmd_count++;
 	ft_tabfree(cmd, ft_tablen(cmd));
@@ -75,10 +78,13 @@ static int	wait_children(t_data *data)
 	status = 0;
 	while (i < data->nb_cmds)
 	{
-		if (data->pids[i])
-			waitpid(data->pids[i], &status, 0);
+		if (!data->pids[i])
+			return (data->exit_code);
+		waitpid(data->pids[i], &status, 0);
 		i++;
 	}
+	if (data->outfile_err)
+		return (1);
 	return (get_error_code(status));
 }
 

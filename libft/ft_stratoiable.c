@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_stratoiable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/28 11:15:18 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/28 11:03:38 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/28 11:55:49 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-void	ft_unset(t_data *data, char *var)
+int	ft_stratoiable(char *str)
 {
-	t_list		*current;
+	int	i;
 
-	if (!var)
-		return ;
-	else if (!ft_stralnum(var))
+	i = 0;
+	while (str[i])
 	{
-		ft_putendl_fd(INVALID_PARAM, 2);
-		return ;
+		while (ft_isspace(str[i]))
+			i++;
+		if (!ft_isdigit(str[i]) && str[i] != '+' && str[i] != '-')
+			return (0);
+		i++;
 	}
-	var = ft_strjoin(var, "=");
-	current = get_env_as_lst(data);
-	current = ft_list_remove_if(var, current, 1);
-	update_env(current, data);
-	ft_lstclear(&current);
+	return (1);
 }
