@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 16:53:35 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 17:05:16 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ static int	execute_command(t_data *data, char *raw_cmd)
 		ft_exit(&data, cmd);
 	}
 	else if (!ft_strcmp(cmd[0], "cd"))
-		ft_cd(data, cmd);
+		ft_cd(data, cmd, NULL);
 	else if (!ft_strcmp(cmd[0], "unset"))
 		ft_unset(data, cmd[1]);
 	else if (!ft_strcmp(cmd[0], "export"))
