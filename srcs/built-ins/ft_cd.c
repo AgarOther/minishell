@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:45:07 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:14:53 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	ft_chdir(t_data *data, char *path)
 		return (-1);
 	retval = chdir(var[0]);
 	if (retval == -1)
-		ft_putendl_fd("ah oui ok d'accord", 2);
+		ft_putendl_fd(NOT_A_DIR, 2);
 	ft_tabfree(var, ft_tablen(var));
 	return (retval);
 }
@@ -65,6 +65,8 @@ void	cd_goto(t_data *data, char *pwd)
 	char	*tmp;
 
 	args = ft_split(data->input, ' ');
+	if (ft_tablen(args) > 2)
+		return (ft_strerror(&data, 1, TOO_MANY_ARGS));
 	pwd = ft_strjoin_free(ft_strdup(pwd), "/");
 	tmp = ft_strjoin(pwd, args[1]);
 	if (!access(tmp, F_OK))
@@ -74,14 +76,14 @@ void	cd_goto(t_data *data, char *pwd)
 			pwd = ft_strcrop(pwd, 1);
 		if (chdir(tmp))
 		{
-			ft_putendl_fd("ah oui ok d'accord", 2);
+			ft_putendl_fd(NOT_A_DIR, 2);
 			free_vars(args, tmp, pwd);
 			return ;
 		}
 		change_env(data, "PWD=", pwd);
 	}
 	else
-		ft_putendl_fd("Error: Directory doesn't exist.", 2);
+		return (ft_strerror(&data, 1, DIR_NOT_FOUND));
 	free_vars(args, tmp, pwd);
 }
 

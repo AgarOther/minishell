@@ -1,24 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_stratoiable.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 17:32:59 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/27 15:09:31 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/28 11:03:38 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/28 11:55:49 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_pwd(t_data *data)
+int	ft_stratoiable(char *str)
 {
 	int	i;
 
 	i = 0;
-	while (data->envp[i] && ft_strncmp(data->envp[i], "PWD=", 4))
+	while (str[i])
+	{
+		while (ft_isspace(str[i]))
+			i++;
+		if (!ft_isdigit(str[i]) && str[i] != '+' && str[i] != '-')
+			return (0);
 		i++;
-	ft_putendl_fd(&data->envp[i][4], 1);
-	return (0);
+	}
+	return (1);
 }

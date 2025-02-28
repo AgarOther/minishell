@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/19 17:06:01 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:15:18 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_unset(t_data *data, char *var)
 		return ;
 	else if (!ft_stralnum(var))
 	{
-		ft_putendl_fd("Error: Invalid parameter name.", 2);
+		ft_putendl_fd(INVALID_PARAM, 2);
 		return ;
 	}
 	var = ft_strjoin(var, "=");

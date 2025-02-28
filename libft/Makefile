@@ -5,6 +5,7 @@ CFLAGS = -Wall -Wextra -Werror -g
 NAME = libft.a
 
 SRCS =	ft_atoi.c \
+		ft_atol.c \
 		ft_bzero.c \
 		ft_hasdigit.c \
 		ft_isalnum.c \
@@ -49,6 +50,7 @@ SRCS =	ft_atoi.c \
 		ft_strstartswith.c \
 		ft_strcontains.c \
 		ft_strcrop.c \
+		ft_stratoiable.c \
 		ft_realloc.c \
 		ft_memcmp.c \
 		ft_calloc.c \

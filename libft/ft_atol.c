@@ -1,24 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_atol.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 17:32:59 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/27 15:09:31 by scraeyme         ###   ########.fr       */
+/*   Created: 2024/10/08 09:18:55 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/28 11:59:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "libft.h"
 
-int	ft_pwd(t_data *data)
+long long	ft_atol(const char *nptr)
 {
-	int	i;
+	int			i;
+	long long	res;
+	long long	neg;
 
 	i = 0;
-	while (data->envp[i] && ft_strncmp(data->envp[i], "PWD=", 4))
+	res = 0;
+	neg = 1;
+	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
 		i++;
-	ft_putendl_fd(&data->envp[i][4], 1);
-	return (0);
+	if (nptr[i] == '+' || nptr[i] == '-')
+	{
+		if (nptr[i] == '-')
+			neg = -1;
+		i++;
+	}
+	while (nptr[i] >= '0' && nptr[i] <= '9')
+	{
+		res = res * 10 + nptr[i] - '0';
+		i++;
+	}
+	res *= neg;
+	return (res);
 }

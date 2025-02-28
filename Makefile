@@ -16,7 +16,7 @@ SRCS				= 	srcs/main.c \
 						srcs/built-ins/ft_export.c \
 						srcs/built-ins/ft_pwd.c \
 						srcs/built-ins/ft_unset.c \
-						srcs/exec/classic_cmds.c \
+						srcs/exec/command_executor.c \
 						srcs/exec/command_handler.c \
 						srcs/exec/command_processor.c \
 						srcs/parsing/expander.c \
