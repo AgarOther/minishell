@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/27 15:24:45 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 11:15:12 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	ft_export(t_data *data, char *arg)
 	if (!arg)
 		return (print_sorted(data));
 	else if (ft_strstartswith(arg, "="))
-		return (ft_putendl_fd("Error: Bad assignment.", 2));
+		return (ft_putendl_fd(BAD_ASSIGNMENT, 2));
 	envp = get_env_as_lst(data);
 	sign_index = ft_strcharindex(arg, '=');
 	to_grep = ft_substr(arg, 0, sign_index);

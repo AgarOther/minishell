@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/25 13:47:39 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/02/28 10:13:15 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ typedef struct s_data
 	int		nb_cmds;
 	int		exit_code;
 	int		cmd_count;
+	int		outfile_err;
 	pid_t	*pids;
 	t_list	*list;
 	t_token	*tokens;
