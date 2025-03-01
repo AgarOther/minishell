@@ -21,6 +21,7 @@ SRCS				= 	srcs/main.c \
 						srcs/exec/command_processor.c \
 						srcs/parsing/expander.c \
 						srcs/parsing/file_handler.c \
+						srcs/parsing/ft_heredoc.c \
 						srcs/tokenizer/ft_newtoken.c \
 						srcs/tokenizer/ft_tokenadd_back.c \
 						srcs/tokenizer/ft_tokenclear.c \
