@@ -5,29 +5,14 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/10 13:45:07 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/28 11:14:53 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/02/28 17:05:47 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	ft_chdir(t_data *data, char *path)
-{
-	char	**var;
-	int		retval;
-
-	var = grep_var(data->envp, path);
-	if (!var)
-		return (-1);
-	retval = chdir(var[0]);
-	if (retval == -1)
-		ft_putendl_fd(NOT_A_DIR, 2);
-	ft_tabfree(var, ft_tablen(var));
-	return (retval);
-}
-
-void	change_env(t_data *data, char *env, char *new)
+static void	change_env(t_data *data, char *env, char *new)
 {
 	int		i;
 	int		j;
@@ -52,66 +37,31 @@ void	change_env(t_data *data, char *env, char *new)
 	}
 }
 
-static void	free_vars(char **args, char *tmp, char *pwd)
+void	ft_cd(t_data *data, char **cmd, char *pwd)
 {
-	ft_tabfree(args, ft_tablen(args));
-	free(tmp);
-	free(pwd);
-}
-
-void	cd_goto(t_data *data, char *pwd)
-{
-	char	**args;
-	char	*tmp;
-
-	args = ft_split(data->input, ' ');
-	if (ft_tablen(args) > 2)
-		return (ft_strerror(&data, 1, TOO_MANY_ARGS));
-	pwd = ft_strjoin_free(ft_strdup(pwd), "/");
-	tmp = ft_strjoin(pwd, args[1]);
-	if (!access(tmp, F_OK))
-	{
-		pwd = ft_strjoin_free(pwd, args[1]);
-		if (pwd[ft_strlen(pwd) - 1] == '/')
-			pwd = ft_strcrop(pwd, 1);
-		if (chdir(tmp))
-		{
-			ft_putendl_fd(NOT_A_DIR, 2);
-			free_vars(args, tmp, pwd);
-			return ;
-		}
-		change_env(data, "PWD=", pwd);
-	}
-	else
-		return (ft_strerror(&data, 1, DIR_NOT_FOUND));
-	free_vars(args, tmp, pwd);
-}
-
-void	ft_cd(t_data *data)
-{
-	char	**tab;
-	char	*pwd;
 	int		len;
-	char	*oldpwd;
+	char	*old_pwd;
+	char	*path;
 
-	tab = grep_var(data->envp, "PWD=");
-	pwd = tab[0];
-	oldpwd = pwd;
-	change_env(data, "OLDPWD=", oldpwd);
-	if (ft_strlencmp(data->input, "cd ..", 0) == 0)
+	len = ft_tablen(cmd);
+	path = delete_quotes(cmd[1]);
+	if (len < 2)
+		return ;
+	else if (len > 2)
 	{
-		len = ft_strlen(pwd) - 1;
-		while (len >= 0 && pwd[len] != '/')
-			len--;
-		pwd = ft_substr(pwd, 0, len);
-		if (!pwd || !pwd[0])
-			change_env(data, "PWD=", "/");
-		else
-			change_env(data, "PWD=", pwd);
-		ft_chdir(data, "PWD=");
-		free(pwd);
+		ft_strerror(&data, 1, TOO_MANY_ARGS);
+		return ;
 	}
-	else
-		cd_goto(data, pwd);
-	ft_tabfree(tab, ft_tablen(tab));
+	old_pwd = grep_var_as_string(data->envp, "PWD=");
+	if (chdir(path) == -1)
+	{
+		free(path);
+		ft_strerror(&data, 1, NO_SUCH_FILE_DIR);
+		return ;
+	}
+	free(path);
+	change_env(data, "OLDPWD=", old_pwd);
+	pwd = getcwd(pwd, 255);
+	if (pwd)
+		change_env(data, "PWD=", pwd);
 }

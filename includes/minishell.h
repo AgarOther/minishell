@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 12:02:10 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:37:12 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define NOT_A_DIR "Error: Not a directory."
 # define DIR_NOT_FOUND "Error: Directory not found."
 # define BAD_ASSIGNMENT "Error: Bad assignment."
+# define NO_SUCH_FILE_DIR "Error: No such file or directory."
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -50,9 +51,9 @@
 # include "struct.h"
 
 // Built-ins
-void	ft_echo(char *str);
+void	ft_echo(t_data **data, char *str, int i);
 int		ft_pwd(t_data *data);
-void	ft_cd(t_data *data);
+void	ft_cd(t_data *data, char **cmd, char *pwd);
 void	ft_env(t_data *data);
 void	ft_exit(t_data **data, char **cmd);
 void	ft_unset(t_data *data, char *var);
@@ -84,12 +85,13 @@ t_list	*get_env_as_lst(t_data *data);
 int		has_invalid_syntax(t_data *data);
 
 // Utils - Tokenizer
+char	*get_tmp_filepath(int cmd_count);
 t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
 
 // File handling
-int		set_file_descriptors(t_data **data);
-int		set_outfile(t_data **data);
-int		set_infile(t_data **data);
+int		set_file_descriptors(t_data **data, t_token *tokens);
+int		set_outfile(t_data **data, t_token *tokens);
+int		set_infile(t_data **data, t_token *tokens);
 
 // Execution
 void	handle_commands(t_data *data);
@@ -109,6 +111,7 @@ t_TYPE	get_type(char *str);
 
 // Parsing
 char	*expand_command(t_data *data, char *command, int i, int j);
+void	ft_heredoc(char *limiter, t_data **data);
 
 // Debug --------------------------------------------------------------------------------
 void	print_tokens(t_token *tokens);
