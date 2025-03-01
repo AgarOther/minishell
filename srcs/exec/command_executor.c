@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/02/28 16:58:56 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:52:17 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,19 @@ static int	global_free(t_data *data)
 	return (1);
 }
 
+static char	**delete_cmd_quotes(char **cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		cmd[i] = delete_quotes(cmd[i]);
+		i++;
+	}
+	return (cmd);
+}
+
 pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 {
 	pid_t	pid;
@@ -61,14 +74,17 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 	if (pid == 0)
 	{
 		if (dup2(data->in, STDIN_FILENO) == -1
-		|| dup2(data->out, STDOUT_FILENO) == -1)
-		return (global_free(data));
+			|| dup2(data->out, STDOUT_FILENO) == -1)
+			return (global_free(data));
 		path = get_cmd_path(data->envp, cmd[0], -1);
 		global_free(data);
+		cmd = delete_cmd_quotes(cmd);
 		if (ft_execve(path, cmd, data, raw_cmd) == -1)
 		{
 			if (path)
 				free(path);
+			ft_putstr_fd("Error: Command failed to execute: ", 2);
+			ft_putendl_fd(cmd[0], 2);
 			ft_tabfree(cmd, ft_tablen(cmd));
 			free_data(data, 1);
 			exit(127);

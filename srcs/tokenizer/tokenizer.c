@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 16:05:29 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 18:46:59 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,12 @@ static void	set_command_tokens(t_token **tokens)
 				|| (prev && prev->type != ARG && prev->type != COMMAND)))
 		{
 			if (tmp->type != INFILE && tmp->type != OUTFILE
-				&& tmp->type != APPENDFILE)
-				tmp->type = COMMAND;
+				&& tmp->type != APPENDFILE && tmp->type != HEREDOC)
+			{
+				if (!prev || (prev && prev->type != INFILE
+					&& prev->type != HEREDOC))
+					tmp->type = COMMAND;
+			}
 		}
 		prev = tmp;
 		tmp = tmp->next;
