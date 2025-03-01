@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:21:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 12:04:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 22:28:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static int	get_expanded(t_data *data, char *value, char *new)
 	else
 		var = grep_var_as_string(data->envp, tmp);
 	if (!var)
-		return (0);
+		return (-1);
 	free(tmp);
 	new = ft_strcat(new, var);
 	if (exit_code && var)

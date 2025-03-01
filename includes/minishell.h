@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 18:37:12 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 22:32:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define DIR_NOT_FOUND "Error: Directory not found."
 # define BAD_ASSIGNMENT "Error: Bad assignment."
 # define NO_SUCH_FILE_DIR "Error: No such file or directory."
+# define INVALID_IDENTIFIER "Error: Not a valid identifier."
+# define IS_DIR "Error: Is a directory."
+# define PERM_DENIED "Error: Permission denied."
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -41,6 +44,7 @@
 # include <readline/history.h>
 # include <signal.h>
 # include <limits.h>
+# include <dirent.h>
 
 // Includes Project
 # include "../libft/libft.h"
@@ -78,6 +82,9 @@ void	free_pipes(t_data *data);
 char	*grep_var_as_string(char **envp, char *to_grep);
 char	**grep_var(char **envp, char *to_grep);
 
+// Utils - Misc
+int		is_directory(char *path);
+
 // Utils - Parsing
 char	*delete_quotes(char *str);
 int		has_invalid_quotes(char *str);
@@ -90,13 +97,12 @@ t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
 
 // File handling
 int		set_file_descriptors(t_data **data, t_token *tokens);
-int		set_outfile(t_data **data, t_token *tokens);
-int		set_infile(t_data **data, t_token *tokens);
 
 // Execution
 void	handle_commands(t_data *data);
 void	process_tokens(t_data **data);
 pid_t	forkit(t_data *data, char **cmds, char *raw_cmd);
+int		ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd);
 
 // Tokens
 t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc);
@@ -106,7 +112,7 @@ int		ft_tokencount(t_token *tokens, t_TYPE type);
 int		ft_tokensize(t_token *token);
 void	get_tokens(t_data **data);
 int		is_token(char c);
-int		get_token_length(char *str, int is_quoted);
+int		get_token_length(char *str);
 t_TYPE	get_type(char *str);
 
 // Parsing

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 19:01:52 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 22:33:39 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	set_command_tokens(t_token **tokens)
 		{
 			if (tmp->type != INFILE && tmp->type != OUTFILE
 				&& tmp->type != APPENDFILE && tmp->type != HEREDOC)
-					tmp->type = COMMAND;
+				tmp->type = COMMAND;
 		}
 		prev = tmp;
 		tmp = tmp->next;
@@ -45,7 +45,7 @@ static t_token	*get_token(char *str, int *i, int *len, char *tmp)
 	{
 		while ((is_token(str[*i]) || ft_isspace(str[*i])) && str[*i])
 			*i = *i + 1;
-		token_len = get_token_length(&str[*i], 0);
+		token_len = get_token_length(&str[*i]);
 		*len = token_len;
 		if (!token_len)
 			type = UNDEFINED;
@@ -76,7 +76,7 @@ static int	tokenize(t_token **tokens, char *str, int is_quoted)
 		new = get_token(str, &i, &len, tmp);
 	else
 	{
-		len = get_token_length(str, is_quoted);
+		len = get_token_length(str);
 		tmp = ft_substr(str, 0, len);
 		new = ft_newtoken(tmp, ARG, 1);
 		free(tmp);
