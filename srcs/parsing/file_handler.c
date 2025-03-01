@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 18:36:43 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 22:31:16 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ static void	handle_outfiles(t_token *tokens, t_data **data, t_TYPE type)
 {
 	int	o_flags;
 
+	tokens->arg = delete_quotes(tokens->arg);
 	safe_close((*data)->out);
 	if (type == OUTFILE)
 		o_flags = O_WRONLY | O_TRUNC | O_CREAT;
@@ -24,7 +25,7 @@ static void	handle_outfiles(t_token *tokens, t_data **data, t_TYPE type)
 	(*data)->out = open(tokens->arg, o_flags, 0777);
 }
 
-int	set_outfile(t_data **data, t_token *tokens)
+static int	set_outfile(t_data **data, t_token *tokens)
 {
 	if (!ft_tokencount(tokens, OUTFILE) && !ft_tokencount(tokens, APPENDFILE))
 		return (1);
@@ -46,6 +47,7 @@ int	set_outfile(t_data **data, t_token *tokens)
 
 static void	handle_infiles(t_token *tokens, t_data **data, t_TYPE type)
 {
+	tokens->arg = delete_quotes(tokens->arg);
 	safe_close((*data)->in);
 	if (type == HEREDOC)
 		ft_heredoc(tokens->arg, data);
@@ -53,7 +55,7 @@ static void	handle_infiles(t_token *tokens, t_data **data, t_TYPE type)
 		(*data)->in = open(tokens->arg, O_RDONLY);
 }
 
-int	set_infile(t_data **data, t_token *tokens)
+static int	set_infile(t_data **data, t_token *tokens)
 {
 	if (!ft_tokencount(tokens, INFILE) && !ft_tokencount(tokens, HEREDOC))
 		return (1);
@@ -67,6 +69,21 @@ int	set_infile(t_data **data, t_token *tokens)
 			return (0);
 		}
 		tokens = tokens->next;
+	}
+	return (1);
+}
+
+int	set_file_descriptors(t_data **data, t_token *tokens)
+{
+	if (!set_infile(data, tokens))
+	{
+		ft_putendl_fd(INVALID_INFILE, 2);
+		return (0);
+	}
+	else if (!set_outfile(data, tokens))
+	{
+		ft_putendl_fd(INVALID_OUTFILE, 2);
+		return (0);
 	}
 	return (1);
 }

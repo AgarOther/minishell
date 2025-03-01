@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 11:15:12 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 21:03:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,10 @@ void	ft_export(t_data *data, char *arg)
 	if (!arg)
 		return (print_sorted(data));
 	else if (ft_strstartswith(arg, "="))
-		return (ft_putendl_fd(BAD_ASSIGNMENT, 2));
+		return (ft_strerror(&data, 1, BAD_ASSIGNMENT));
+	else if ((arg[0] && !ft_isalpha(arg[0]))
+		|| arg[ft_strcharindex(arg, '=')] == '-')
+		return (ft_strerror(&data, 1, INVALID_IDENTIFIER));
 	envp = get_env_as_lst(data);
 	sign_index = ft_strcharindex(arg, '=');
 	to_grep = ft_substr(arg, 0, sign_index);

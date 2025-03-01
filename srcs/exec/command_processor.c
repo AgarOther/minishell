@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 18:45:48 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 20:52:00 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,10 +42,7 @@ static int	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 
 	cmd = ft_split_quote(raw_cmd, ' ');
 	if (!ft_strcmp(cmd[0], "exit"))
-	{
-		free(raw_cmd);
 		ft_exit(&data, cmd);
-	}
 	else if (!ft_strcmp(cmd[0], "cd"))
 		ft_cd(data, cmd, NULL);
 	else if (!ft_strcmp(cmd[0], "unset"))

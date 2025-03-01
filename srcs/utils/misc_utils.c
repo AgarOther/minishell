@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strcharindex.c                                  :+:      :+:    :+:   */
+/*   misc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/24 14:49:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 21:04:06 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/03/01 22:01:41 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/03/01 22:05:48 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "minishell.h"
 
-int	ft_strcharindex(char *str, char c)
+int	is_directory(char *path)
 {
-	int	i;
+	DIR	*dir;
+	int	val;
 
-	i = 0;
-	if (!ft_strchr(str, c))
-		return (ft_strlen(str) - 1);
-	while (str[i] && str[i] != c)
-		i++;
-	return (i - 1);
+	dir = opendir(path);
+	if (!dir)
+		val = 0;
+	else
+		val = 1;
+	if (val)
+		closedir(dir);
+	return (val);
 }
