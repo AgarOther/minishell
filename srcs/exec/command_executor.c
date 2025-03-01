@@ -6,43 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/01 18:52:17 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 22:32:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-static void	free_and_exit(char **cmd, t_data *data, char *raw_cmd, char *path)
-{
-	int	exit_code;
-
-	exit_code = data->exit_code;
-	ft_tabfree(cmd, ft_tablen(cmd));
-	free(raw_cmd);
-	free(path);
-	exit_code = data->exit_code;
-	free_data(data, 1);
-	exit(exit_code);
-}
-
-static int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
-{
-	if (!ft_strcmp(cmd[0], "echo"))
-		ft_echo(&data, &raw_cmd[5], 0);
-	else if (!ft_strcmp(cmd[0], "env"))
-		ft_env(data);
-	else if (!ft_strcmp(cmd[0], "pwd"))
-		ft_pwd(data);
-	else
-	{
-		if (!path)
-			return (-1);
-		free(raw_cmd);
-		return (execve(path, cmd, data->envp));
-	}
-	free_and_exit(cmd, data, raw_cmd, path);
-	return (0);
-}
 
 static int	global_free(t_data *data)
 {
@@ -65,6 +33,22 @@ static char	**delete_cmd_quotes(char **cmd)
 	return (cmd);
 }
 
+static void	free_forkit(char *path, char **cmd, t_data *data, int exit_code)
+{
+	if (exit_code == 126)
+		ft_putendl_fd("Error: Is a directory.", 2);
+	else if (exit_code == 127)
+	{
+		ft_putstr_fd("Error: Command failed to execute: ", 2);
+		ft_putendl_fd(cmd[0], 2);
+	}
+	if (path)
+		free(path);
+	ft_tabfree(cmd, ft_tablen(cmd));
+	free_data(data, 1);
+	exit(exit_code);
+}
+
 pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 {
 	pid_t	pid;
@@ -78,17 +62,11 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 			return (global_free(data));
 		path = get_cmd_path(data->envp, cmd[0], -1);
 		global_free(data);
+		if (path && path[0] == '.' && is_directory(path))
+			free_forkit(path, cmd, data, 126);
 		cmd = delete_cmd_quotes(cmd);
 		if (ft_execve(path, cmd, data, raw_cmd) == -1)
-		{
-			if (path)
-				free(path);
-			ft_putstr_fd("Error: Command failed to execute: ", 2);
-			ft_putendl_fd(cmd[0], 2);
-			ft_tabfree(cmd, ft_tablen(cmd));
-			free_data(data, 1);
-			exit(127);
-		}
+			free_forkit(path, cmd, data, 127);
 	}
 	close_fd(data);
 	return (pid);

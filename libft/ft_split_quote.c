@@ -29,7 +29,7 @@ static int	count_char(char *str, char c, int quote)
 	return (chars);
 }
 
-static void	free_all(char **tab, int index)
+static char	**free_all(char **tab, int index)
 {
 	int	i;
 
@@ -40,6 +40,18 @@ static void	free_all(char **tab, int index)
 		i++;
 	}
 	free(tab);
+	return (NULL);
+}
+
+static void	loop_on_quote(char *str, int *i, int quote, int *is_spaced)
+{
+	while (str[*i + 1] && quote)
+	{
+		if (str[*i + 1] == quote)
+			quote = 0;
+		*i = *i + 1;
+	}
+	*is_spaced = 0;
 }
 
 static char	**fill_tab(char **tab, char *str, char c, int i)
@@ -61,18 +73,9 @@ static char	**fill_tab(char **tab, char *str, char c, int i)
 		{
 			tab[j] = ft_calloc(count_char(&str[i], c, quote) + 1, 1);
 			if (!tab[j])
-			{
-				free_all(tab, j);
-				return (NULL);
-			}
+				return (free_all(tab, j));
 			ft_strlcpy(tab[j++], &str[i], count_char(&str[i], c, quote) + 1);
-			while (str[i + 1] && quote)
-			{
-				if (str[i + 1] == quote)
-					quote = 0;
-				i++;
-			}
-			is_spaced = 0;
+			loop_on_quote(str, &i, quote, &is_spaced);
 		}
 		else if (!is_spaced && str[i] == c)
 			is_spaced = 1;

@@ -6,25 +6,42 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 18:47:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/01 22:33:55 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	set_file_descriptors(t_data **data, t_token *tokens)
+static void	free_and_exit(char **cmd, t_data *data, char *raw_cmd, char *path)
 {
-	if (!set_infile(data, tokens))
+	int	exit_code;
+
+	exit_code = data->exit_code;
+	ft_tabfree(cmd, ft_tablen(cmd));
+	free(raw_cmd);
+	free(path);
+	exit_code = data->exit_code;
+	free_data(data, 1);
+	exit(exit_code);
+}
+
+int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
+{
+	if (!ft_strcmp(cmd[0], "echo"))
+		ft_echo(&data, &raw_cmd[5], 0);
+	else if (!ft_strcmp(cmd[0], "env"))
+		ft_env(data);
+	else if (!ft_strcmp(cmd[0], "pwd"))
+		ft_pwd(data);
+	else
 	{
-		ft_putendl_fd(INVALID_INFILE, 2);
-		return (0);
+		if (!path)
+			return (-1);
+		free(raw_cmd);
+		return (execve(path, cmd, data->envp));
 	}
-	else if (!set_outfile(data, tokens))
-	{
-		ft_putendl_fd(INVALID_OUTFILE, 2);
-		return (0);
-	}
-	return (1);
+	free_and_exit(cmd, data, raw_cmd, path);
+	return (0);
 }
 
 void	handle_commands(t_data *data)
