@@ -6,19 +6,28 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 22:33:39 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:10:52 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+static int	is_redirection(t_token *tmp, t_token *last_cmd)
+{
+	while (last_cmd->next != tmp)
+		last_cmd = last_cmd->next;
+	return (last_cmd->type == INFILE || last_cmd->type == HEREDOC);
+}
+
 static void	set_command_tokens(t_token **tokens)
 {
 	t_token	*tmp;
+	t_token	*last_cmd;
 	t_token	*prev;
 
 	tmp = *tokens;
 	prev = NULL;
+	last_cmd = NULL;
 	while (tmp)
 	{
 		if (tmp->type != PIPE && ((!prev && tmp->type == ARG)
@@ -26,7 +35,13 @@ static void	set_command_tokens(t_token **tokens)
 		{
 			if (tmp->type != INFILE && tmp->type != OUTFILE
 				&& tmp->type != APPENDFILE && tmp->type != HEREDOC)
-				tmp->type = COMMAND;
+			{
+				if (!last_cmd || !is_redirection(tmp, last_cmd))
+				{
+					tmp->type = COMMAND;
+					last_cmd = tmp;
+				}
+			}
 		}
 		prev = tmp;
 		tmp = tmp->next;

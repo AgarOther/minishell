@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 20:56:45 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:42:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ int	get_token_length(char *str)
 				quote = 0;
 		}
 		i++;
-		if (!quote && ft_isspace(str[i]))
+		if (!quote && (ft_isspace(str[i]) || is_token(str[i])))
 			break ;
 	}
 	return (i);

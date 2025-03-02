@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 22:33:55 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:42:34 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ static void	free_and_exit(char **cmd, t_data *data, char *raw_cmd, char *path)
 	ft_tabfree(cmd, ft_tablen(cmd));
 	free(raw_cmd);
 	free(path);
-	exit_code = data->exit_code;
 	free_data(data, 1);
 	exit(exit_code);
 }
@@ -30,14 +29,14 @@ int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
 	if (!ft_strcmp(cmd[0], "echo"))
 		ft_echo(&data, &raw_cmd[5], 0);
 	else if (!ft_strcmp(cmd[0], "env"))
-		ft_env(data);
+		ft_env(&data);
 	else if (!ft_strcmp(cmd[0], "pwd"))
-		ft_pwd(data);
+		ft_pwd(&data);
 	else
 	{
+		free(raw_cmd);
 		if (!path)
 			return (-1);
-		free(raw_cmd);
 		return (execve(path, cmd, data->envp));
 	}
 	free_and_exit(cmd, data, raw_cmd, path);
@@ -54,7 +53,6 @@ void	handle_commands(t_data *data)
 	{
 		data->nb_cmds = ft_tokencount(data->tokens, COMMAND);
 		data->cmd_count = 0;
-		data->outfile_err = 0;
 		data->in = 0;
 		data->out = 1;
 		data->out_tmp = 1;
