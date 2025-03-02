@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 22:31:16 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:47:11 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ static int	set_outfile(t_data **data, t_token *tokens)
 		if ((*data)->out == -1)
 		{
 			(*data)->exit_code = 1;
-			(*data)->outfile_err = 1;
 			return (0);
 		}
 		tokens = tokens->next;

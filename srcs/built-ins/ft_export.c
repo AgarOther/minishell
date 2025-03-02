@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 21:03:50 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:25:58 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static void	modify_var(t_list **envp, char *to_grep, char *arg)
 	free(arg);
 }
 
-void	ft_export(t_data *data, char *arg)
+void	ft_export(t_data **data, char *arg)
 {
 	t_list	*envp;
 	char	**var;
@@ -123,23 +123,24 @@ void	ft_export(t_data *data, char *arg)
 	int		sign_index;
 
 	if (!arg)
-		return (print_sorted(data));
+		return (print_sorted(*data));
 	else if (ft_strstartswith(arg, "="))
-		return (ft_strerror(&data, 1, BAD_ASSIGNMENT));
+		return (ft_strerror(data, 1, BAD_ASSIGNMENT));
 	else if ((arg[0] && !ft_isalpha(arg[0]))
 		|| arg[ft_strcharindex(arg, '=')] == '-')
-		return (ft_strerror(&data, 1, INVALID_IDENTIFIER));
-	envp = get_env_as_lst(data);
+		return (ft_strerror(data, 1, INVALID_IDENTIFIER));
+	envp = get_env_as_lst(*data);
 	sign_index = ft_strcharindex(arg, '=');
 	to_grep = ft_substr(arg, 0, sign_index);
-	var = grep_var(data->envp, to_grep);
+	var = grep_var((*data)->envp, to_grep);
 	if (!var)
 		ft_lstadd_back(&envp, ft_lstnew(arg));
 	else
 		modify_var(&envp, to_grep, arg);
-	update_env(envp, data);
+	update_env(envp, *data);
 	free(to_grep);
 	if (var)
 		ft_tabfree(var, ft_tablen(var));
 	ft_lstclear(&envp);
+	(*data)->exit_code = 0;
 }
