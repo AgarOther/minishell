@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:57:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/24 17:32:46 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/02 13:23:49 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ void	ft_tabprint_if(char **tab, char c, int endl)
 	}
 }
 
-void	ft_env(t_data *data)
+void	ft_env(t_data **data)
 {
-	ft_tabprint_if(data->envp, '=', 1);
+	ft_tabprint_if((*data)->envp, '=', 1);
+	(*data)->exit_code = 0;
 }
