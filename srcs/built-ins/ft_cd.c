@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:26:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:04:37 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static void	change_env(t_data **data, char *env, char *new)
 		j++;
 		k++;
 	}
+	free(new);
 	(*data)->exit_code = 0;
 }
 
@@ -45,7 +46,7 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 	char	*path;
 
 	len = ft_tablen(cmd);
-	path = delete_quotes(cmd[1]);
+	path = delete_quotes(cmd[1], 0);
 	if (len < 2)
 		return ;
 	else if (len > 2)
@@ -62,7 +63,7 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 	}
 	free(path);
 	change_env(data, "OLDPWD=", old_pwd);
-	pwd = getcwd(pwd, 255);
+	pwd = getcwd(pwd, 0);
 	if (pwd)
 		change_env(data, "PWD=", pwd);
 }

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 17:37:25 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:38:19 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_echo(t_data **data, char *str, int i);
 void	ft_pwd(t_data **data);
 void	ft_cd(t_data **data, char **cmd, char *pwd);
 void	ft_env(t_data **data);
-void	ft_exit(t_data **data, char **cmd);
+void	ft_exit(t_data **data, char **cmd, unsigned char code, char *raw_cmd);
 void	ft_unset(t_data **data, char *var);
 void	ft_export(t_data **data, char *arg);
 
@@ -72,7 +72,7 @@ char	*addquotes(char *str);
 
 // Utils - Data
 void	close_fd(t_data *data);
-void	free_data(t_data *data, int free_envp);
+int		free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data);
 t_data	*setup_data(char **envp);
 
@@ -87,7 +87,7 @@ char	**grep_var(char **envp, char *to_grep);
 int		is_directory(char *path);
 
 // Utils - Parsing
-char	*delete_quotes(char *str);
+char	*delete_quotes(char *str, int needs_free);
 int		has_invalid_quotes(char *str);
 t_list	*get_env_as_lst(t_data *data);
 int		has_invalid_syntax(t_data *data);
