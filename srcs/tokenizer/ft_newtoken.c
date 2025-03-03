@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:17:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:05:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:54:58 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc)
+t_token	*ft_newtoken(char *arg, t_type type, int need_alloc)
 {
 	t_token	*node;
 

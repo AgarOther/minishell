@@ -6,7 +6,7 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 12:26:11 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:29:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	set_pipes(t_data **data, char **cmd, char *raw_cmd, t_token *token)
 	{
 		if (set_file_descriptors(data, token))
 			(*data)->pids[(*data)->cmd_count] = forkit(*data, cmd, raw_cmd);
+		else
+			close_fd(*data);
 		return ;
 	}
 	else if ((*data)->cmd_count == 0)
@@ -34,6 +36,8 @@ static void	set_pipes(t_data **data, char **cmd, char *raw_cmd, t_token *token)
 	}
 	if (set_file_descriptors(data, token))
 		(*data)->pids[(*data)->cmd_count] = forkit(*data, cmd, raw_cmd);
+	else
+		close_fd(*data);
 }
 
 static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
@@ -42,7 +46,7 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 
 	cmd = ft_split_quote(raw_cmd, ' ');
 	if (!ft_strcmp(cmd[0], "exit"))
-		ft_exit(&data, cmd);
+		ft_exit(&data, cmd, 0, raw_cmd);
 	else if (!ft_strcmp(cmd[0], "cd"))
 		ft_cd(&data, cmd, NULL);
 	else if (!ft_strcmp(cmd[0], "unset"))
@@ -53,8 +57,8 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 	{
 		set_pipes(&data, cmd, raw_cmd, tokens);
 		data->cmd_count++;
-		ft_tabfree(cmd, ft_tablen(cmd));
 	}
+	ft_tabfree(cmd, ft_tablen(cmd));
 	free(raw_cmd);
 }
 
@@ -93,11 +97,11 @@ static int	wait_children(t_data *data)
 	status = 0;
 	while (i < data->nb_cmds)
 	{
-		if (!data->pids[i])
-			return (data->exit_code);
 		waitpid(data->pids[i], &status, 0);
 		i++;
 	}
+	if (data->pipeline_error)
+		return (data->pipeline_error);
 	return (get_error_code(status));
 }
 
@@ -110,8 +114,10 @@ void	process_tokens(t_data **data)
 	while (tokens)
 	{
 		if (tokens->type == COMMAND || tokens->type == HEREDOC
-			|| tokens->type == INFILE)
+			|| tokens->type == INFILE || tokens->type == OUTFILE
+			|| tokens->type == APPENDFILE)
 		{
+			(*data)->pipeline_error = 0;
 			cmd = construct_command(tokens);
 			execute_command((*data), cmd, tokens);
 			while (tokens && tokens->type != PIPE)

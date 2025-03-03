@@ -12,10 +12,10 @@
 
 #include "libft.h"
 
-char    **ft_splitfirst(char *str, char c)
+char	**ft_splitfirst(char *str, char c)
 {
-	char    **tab;
-	int        index;
+	char	**tab;
+	int   index;
 
 	if (!str)
 		return (NULL);

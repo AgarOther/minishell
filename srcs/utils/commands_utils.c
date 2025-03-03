@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:22:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:38:15 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,14 @@
 void	ft_strerror(t_data **data, int error, char *msg)
 {
 	(*data)->exit_code = error;
+	(*data)->pipeline_error = error;
 	ft_putendl_fd(msg, 2);
 }
 
 int	get_error_code(int status)
 {
 	if (WIFSIGNALED(status))
-		return (WTERMSIG(status));
+		return (WTERMSIG(status) + 128);
 	else if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSTOPPED(status))
@@ -34,7 +35,7 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 	char	**paths;
 	char	*path;
 
-	if (!access (cmd, X_OK))
+	if (!access(cmd, X_OK))
 		return (ft_strdup(cmd));
 	while (envp[++i])
 	{
@@ -48,7 +49,7 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 		path = ft_strjoin(paths[i], cmd);
 		if (!access(path, X_OK))
 		{
-			ft_tabfree(paths, i);
+			ft_tabfree(paths, ft_tablen(paths));
 			return (path);
 		}
 		free(path);

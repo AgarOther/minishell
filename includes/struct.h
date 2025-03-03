@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/02 13:22:17 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:30:51 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@
 
 typedef enum e_type
 {
+	UNDEFINED,
 	COMMAND,
 	ARG,
 	PIPE,
 	INFILE,
 	OUTFILE,
 	HEREDOC,
-	APPENDFILE,
-	UNDEFINED
-}	t_TYPE;
+	APPENDFILE
+}	t_type;
 
 typedef struct s_token
 {
 	char			*arg;
-	t_TYPE			type;
+	t_type			type;
 	struct s_token	*next;
 }			t_token;
 
@@ -42,6 +42,7 @@ typedef struct s_data
 	int		in;
 	int		out;
 	int		out_tmp;
+	int		pipeline_error;
 	int		nb_cmds;
 	int		exit_code;
 	int		cmd_count;

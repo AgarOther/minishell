@@ -6,7 +6,7 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 12:11:18 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/03 23:38:19 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <dirent.h>
+# include <errno.h>
 
 // Includes Project
 # include "../libft/libft.h"
@@ -59,7 +60,7 @@ void	ft_echo(t_data **data, char *str, int i);
 void	ft_pwd(t_data **data);
 void	ft_cd(t_data **data, char **cmd, char *pwd);
 void	ft_env(t_data **data);
-void	ft_exit(t_data **data, char **cmd);
+void	ft_exit(t_data **data, char **cmd, unsigned char code, char *raw_cmd);
 void	ft_unset(t_data **data, char *var);
 void	ft_export(t_data *data, char *arg);
 
@@ -71,7 +72,7 @@ char	*addquotes(char *str);
 
 // Utils - Data
 void	close_fd(t_data *data);
-void	free_data(t_data *data, int free_envp);
+int		free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data);
 t_data	*setup_data(char **envp);
 
@@ -86,7 +87,7 @@ char	**grep_var(char **envp, char *to_grep);
 int		is_directory(char *path);
 
 // Utils - Parsing
-char	*delete_quotes(char *str);
+char	*delete_quotes(char *str, int needs_free);
 int		has_invalid_quotes(char *str);
 t_list	*get_env_as_lst(t_data *data);
 int		has_invalid_syntax(t_data *data);
@@ -105,15 +106,15 @@ pid_t	forkit(t_data *data, char **cmds, char *raw_cmd);
 int		ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd);
 
 // Tokens
-t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc);
+t_token	*ft_newtoken(char *arg, t_type type, int need_alloc);
 void	ft_tokenadd_back(t_token **token, t_token *new);
 void	ft_tokenclear(t_token **token);
-int		ft_tokencount(t_token *tokens, t_TYPE type);
+int		ft_tokencount(t_token *tokens, t_type type);
 int		ft_tokensize(t_token *token);
-void	get_tokens(t_data **data);
+void	get_tokens(t_data **data, int i);
 int		is_token(char c);
 int		get_token_length(char *str);
-t_TYPE	get_type(char *str);
+t_type	get_type(char *str);
 
 // Parsing
 char	*expand_command(t_data *data, char *command, int i, int j);

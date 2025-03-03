@@ -6,7 +6,7 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 13:39:39 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/03 13:20:43 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ int			ft_tolower(int c);
 int			ft_toupper(int c);
 char		*ft_itoa(int n);
 char		**ft_split(char const *s, char c);
+char		**ft_splitfirst(char *s, char c);
 char		**ft_split_quote(char const *s, char c);
 int			ft_intlen(int n);
 int			ft_countsplits(const char *str, char c);
