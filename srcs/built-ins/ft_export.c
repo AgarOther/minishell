@@ -3,51 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:25:58 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:46:01 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+int	is_exportable(char *arg)
+{
+	if (!isalpha(arg[0]))
+	{
+		if (arg[0] != '\"' && arg[0] != '\'' && arg[0] != '_')
+			return (0);
+	}
+	return (1);
+}
+
 void	ft_lstprint_export(t_list *lst)
 {
 	t_list	*tmp;
-	char	*to_sub;
-
+	char **arg;
 	tmp = lst;
 	while (tmp)
 	{
-		to_sub = ft_substr(&tmp->str[ft_strcharindex(tmp->str, '=')], 2,
-				ft_strlen(&tmp->str[ft_strcharindex(tmp->str, '=')]));
-		tmp->sptstr = ft_split(tmp->str, '=');
-		if (!tmp->sptstr[1])
+		if (!ft_strchr(tmp->str, '='))
+			ft_printf("declare -x %s\n", tmp->str);
+		else
 		{
-			if (ft_strchr(tmp->str, '='))
-			{
-				tmp->str = ft_strjoin_free(tmp->str, "=");
-				tmp->str = ft_strjoin_free(tmp->str, "\"");
-				tmp->str = ft_strjoin_free(tmp->str, "\"");
-			}
-			free(tmp->str);
-			tmp->str = ft_strjoin("declare -x ", tmp->sptstr[0]);
-			ft_putendl_fd(tmp->str, 1);
-			ft_tabfree(tmp->sptstr, ft_tablen(tmp->sptstr));
-			free(to_sub);
-			tmp = tmp->next;
-			continue ;
+			arg = ft_splitfirst(tmp->str, '=');
+			arg[1] = delete_quotes(arg[1]);
+			ft_printf("declare -x %s=\"%s\"\n", arg[0], arg[1]);
 		}
-		free(tmp->str);
-		tmp->str = ft_strjoin("declare -x ", tmp->sptstr[0]);
-		to_sub = addquotes(to_sub);
-		tmp->str = ft_strjoin_free(tmp->str, "=");
-		tmp->str = ft_strjoin_free(tmp->str, to_sub);
-		tmp->str = ft_strjoin_free(tmp->str, "\"");
-		ft_putendl_fd(tmp->str, 1);
-		ft_tabfree(tmp->sptstr, ft_tablen(tmp->sptstr));
-		free(to_sub);
 		tmp = tmp->next;
 	}
 }
@@ -56,26 +45,26 @@ static t_list	*get_highest(t_list *envp)
 {
 	t_list	*tmp;
 	t_list	*highest;
-
+	
 	tmp = envp;
 	highest = tmp;
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->str, highest->str,
-				ft_strcharindex(tmp->str, '=')) < 0)
-			highest = tmp;
-		tmp = tmp->next;
+			ft_strcharindex(tmp->str, '=')) < 0)
+				highest = tmp;
+			tmp = tmp->next;
+		}
+		return (highest);
 	}
-	return (highest);
-}
-
+	
 static void	print_sorted(t_data *data)
 {
 	t_list	*envp;
 	t_list	*sorted;
 	t_list	*highest;
 	char	*to_add;
-
+		
 	envp = get_env_as_lst(data);
 	if (!envp)
 		return ;
@@ -95,52 +84,79 @@ static void	print_sorted(t_data *data)
 	ft_lstclear(&envp);
 }
 
-static void	modify_var(t_list **envp, char *to_grep, char *arg)
+static int	modify_var(t_list *envp, char *arg)
 {
 	t_list	*tmp;
-	int		len;
+	int i;
+	int j;
 
-	tmp = *envp;
-	len = ft_strlen(to_grep);
+	tmp = envp;
+	i = 0;
+	while (arg[i] != '=')
+		i++;
 	while (tmp)
 	{
-		if (!ft_strncmp(tmp->str, to_grep, len))
+		j = 0;
+		while (tmp->str[j] != '=' && tmp->str[j])
+			j++;
+		if (tmp->str[j] == 0)
 		{
 			free(tmp->str);
 			tmp->str = ft_strdup(arg);
-			break ;
+		}
+		if (ft_strcmp(&arg[i], &tmp->str[j]))
+		{
+			ft_printf("debug69\n");
+			ft_printf("env : %s\n", &tmp->str[j]);
+			ft_printf("arg : %s\n", &arg[i]);
+			free(tmp->str);
+			tmp->str = ft_strdup(arg);
+			return (1);
 		}
 		tmp = tmp->next;
 	}
-	free(arg);
+	return (0);
 }
-
-void	ft_export(t_data **data, char *arg)
+	
+static int	already_exists(t_list *envp, char *arg)
+{
+	t_list	*tmp;
+		
+	tmp = envp;
+	while (tmp)
+	{
+		if (!ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '='))) // si il existe déja
+			return (1);
+		tmp = tmp->next;
+	}
+	return (0);
+}
+				
+void	ft_export(t_data *data, char *arg)
 {
 	t_list	*envp;
-	char	**var;
-	char	*to_grep;
-	int		sign_index;
-
+					
 	if (!arg)
-		return (print_sorted(*data));
-	else if (ft_strstartswith(arg, "="))
-		return (ft_strerror(data, 1, BAD_ASSIGNMENT));
-	else if ((arg[0] && !ft_isalpha(arg[0]))
-		|| arg[ft_strcharindex(arg, '=')] == '-')
-		return (ft_strerror(data, 1, INVALID_IDENTIFIER));
-	envp = get_env_as_lst(*data);
-	sign_index = ft_strcharindex(arg, '=');
-	to_grep = ft_substr(arg, 0, sign_index);
-	var = grep_var((*data)->envp, to_grep);
-	if (!var)
-		ft_lstadd_back(&envp, ft_lstnew(arg));
-	else
-		modify_var(&envp, to_grep, arg);
-	update_env(envp, *data);
-	free(to_grep);
-	if (var)
-		ft_tabfree(var, ft_tablen(var));
+		return (print_sorted(data));
+	else if (ft_strstartswith(arg, "=") || !is_exportable(arg))
+		return (ft_putendl_fd(BAD_ASSIGNMENT, 2));
+	envp = get_env_as_lst(data);
+	if (already_exists(envp, arg))
+	{
+		ft_printf("debug667\n");
+		if (!ft_strchr(arg, '='))
+			return ;
+		else
+		{
+			modify_var(envp, arg);
+			ft_printf("debug\n");
+		}
+		// else	
+		// 	return (ft_putendl_fd("var already exists", 2));
+	}
+	t_list *new = ft_lstnew(arg);
+	ft_lstadd_back(&envp, new);
+	update_env(envp, data);
 	ft_lstclear(&envp);
-	(*data)->exit_code = 0;
 }
+				
