@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:10:52 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 16:02:41 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	set_command_tokens(t_token **tokens)
 
 static t_token	*get_token(char *str, int *i, int *len, char *tmp)
 {
-	t_TYPE	type;
+	t_type	type;
 	t_token	*new;
 	int		token_len;
 	int		is_allocable;
@@ -103,21 +103,21 @@ static int	tokenize(t_token **tokens, char *str, int is_quoted)
 	return (len + i);
 }
 
-void	get_tokens(t_data **data)
+void	get_tokens(t_data **data, int i)
 {
 	t_token	*tokens;
 	char	*input;
-	int		i;
 	char	quote;
 
 	input = (*data)->input;
 	quote = 0;
 	tokens = NULL;
-	i = 0;
 	while (input[i])
 	{
 		while (input[i] && ft_isspace(input[i]))
 			i++;
+		if (!input[i])
+			break ;
 		if (input[i] == '\'' || input[i] == '\"')
 		{
 			if (!quote)

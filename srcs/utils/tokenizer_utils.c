@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:42:07 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:55:47 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	get_token_length(char *str)
 	return (i);
 }
 
-t_TYPE	get_type(char *str)
+t_type	get_type(char *str)
 {
 	if (!ft_strncmp(str, "<<", 2))
 		return (HEREDOC);

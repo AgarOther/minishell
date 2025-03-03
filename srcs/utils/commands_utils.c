@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:22:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:03:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 void	ft_strerror(t_data **data, int error, char *msg)
 {
 	(*data)->exit_code = error;
+	(*data)->pipeline_error = error;
 	ft_putendl_fd(msg, 2);
 }
 
