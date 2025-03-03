@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
 /*   Updated: 2025/03/03 22:29:07 by scraeyme         ###   ########.fr       */
@@ -52,7 +52,7 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 	else if (!ft_strcmp(cmd[0], "unset"))
 		ft_unset(&data, cmd[1]);
 	else if (!ft_strcmp(cmd[0], "export"))
-		ft_export(&data, ft_strdup(cmd[1]));
+		ft_export(data, ft_strdup(cmd[1]));
 	else
 	{
 		set_pipes(&data, cmd, raw_cmd, tokens);
