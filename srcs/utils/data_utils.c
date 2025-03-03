@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/27 14:27:38 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 21:55:31 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,11 @@ void	close_fd(t_data *data)
 	safe_close(data->out);
 }
 
-void	free_data(t_data *data, int free_envp)
+int	free_data(t_data *data, int free_envp)
 {
+	int	exit_code;
+
+	exit_code = data->exit_code;
 	close_fd(data);
 	safe_close(data->out_tmp);
 	if (data->tokens)
@@ -41,6 +44,7 @@ void	free_data(t_data *data, int free_envp)
 		ft_tabfree(data->envp, ft_tablen(data->envp));
 	if (free_envp)
 		free(data);
+	return (exit_code);
 }
 
 t_data	*fill_data(t_data *data)

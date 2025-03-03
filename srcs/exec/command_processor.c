@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 16:44:44 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 22:29:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 
 	cmd = ft_split_quote(raw_cmd, ' ');
 	if (!ft_strcmp(cmd[0], "exit"))
-		ft_exit(&data, cmd);
+		ft_exit(&data, cmd, 0, raw_cmd);
 	else if (!ft_strcmp(cmd[0], "cd"))
 		ft_cd(&data, cmd, NULL);
 	else if (!ft_strcmp(cmd[0], "unset"))
@@ -57,8 +57,8 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 	{
 		set_pipes(&data, cmd, raw_cmd, tokens);
 		data->cmd_count++;
-		ft_tabfree(cmd, ft_tablen(cmd));
 	}
+	ft_tabfree(cmd, ft_tablen(cmd));
 	free(raw_cmd);
 }
 

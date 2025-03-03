@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/02/28 11:10:16 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 21:58:34 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	get_alloc_size(char *str)
 	return (size);
 }
 
-char	*delete_quotes(char *str)
+char	*delete_quotes(char *str, int needs_free)
 {
 	int		quote;
 	int		i;
@@ -57,6 +57,8 @@ char	*delete_quotes(char *str)
 			new[j++] = str[i];
 		i++;
 	}
+	if (needs_free)
+		free(str);
 	return (new);
 }
 
