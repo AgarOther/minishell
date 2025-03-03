@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/01 22:32:50 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:40:44 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,29 @@ static void	free_forkit(char *path, char **cmd, t_data *data, int exit_code)
 	exit(exit_code);
 }
 
+// pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
+// {
+// 	pid_t	pid;
+// 	char	*path;
+
+// 	pid = fork();
+// 	if (pid == 0)
+// 	{
+// 		if (dup2(data->in, STDIN_FILENO) == -1
+// 			|| dup2(data->out, STDOUT_FILENO) == -1)
+// 			return (global_free(data));
+// 		path = get_cmd_path(data->envp, cmd[0], -1);
+// 		global_free(data);
+// 		if (path && (path[0] == '.' || path[0] == '/') && is_directory(path))
+// 			free_forkit(path, cmd, data, 126);
+// 		cmd = delete_cmd_quotes(cmd);
+// 		if (ft_execve(path, cmd, data, raw_cmd) == -1)
+// 			free_forkit(path, cmd, data, 127);
+// 	}
+// 	close_fd(data);
+// 	return (pid);
+// }
+
 pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 {
 	pid_t	pid;
@@ -61,12 +84,15 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 			|| dup2(data->out, STDOUT_FILENO) == -1)
 			return (global_free(data));
 		path = get_cmd_path(data->envp, cmd[0], -1);
-		global_free(data);
-		if (path && path[0] == '.' && is_directory(path))
-			free_forkit(path, cmd, data, 126);
+		global_free(data);;
 		cmd = delete_cmd_quotes(cmd);
 		if (ft_execve(path, cmd, data, raw_cmd) == -1)
-			free_forkit(path, cmd, data, 127);
+		{
+			if (errno == ENOENT)
+				free_forkit(path, cmd, data, 127);
+			else
+				free_forkit(path, cmd, data, 126);
+		}
 	}
 	close_fd(data);
 	return (pid);

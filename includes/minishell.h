@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:46:04 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/03 17:37:25 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # include <signal.h>
 # include <limits.h>
 # include <dirent.h>
+# include <errno.h>
 
 // Includes Project
 # include "../libft/libft.h"
@@ -105,15 +106,15 @@ pid_t	forkit(t_data *data, char **cmds, char *raw_cmd);
 int		ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd);
 
 // Tokens
-t_token	*ft_newtoken(char *arg, t_TYPE type, int need_alloc);
+t_token	*ft_newtoken(char *arg, t_type type, int need_alloc);
 void	ft_tokenadd_back(t_token **token, t_token *new);
 void	ft_tokenclear(t_token **token);
-int		ft_tokencount(t_token *tokens, t_TYPE type);
+int		ft_tokencount(t_token *tokens, t_type type);
 int		ft_tokensize(t_token *token);
-void	get_tokens(t_data **data);
+void	get_tokens(t_data **data, int i);
 int		is_token(char c);
 int		get_token_length(char *str);
-t_TYPE	get_type(char *str);
+t_type	get_type(char *str);
 
 // Parsing
 char	*expand_command(t_data *data, char *command, int i, int j);
