@@ -6,25 +6,30 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 23:38:16 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:26:24 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	signal_handler(int sig)
+int	g_signal = 0;
+
+void	change_signal_value(int value)
 {
-	(void) sig;
-	ft_putchar_fd('\n', 1);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	g_signal = value;
 }
 
-static void	intercept_signals(void)
+static char	*readline_and_signal(t_data **data)
 {
-	//signal(SIGQUIT, SIG_IGN);
-	signal(SIGINT, signal_handler);
+	char	*str;
+
+	str = readline(PROMPT);
+	if (g_signal)
+	{
+		(*data)->exit_code = g_signal;
+		g_signal = 0;
+	}
+	return (str);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -37,7 +42,7 @@ int	main(int ac, char **av, char **envp)
 	intercept_signals();
 	while (1 && ac != ((int)**av) + ac) // tkt
 	{
-		data->input = readline(PROMPT);
+		data->input = readline_and_signal(&data);
 		if (!data->input)
 			break ;
 		else if (!data->input[0] || ft_isfilled(data->input, ' ', NULL))

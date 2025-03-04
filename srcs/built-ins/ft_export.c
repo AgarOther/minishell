@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 14:28:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:48:29 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ static t_list	*get_highest(t_list *envp)
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->str, highest->str,
-			ft_strcharindex(tmp->str, '=')) < 0)
+			ft_strcharindex(tmp->str, '=') + 1) < 0)
 				highest = tmp;
 			tmp = tmp->next;
 		}
@@ -111,7 +111,7 @@ static int	modify_var(t_list *envp, char *arg)
 	i = 0;
 	while (arg[i] != '=')
 		i++;
-	while (ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '=')))	
+	while (ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '=') + 1))	
 		tmp = tmp->next;
 	free(tmp->str);
 	tmp->str = ft_strdup(arg);
