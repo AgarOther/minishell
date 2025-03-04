@@ -19,6 +19,7 @@ SRCS				= 	srcs/main.c \
 						srcs/exec/command_executor.c \
 						srcs/exec/command_handler.c \
 						srcs/exec/command_processor.c \
+						srcs/exec/signals.c \
 						srcs/parsing/expander.c \
 						srcs/parsing/file_handler.c \
 						srcs/parsing/ft_heredoc.c \

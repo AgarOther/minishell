@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/03 23:03:14 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/05 00:02:40 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_unset(t_data **data, char *var)
 {
 	t_list		*current;
 
+	(*data)->nb_cmds--;
 	if (!var)
 		return ;
 	else if (!ft_stralnum(var))

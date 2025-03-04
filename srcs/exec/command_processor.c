@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 15:20:08 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/05 00:02:14 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,12 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 	else if (cmd && !ft_strcmp(cmd[0], "export"))
 		ft_export(&data, ft_strdup(cmd[1]));
 	else
-	{
 		set_pipes(&data, cmd, raw_cmd, tokens);
-		data->cmd_count++;
-	}
 	if (cmd)
 		ft_tabfree(cmd, ft_tablen(cmd));
 	if (raw_cmd)
 		free(raw_cmd);
+	data->cmd_count++;
 }
 
 static char	*construct_command(t_token *tokens)

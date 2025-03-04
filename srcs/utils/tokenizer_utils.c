@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 14:55:47 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:47:45 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@ t_list	*ft_list_remove_if(char *var, t_list *current, int free_var)
 	prev = NULL;
 	while (current)
 	{
-		if (!ft_strncmp(var, current->str, ft_strcharindex(current->str, '=')))
+		if (!ft_strncmp(var, current->str,
+			ft_strcharindex(current->str, '=') + 1))
 		{
 			if (prev == NULL)
 				head = current->next;

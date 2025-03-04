@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 16:52:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:29:36 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
 	{
 		if (!path)
 			return (-1);
+		get_cmd_sigquit();
 		return (execve(path, cmd, data->envp));
 	}
 	free_and_exit(cmd, data, raw_cmd, path);

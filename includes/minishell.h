@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 15:20:00 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:27:24 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,11 @@ t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
 
 // File handling
 int		set_file_descriptors(t_data **data, t_token *tokens);
+
+// Signals
+void	change_signal_value(int value);
+void	intercept_signals(void);
+void	get_cmd_sigquit(void);
 
 // Execution
 void	handle_commands(t_data *data);
