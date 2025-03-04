@@ -14,10 +14,25 @@
 
 int	is_exportable(char *arg)
 {
+	int	i;
+
 	if (!isalpha(arg[0]))
 	{
-		if (arg[0] != '\"' && arg[0] != '\'' && arg[0] != '_')
+		if (arg[0] != '\"' && arg[0] != '\'' && arg[0] != '_' && arg[0] != '`')
 			return (0);
+	}
+	i = 0;
+	while (arg[i] && arg[i] != '=')
+	{
+		if (arg[i] == '-' || arg[i] == 92 || arg[i] == '/' || arg[i] == '+'
+			|| arg[i] == '*'|| arg[i] == ':' || arg[i] == ';' || arg[i] == '{'
+			|| arg[i] == '}' || arg[i] == '(' || arg[i] == ')' || arg[i] == '&'
+			|| arg[i] == '^' || arg[i] == '%' || arg[i] == '$' || arg[i] == '#'
+			|| arg[i] == '@' || arg[i] == '!' || arg[i] == '<' || arg[i] == '>'
+			|| arg[i] == '?' || arg[i] == ',' || arg[i] == '.' || arg[i] == '~'
+			|| arg[i] == '`')
+			return (0);
+		i++;
 	}
 	return (1);
 }
@@ -33,7 +48,7 @@ void	ft_lstprint_export(t_list *lst)
 			ft_printf("declare -x %s\"\"\n", tmp->str);
 		else if (!ft_strchr(tmp->str, '='))
 			ft_printf("declare -x %s\n", tmp->str);
-		else
+		else if (tmp->str[0] != '_' || tmp->str[1] != '=')
 		{
 			arg = ft_splitfirst(tmp->str, '=');
 			arg[1] = delete_quotes(arg[1], 1);
@@ -110,7 +125,7 @@ static int	already_exists(t_list *envp, char *arg)
 	tmp = envp;
 	while (tmp)
 	{
-		if (!ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '='))) // si il existe déja
+		if (!ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '=') + 1))
 			return (1);
 		tmp = tmp->next;
 	}
@@ -124,8 +139,9 @@ void	ft_export(t_data **data, char *arg)
 	if (!arg)
 		return (print_sorted(*data));
 	else if (ft_strstartswith(arg, "=") || !is_exportable(arg))
-		return (ft_strerror(data, 1, BAD_ASSIGNMENT));
+		return (ft_strerror(data, 2, BAD_ASSIGNMENT));
 	envp = get_env_as_lst(*data);
+	arg = delete_quotes(arg, 1);
 	if (already_exists(envp, arg))
 	{
 		if (!ft_strchr(arg, '='))
@@ -136,8 +152,6 @@ void	ft_export(t_data **data, char *arg)
 			update_env(envp, *data);
 			return ;
 		}
-		// else	
-		// 	return (ft_putendl_fd("var already exists", 2));
 	}
 	t_list *new = ft_lstnew(arg);
 	ft_lstadd_back(&envp, new);
