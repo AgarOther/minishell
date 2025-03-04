@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 13:58:34 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:28:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ static int	modify_var(t_list *envp, char *arg)
 		tmp = tmp->next;
 	free(tmp->str);
 	tmp->str = ft_strdup(arg);
-	ft_printf("env : %s\n", tmp->str);
-	ft_printf("arg : %s\n", arg);
 	return (1);
 }
 	
@@ -119,25 +117,23 @@ static int	already_exists(t_list *envp, char *arg)
 	return (0);
 }
 				
-void	ft_export(t_data *data, char *arg)
+void	ft_export(t_data **data, char *arg)
 {
 	t_list	*envp;
 					
 	if (!arg)
-		return (print_sorted(data));
+		return (print_sorted(*data));
 	else if (ft_strstartswith(arg, "=") || !is_exportable(arg))
-		return (ft_putendl_fd(BAD_ASSIGNMENT, 2));
-	envp = get_env_as_lst(data);
+		return (ft_strerror(data, 1, BAD_ASSIGNMENT));
+	envp = get_env_as_lst(*data);
 	if (already_exists(envp, arg))
 	{
-		ft_printf("debug667\n");
 		if (!ft_strchr(arg, '='))
 			return ;
 		else
 		{
 			modify_var(envp, arg);
-			ft_printf("debug\n");
-			update_env(envp, data);
+			update_env(envp, *data);
 			return ;
 		}
 		// else	
@@ -145,7 +141,7 @@ void	ft_export(t_data *data, char *arg)
 	}
 	t_list *new = ft_lstnew(arg);
 	ft_lstadd_back(&envp, new);
-	update_env(envp, data);
+	update_env(envp, *data);
 	ft_lstclear(&envp);
 }
 				

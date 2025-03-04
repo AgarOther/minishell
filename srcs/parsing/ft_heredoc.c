@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 18:36:37 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 18:38:36 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:51:57 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	ft_heredoc(char *limiter, t_data **data)
 
 	str = NULL;
 	filepath = get_tmp_filepath(count++);
-	ft_putstr_fd("> ", 1);
 	tmp_fd = open(filepath, O_CREAT | O_WRONLY | O_TRUNC, 0777);
 	if (tmp_fd < 0)
 	{
@@ -38,10 +37,8 @@ void	ft_heredoc(char *limiter, t_data **data)
 	}
 	while (1)
 	{
-		if (str)
-			ft_putstr_fd("> ", 1);
-		str = get_next_line(1);
-		if (ft_strlencmp(str, limiter, 1) == 0)
+		str = readline("> ");
+		if (!str || ft_strcmp(str, limiter) == 0)
 			break ;
 		write(tmp_fd, str, ft_strlen(str));
 		free(str);

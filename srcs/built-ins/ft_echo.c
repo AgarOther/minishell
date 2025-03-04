@@ -6,26 +6,31 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 23:32:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:26:22 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	has_option(char *str, int *i)
+static int	has_option(char *str, int *index)
 {
-	int	tmp;
+	int	i;
 
-	if (!str || !str[0] || ft_strlen(str) < 3 || ft_strncmp(&str[1], "-n", 2))
-		return (0);
-	tmp = 2;
-	while (str[tmp] && str[tmp] == 'n')
-		tmp++;
-	if (!str[tmp] || ft_isspace(str[tmp]))
-		*i = tmp + 1;
-	else
-		return (0);
-	return (1);
+	i = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
+	if (!ft_strncmp(&str[i], "-n", 2))
+	{
+		i++;
+		while (str[i] && str[i] == 'n')
+			i++;
+		if (!str[i] || ft_isspace(str[i]))
+		{
+			*index = *index + i + (str[i] != 0);
+			return (1);
+		}
+	}
+	return (0);
 }
 
 void	ft_echo(t_data **data, char *str, int i)
@@ -33,10 +38,9 @@ void	ft_echo(t_data **data, char *str, int i)
 	int	has_newline;
 	int	quote;
 
-	if (has_option(str, &i))
-		has_newline = 0;
-	else
-		has_newline = 1;
+	while (has_option(&str[i], &i))
+		;
+	has_newline = (i == 0);
 	quote = 0;
 	while (str[i])
 	{

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 16:02:41 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:40:59 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,13 @@ static void	set_command_tokens(t_token **tokens)
 		if (tmp->type != PIPE && ((!prev && tmp->type == ARG)
 				|| (prev && prev->type != ARG && prev->type != COMMAND)))
 		{
-			if (tmp->type != INFILE && tmp->type != OUTFILE
+			if ((tmp->type != INFILE && tmp->type != OUTFILE
 				&& tmp->type != APPENDFILE && tmp->type != HEREDOC)
+				&& (!last_cmd || !is_redirection(tmp, last_cmd))
+				&& tmp->type != UNDEFINED)
 			{
-				if (!last_cmd || !is_redirection(tmp, last_cmd))
-				{
-					tmp->type = COMMAND;
-					last_cmd = tmp;
-				}
+				tmp->type = COMMAND;
+				last_cmd = tmp;
 			}
 		}
 		prev = tmp;
@@ -62,7 +61,7 @@ static t_token	*get_token(char *str, int *i, int *len, char *tmp)
 			*i = *i + 1;
 		token_len = get_token_length(&str[*i]);
 		*len = token_len;
-		if (!token_len)
+		if (!token_len || !str[*i])
 			type = UNDEFINED;
 		tmp = ft_substr(&str[*i], 0, *len);
 		is_allocable = 0;
