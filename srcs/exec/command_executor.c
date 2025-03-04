@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/03 21:59:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:57:42 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,17 +33,18 @@ static char	**delete_cmd_quotes(char **cmd)
 	return (cmd);
 }
 
-static void	free_forkit(char *path, char **cmd, t_data *data, int exit_code)
+static void	free_forkit(char *raw_cmd, char **cmd, t_data *data)
 {
-	if (exit_code == 126)
-		ft_putendl_fd("Error: Is a directory.", 2);
-	else if (exit_code == 127)
-	{
-		ft_putstr_fd("Error: Command failed to execute: ", 2);
-		ft_putendl_fd(cmd[0], 2);
-	}
-	if (path)
-		free(path);
+	int	exit_code;
+
+	if ((errno == ENOENT && ft_strncmp(raw_cmd, "./", 2))
+			|| (ft_strchr(raw_cmd, '/') && is_directory(raw_cmd))
+			|| (!ft_strncmp(raw_cmd, "./", 2) && !access(raw_cmd, F_OK)
+			&& access(raw_cmd, X_OK) == -1))
+		exit_code = 126;
+	else
+		exit_code = 127;
+	free(raw_cmd);
 	ft_tabfree(cmd, ft_tablen(cmd));
 	free_data(data, 1);
 	exit(exit_code);
@@ -54,6 +55,8 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 	pid_t	pid;
 	char	*path;
 
+	if (!raw_cmd)
+		return (0);
 	pid = fork();
 	if (pid == 0)
 	{
@@ -65,10 +68,10 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 		cmd = delete_cmd_quotes(cmd);
 		if (ft_execve(path, cmd, data, raw_cmd) == -1)
 		{
-			if (errno == ENOENT)
-				free_forkit(path, cmd, data, 127);
-			else
-				free_forkit(path, cmd, data, 126);
+			if (path)
+				free(path);
+			perror(raw_cmd);
+			free_forkit(raw_cmd, cmd, data);
 		}
 	}
 	close_fd(data);

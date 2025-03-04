@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 23:15:15 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:52:24 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
 		ft_pwd(&data);
 	else
 	{
-		free(raw_cmd);
 		if (!path)
 			return (-1);
 		return (execve(path, cmd, data->envp));

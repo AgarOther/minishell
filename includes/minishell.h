@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 23:38:19 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:26:53 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_cd(t_data **data, char **cmd, char *pwd);
 void	ft_env(t_data **data);
 void	ft_exit(t_data **data, char **cmd, unsigned char code, char *raw_cmd);
 void	ft_unset(t_data **data, char *var);
-void	ft_export(t_data *data, char *arg);
+void	ft_export(t_data **data, char *arg);
 
 // Utils - Commands
 void	ft_strerror(t_data **data, int error, char *msg);

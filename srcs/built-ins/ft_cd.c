@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 22:04:37 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 14:31:06 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	change_env(t_data **data, char *env, char *new)
+static void	change_env(t_data **data, char *env, char *new, int needs_free)
 {
 	int		i;
 	int		j;
@@ -35,7 +35,8 @@ static void	change_env(t_data **data, char *env, char *new)
 		j++;
 		k++;
 	}
-	free(new);
+	if (needs_free)
+		free(new);
 	(*data)->exit_code = 0;
 }
 
@@ -62,8 +63,8 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 		return ;
 	}
 	free(path);
-	change_env(data, "OLDPWD=", old_pwd);
+	change_env(data, "OLDPWD=", old_pwd, 0);
 	pwd = getcwd(pwd, 0);
 	if (pwd)
-		change_env(data, "PWD=", pwd);
+		change_env(data, "PWD=", pwd, 1);
 }
