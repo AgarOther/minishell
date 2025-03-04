@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 21:58:34 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 16:29:18 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	has_invalid_syntax(t_data *data)
 
 	tokens = data->tokens;
 	size = ft_tokensize(tokens);
-	if (size == 1 && tokens->type == PIPE)
+	if (tokens->type == PIPE)
 		return (1);
 	while (tokens)
 	{

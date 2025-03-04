@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:14:58 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 22:59:05 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 15:11:46 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ static void	exit_and_free(t_data **data, char **cmd, char *tmp, int code)
 {
 	ft_tabfree(cmd, ft_tablen(cmd));
 	free_data(*data, 1);
-	free(tmp);
+	if (tmp)
+		free(tmp);
 	exit(code);
 }
 
@@ -90,13 +91,12 @@ void	ft_exit(t_data **data, char **cmd, unsigned char code, char *raw_cmd)
 	tmp = NULL;
 	has_overflow = 0;
 	if (ft_tablen(cmd) == 1 || ft_isfilled(cmd[1], ' ', NULL))
-		exit_and_free(data, cmd, tmp, (*data)->exit_code);
-	if (ft_tablen(cmd) > 2 && ft_stratoiable(cmd[1]))
 	{
-		ft_strerror(data, 1, TOO_MANY_ARGS);
-		(*data)->exit_code = 1;
-		return ;
+		free(raw_cmd);
+		exit_and_free(data, cmd, tmp, (*data)->exit_code);
 	}
+	if (ft_tablen(cmd) > 2 && ft_stratoiable(cmd[1]))
+		return (ft_strerror(data, 1, TOO_MANY_ARGS));
 	tmp = delete_quotes(cmd[1], 0);
 	res = ft_safe_atoll(tmp, &has_overflow, 0);
 	if (has_overflow || !ft_stratoiable(tmp))

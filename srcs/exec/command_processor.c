@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
 /*   Updated: 2025/03/04 15:20:08 by maregnie         ###   ########.fr       */
@@ -16,7 +16,7 @@ static void	set_pipes(t_data **data, char **cmd, char *raw_cmd, t_token *token)
 {
 	if ((*data)->nb_cmds < 2)
 	{
-		if (set_file_descriptors(data, token))
+		if (set_file_descriptors(data, token) && (*data)->nb_cmds)
 			(*data)->pids[(*data)->cmd_count] = forkit(*data, cmd, raw_cmd);
 		else
 			close_fd(*data);
@@ -34,7 +34,7 @@ static void	set_pipes(t_data **data, char **cmd, char *raw_cmd, t_token *token)
 		(*data)->in = (*data)->pipes[(*data)->cmd_count - 1][0];
 		(*data)->out = (*data)->out_tmp;
 	}
-	if (set_file_descriptors(data, token))
+	if (set_file_descriptors(data, token) && (*data)->nb_cmds)
 		(*data)->pids[(*data)->cmd_count] = forkit(*data, cmd, raw_cmd);
 	else
 		close_fd(*data);
@@ -45,21 +45,23 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 	char		**cmd;
 
 	cmd = ft_split_quote(raw_cmd, ' ');
-	if (!ft_strcmp(cmd[0], "exit"))
+	if (cmd && !ft_strcmp(cmd[0], "exit"))
 		ft_exit(&data, cmd, 0, raw_cmd);
-	else if (!ft_strcmp(cmd[0], "cd"))
+	else if (cmd && !ft_strcmp(cmd[0], "cd"))
 		ft_cd(&data, cmd, NULL);
-	else if (!ft_strcmp(cmd[0], "unset"))
+	else if (cmd && !ft_strcmp(cmd[0], "unset"))
 		ft_unset(&data, cmd[1]);
-	else if (!ft_strcmp(cmd[0], "export"))
+	else if (cmd && !ft_strcmp(cmd[0], "export"))
 		ft_export(&data, ft_strdup(cmd[1]));
 	else
 	{
 		set_pipes(&data, cmd, raw_cmd, tokens);
 		data->cmd_count++;
 	}
-	ft_tabfree(cmd, ft_tablen(cmd));
-	free(raw_cmd);
+	if (cmd)
+		ft_tabfree(cmd, ft_tablen(cmd));
+	if (raw_cmd)
+		free(raw_cmd);
 }
 
 static char	*construct_command(t_token *tokens)
@@ -68,6 +70,8 @@ static char	*construct_command(t_token *tokens)
 
 	while (tokens && tokens->type != COMMAND)
 		tokens = tokens->next;
+	if (!tokens)
+		return (NULL);
 	command = ft_strdup(tokens->arg);
 	tokens = tokens->next;
 	while (tokens)

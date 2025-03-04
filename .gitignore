@@ -4,3 +4,4 @@ minishell
 *.a
 srcs/main.c
 *.supp
+lol
