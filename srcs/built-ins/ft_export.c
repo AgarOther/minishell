@@ -6,7 +6,7 @@
 /*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 17:46:01 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/04 13:58:34 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ void	ft_lstprint_export(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
-		if (!ft_strchr(tmp->str, '='))
+		if (tmp->str[ft_strlen(tmp->str) - 1] == '=')
+			ft_printf("declare -x %s\"\"\n", tmp->str);
+		else if (!ft_strchr(tmp->str, '='))
 			ft_printf("declare -x %s\n", tmp->str);
 		else
 		{
 			arg = ft_splitfirst(tmp->str, '=');
-			arg[1] = delete_quotes(arg[1]);
+			arg[1] = delete_quotes(arg[1], 1);
 			ft_printf("declare -x %s=\"%s\"\n", arg[0], arg[1]);
+			ft_tabfree(arg, ft_tablen(arg));
 		}
 		tmp = tmp->next;
 	}
@@ -88,34 +91,18 @@ static int	modify_var(t_list *envp, char *arg)
 {
 	t_list	*tmp;
 	int i;
-	int j;
 
 	tmp = envp;
 	i = 0;
 	while (arg[i] != '=')
 		i++;
-	while (tmp)
-	{
-		j = 0;
-		while (tmp->str[j] != '=' && tmp->str[j])
-			j++;
-		if (tmp->str[j] == 0)
-		{
-			free(tmp->str);
-			tmp->str = ft_strdup(arg);
-		}
-		if (ft_strcmp(&arg[i], &tmp->str[j]))
-		{
-			ft_printf("debug69\n");
-			ft_printf("env : %s\n", &tmp->str[j]);
-			ft_printf("arg : %s\n", &arg[i]);
-			free(tmp->str);
-			tmp->str = ft_strdup(arg);
-			return (1);
-		}
+	while (ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '=')))	
 		tmp = tmp->next;
-	}
-	return (0);
+	free(tmp->str);
+	tmp->str = ft_strdup(arg);
+	ft_printf("env : %s\n", tmp->str);
+	ft_printf("arg : %s\n", arg);
+	return (1);
 }
 	
 static int	already_exists(t_list *envp, char *arg)
@@ -150,6 +137,8 @@ void	ft_export(t_data *data, char *arg)
 		{
 			modify_var(envp, arg);
 			ft_printf("debug\n");
+			update_env(envp, data);
+			return ;
 		}
 		// else	
 		// 	return (ft_putendl_fd("var already exists", 2));
