@@ -6,18 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 23:26:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:18:04 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal = 0;
-
-void	change_signal_value(int value)
-{
-	g_signal = value;
-}
 
 static char	*readline_and_signal(t_data **data)
 {
