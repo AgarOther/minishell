@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 14:48:57 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:20:46 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ static int	get_type_len(t_type type)
 {
 	if (type == HEREDOC || type == APPENDFILE)
 		return (2);
-	else
-		return (1);
+	return (type != ARG);
 }
 
 t_type	get_type(char *str, int *i)
@@ -93,5 +92,7 @@ t_type	get_type(char *str, int *i)
 	else
 		type = ARG;
 	*i = *i + get_type_len(type);
+	if (type == PIPE)
+		*i = *i - 1;
 	return (type);
 }
