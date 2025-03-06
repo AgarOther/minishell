@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/06 00:46:13 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 01:46:11 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 		if (dup2(data->in, STDIN_FILENO) == -1
 			|| dup2(data->out, STDOUT_FILENO) == -1)
 			return (global_free(data));
-		path = get_cmd_path(data->envp, cmd[0], -1);
+		path = get_cmd_path(data->envp, cmd[0], -1, NULL);
 		global_free(data);
 		cmd = delete_cmd_quotes(cmd);
 		if (ft_execve(path, cmd, data, raw_cmd) == -1)
