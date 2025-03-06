@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 01:48:20 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:15:26 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ int	get_error_code(int status)
 {
 	if (WIFSIGNALED(status))
 	{
-		change_signal_value(131);
+		g_signal = 131;
 		return (WTERMSIG(status) + 128);
 	}
 	else if (WIFEXITED(status))

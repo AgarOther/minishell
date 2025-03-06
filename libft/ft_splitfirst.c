@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_splitfirst.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/03 13:07:24 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 13:36:23 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:19:58 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 char	**ft_splitfirst(char *str, char c)
 {
 	char	**tab;
-	int   index;
+	int		index;
 
 	if (!str)
 		return (NULL);
