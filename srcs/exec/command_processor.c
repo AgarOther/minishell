@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   command_processor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 17:12:07 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:29:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,11 @@ void	process_tokens(t_data **data)
 		{
 			(*data)->pipeline_error = 0;
 			cmd = construct_command(tokens);
+			if (cmd && !ft_strcmp(cmd, "."))
+			{
+				ft_strerror(data, 2, INVALID_PARAM);
+				(*data)->pipeline_error = 2;
+			}
 			execute_command((*data), cmd, tokens);
 			while (tokens && tokens->type != PIPE)
 				tokens = tokens->next;

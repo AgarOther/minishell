@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 17:11:58 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/06 18:43:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ void	close_fd(t_data *data);
 int		free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data);
 t_data	*setup_data(char **envp);
+
+// Utils - Export
+char	*rm_first_occur(char *arg, char c);
+void	ft_lstprint_export(t_list *lst);
+int		is_exportable(char *arg);
+void	print_sorted(t_data *data);
 
 // Utils - Minishell
 void	safe_close(int fd);
