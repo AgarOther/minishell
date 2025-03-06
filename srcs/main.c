@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 14:18:04 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/07 00:13:22 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ int	main(int ac, char **av, char **envp)
 	if (!data)
 		return (1);
 	intercept_signals();
-	while (1 && ac != ((int)**av) + ac) // tkt
+	while (1 && ac != ((int)**av) + ac)
 	{
 		data->input = readline_and_signal(&data);
 		if (!data->input)

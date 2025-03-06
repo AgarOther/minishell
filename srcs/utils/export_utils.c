@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 18:37:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 18:40:01 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 20:55:52 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,8 @@ int	is_exportable(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 	{
-		if ((arg[i] == '+' && arg[i] == '=') || arg[i] == '-' || arg[i] == '~'
-			|| arg[i] == '/' || arg[i] == '*' || arg[i] == '`' || arg[i] == '>'
-			|| arg[i] == ':' || arg[i] == ';' || arg[i] == '{' || arg[0] == '+'
-			|| arg[i] == '}' || arg[i] == '(' || arg[i] == ')' || arg[i] == '&'
-			|| arg[i] == '^' || arg[i] == '%' || arg[i] == '$' || arg[i] == '#'
-			|| arg[i] == '@' || arg[i] == '!' || arg[i] == '<' || arg[i] == '?'
-			|| arg[i] == ',' || arg[i] == '.' || arg[i] == 92)
+		if ((!(arg[i] == '+' && arg[i + 1] == '=')
+				&& is_blacklist(arg[i])))
 			return (0);
 		i++;
 	}
@@ -95,7 +90,7 @@ void	ft_lstprint_export(t_list *lst)
 		else if (tmp->str[0] != '_' || tmp->str[1] != '=')
 		{
 			arg = ft_splitfirst(tmp->str, '=');
-			arg[1] = delete_quotes(arg[1], 1);
+			arg[1] = delete_quotes(arg[1], 1, -1);
 			ft_printf("declare -x %s=\"%s\"\n", arg[0], arg[1]);
 			ft_tabfree(arg, ft_tablen(arg));
 		}
@@ -121,5 +116,6 @@ char	*rm_first_occur(char *arg, char c)
 		j++;
 	}
 	newarg[j] = 0;
+	free(arg);
 	return (newarg);
 }

@@ -59,6 +59,7 @@ SRCS =	ft_atoi.c \
 		ft_splitfirst.c \
 		ft_split_quote.c \
 		ft_countsplits.c \
+		ft_countsplits_quote.c \
 		ft_countwords.c \
 		ft_strtrim.c \
 		ft_strquote.c \
