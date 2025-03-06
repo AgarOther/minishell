@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/05 00:09:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 00:46:13 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	free_forkit(char *raw_cmd, char **cmd, t_data *data)
 	int	exit_code;
 
 	if ((errno == ENOENT && ft_strncmp(raw_cmd, "./", 2))
-			|| (ft_strchr(raw_cmd, '/') && is_directory(raw_cmd))
+			|| (!ft_strncmp(raw_cmd, "./", 2) && is_directory(raw_cmd))
 			|| (!ft_strncmp(raw_cmd, "./", 2) && !access(raw_cmd, F_OK)
 			&& access(raw_cmd, X_OK) == -1))
 		exit_code = 126;
