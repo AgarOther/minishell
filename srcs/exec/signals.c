@@ -1,41 +1,41 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   misc_utils.c                                       :+:      :+:    :+:   */
+/*   signals.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/03/01 22:01:41 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 00:52:34 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/03/04 23:26:05 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/03/04 23:42:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_tmp_filepath(int cmd_count)
+void	cmd_sig_handler(int sig)
 {
-	char	*filepath;
-	char	*count;
-
-	count = ft_itoa(cmd_count);
-	if (!count)
-		return (NULL);
-	filepath = ft_strjoin(TMP_FILEPATH, count);
-	free(count);
-	return (filepath);
+	if (sig == SIGQUIT)
+		ft_putendl_fd("Quit", 2);
 }
 
-int	is_directory(char *path)
+void	get_cmd_sigquit(void)
 {
-	DIR	*dir;
-	int	val;
+	signal(SIGQUIT, cmd_sig_handler);
+	signal(SIGINT, cmd_sig_handler);
+}
 
-	dir = opendir(path);
-	if (!dir)
-		val = 0;
-	else
-		val = 1;
-	if (val)
-		closedir(dir);
-	return (val);
+static void	signal_handler(int sig)
+{
+	(void) sig;
+	change_signal_value(130);
+	ft_putchar_fd('\n', 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
+}
+
+void	intercept_signals(void)
+{
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, signal_handler);
 }

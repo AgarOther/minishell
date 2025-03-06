@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 16:29:18 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/04 23:02:57 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,8 @@ char	*delete_quotes(char *str, int needs_free)
 int	has_invalid_syntax(t_data *data)
 {
 	t_token	*tokens;
-	int		size;
 
 	tokens = data->tokens;
-	size = ft_tokensize(tokens);
 	if (tokens->type == PIPE)
 		return (1);
 	while (tokens)

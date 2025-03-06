@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 23:38:15 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 01:48:20 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,10 @@ void	ft_strerror(t_data **data, int error, char *msg)
 int	get_error_code(int status)
 {
 	if (WIFSIGNALED(status))
+	{
+		change_signal_value(131);
 		return (WTERMSIG(status) + 128);
+	}
 	else if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
 	else if (WIFSTOPPED(status))
@@ -30,9 +33,8 @@ int	get_error_code(int status)
 	return (0);
 }
 
-char	*get_cmd_path(char **envp, char *cmd, int i)
+char	*get_cmd_path(char **envp, char *cmd, int i, char **paths)
 {
-	char	**paths;
 	char	*path;
 
 	if (!access(cmd, X_OK))
@@ -43,7 +45,7 @@ char	*get_cmd_path(char **envp, char *cmd, int i)
 			paths = ft_split(&envp[i][5], ':');
 	}
 	i = -1;
-	while (paths[++i])
+	while (paths && paths[++i])
 	{
 		paths[i] = ft_strjoin_free(paths[i], "/");
 		path = ft_strjoin(paths[i], cmd);
