@@ -6,24 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 23:47:45 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 01:42:41 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
-char	*get_tmp_filepath(int cmd_count)
-{
-	char	*filepath;
-	char	*count;
-
-	count = ft_itoa(cmd_count);
-	if (!count)
-		return (NULL);
-	filepath = ft_strjoin(TMP_FILEPATH, count);
-	free(count);
-	return (filepath);
-}
 
 t_list	*ft_list_remove_if(char *var, t_list *current, int free_var)
 {

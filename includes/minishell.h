@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 23:27:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 01:48:11 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_export(t_data **data, char *arg);
 // Utils - Commands
 void	ft_strerror(t_data **data, int error, char *msg);
 int		get_error_code(int status);
-char	*get_cmd_path(char **envp, char *cmd, int i);
+char	*get_cmd_path(char **envp, char *cmd, int i, char **paths);
 char	*addquotes(char *str);
 
 // Utils - Data
@@ -85,6 +85,7 @@ char	**grep_var(char **envp, char *to_grep);
 
 // Utils - Misc
 int		is_directory(char *path);
+char	*get_tmp_filepath(int cmd_count);
 
 // Utils - Parsing
 char	*delete_quotes(char *str, int needs_free);
@@ -93,7 +94,6 @@ t_list	*get_env_as_lst(t_data *data);
 int		has_invalid_syntax(t_data *data);
 
 // Utils - Tokenizer
-char	*get_tmp_filepath(int cmd_count);
 t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
 
 // File handling
