@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 13:22:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 15:07:10 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ int	is_exportable(char *arg)
 	i = 0;
 	while (arg[i] && arg[i] != '=')
 	{
-		if (arg[i] == '-' || arg[i] == 92 || arg[i] == '/' || arg[i] == '+'
-			|| arg[i] == '*'|| arg[i] == ':' || arg[i] == ';' || arg[i] == '{'
+		if ((arg[i] == '+' && arg[i] == '=') || arg[i] == '-' || arg[i] == 92 || arg[i] == '/' || arg[i] == '*'
+			|| arg[i] == ':' || arg[i] == ';' || arg[i] == '{'|| arg[0] == '+'
 			|| arg[i] == '}' || arg[i] == '(' || arg[i] == ')' || arg[i] == '&'
 			|| arg[i] == '^' || arg[i] == '%' || arg[i] == '$' || arg[i] == '#'
 			|| arg[i] == '@' || arg[i] == '!' || arg[i] == '<' || arg[i] == '>'
@@ -47,7 +47,7 @@ void	ft_lstprint_export(t_list *lst)
 		if (tmp->str[ft_strlen(tmp->str) - 1] == '=')
 			ft_printf("declare -x %s\"\"\n", tmp->str);
 		else if (!ft_strchr(tmp->str, '='))
-			ft_printf("declare -x %s\n", tmp->str);
+		ft_printf("declare -x %s\n", tmp->str);
 		else if (tmp->str[0] != '_' || tmp->str[1] != '=')
 		{
 			arg = ft_splitfirst(tmp->str, '=');
@@ -69,7 +69,7 @@ static t_list	*get_highest(t_list *envp)
 	while (tmp)
 	{
 		if (ft_strncmp(tmp->str, highest->str,
-			ft_strcharindex(tmp->str, '=') + 1) < 0)
+			ft_strcharindex(tmp->str, '=')) < 0)
 				highest = tmp;
 			tmp = tmp->next;
 		}
@@ -105,16 +105,18 @@ static void	print_sorted(t_data *data)
 static int	modify_var(t_list *envp, char *arg)
 {
 	t_list	*tmp;
-	int i;
+	int 	i;
 
 	tmp = envp;
 	i = 0;
 	while (arg[i] != '=')
 		i++;
-	while (ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '=') + 1))	
+	while (ft_strncmp(arg, tmp->str, ft_strcharindex(arg, '=')))	
 		tmp = tmp->next;
 	free(tmp->str);
 	tmp->str = ft_strdup(arg);
+	ft_printf("env : %s\n", tmp->str);
+	ft_printf("arg : %s\n", arg);
 	return (1);
 }
 	
@@ -131,7 +133,31 @@ static int	already_exists(t_list *envp, char *arg)
 	}
 	return (0);
 }
-				
+
+char	*rm_first_occur(char *arg, char c)
+{
+	int		i;
+	int 	j;
+	char	*newarg;
+
+	j = 0;
+	i = 0;
+
+	newarg = ft_calloc(ft_strlen(arg), 1);
+	while (arg[i])
+	{
+		if (arg[i] == c && arg[i + 1] == '=')
+			i++;
+		newarg[j] = arg[i];
+		i++;
+		j++;
+	}
+	newarg[i] = 0;
+	ft_printf("debug newarg : %s\n", newarg);
+	ft_printf("debug arg : %s\n", arg);
+	return (newarg);
+}
+
 void	ft_export(t_data **data, char *arg)
 {
 	t_list	*envp;
@@ -153,6 +179,8 @@ void	ft_export(t_data **data, char *arg)
 			return ;
 		}
 	}
+	if (ft_strcontains(arg, "+="))
+		arg = rm_first_occur(arg, '+');
 	t_list *new = ft_lstnew(arg);
 	ft_lstadd_back(&envp, new);
 	update_env(envp, *data);
