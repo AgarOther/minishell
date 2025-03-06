@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 14:48:31 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:59:30 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ t_data	*setup_data(char **envp);
 
 // Utils - Minishell
 void	safe_close(int fd);
-void	update_env(t_list *lst, t_data *data);
+void	update_env(t_list *lst, t_data **data);
 void	free_pipes(t_data *data);
 char	*grep_var_as_string(char **envp, char *to_grep);
 char	**grep_var(char **envp, char *to_grep);

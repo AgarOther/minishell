@@ -6,12 +6,11 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 14:34:33 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:42:49 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
-
 
 void	close_fd(t_data *data)
 {
@@ -67,7 +66,7 @@ t_data	*fill_data(t_data *data)
 	}
 	if (data->nb_cmds > 1)
 	{
-		data->pipes = malloc(sizeof(int *) * (data->nb_cmds - 1));
+		data->pipes = malloc(sizeof(int *) * data->nb_cmds - 1);
 		while (i < data->nb_cmds - 1)
 		{
 			data->pipes[i] = malloc(sizeof(int) * 2);

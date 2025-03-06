@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:54:44 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/03 16:11:12 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:58:49 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,41 +18,46 @@ void	safe_close(int fd)
 		close(fd);
 }
 
-void	update_env(t_list *lst, t_data *data)
+void	update_env(t_list *lst, t_data **data)
 {
 	size_t	i;
 
 	i = 0;
-	ft_tabfree(data->envp, ft_tablen(data->envp));
-	data->envp = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
-	if (!data->envp)
+	ft_tabfree((*data)->envp, ft_tablen((*data)->envp));
+	(*data)->envp = ft_calloc(ft_lstsize(lst) + 1, sizeof(char *));
+	if (!(*data)->envp)
 		return ;
 	while (lst)
 	{
-		if (data->envp[i] != lst->str)
-			data->envp[i] = ft_strdup(lst->str);
+		if ((*data)->envp[i] != lst->str)
+			(*data)->envp[i] = ft_strdup(lst->str);
 		lst = lst->next;
 		i++;
 	}
-	data->envp[i] = 0;
+	(*data)->envp[i] = 0;
 }
 
 void	free_pipes(t_data *data)
 {
 	int	i;
 
-	i = -1;
-	if (!data->pipes)
+	i = 0;
+	if (!data->nb_cmds)
 		return ;
-	while (++i < data->nb_cmds - 1)
+	while (i < data->nb_cmds - 1)
 	{
-		if (data->pipes[i][0] >= 0)
-			close(data->pipes[i][0]);
-		if (data->pipes[i][1] >= 0)
-			close(data->pipes[i][1]);
-		free(data->pipes[i]);
+		if (data->pipes && data->pipes[i])
+		{
+			if (data->pipes[i][0] >= 0)
+				close(data->pipes[i][0]);
+			if (data->pipes[i][1] >= 0)
+				close(data->pipes[i][1]);
+			free(data->pipes[i]);
+		}
+		i++;
 	}
-	free(data->pipes);
+	if (data->pipes)
+		free(data->pipes);
 	data->pipes = NULL;
 }
 

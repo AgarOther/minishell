@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 15:07:10 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/06 17:04:21 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,9 +161,11 @@ char	*rm_first_occur(char *arg, char c)
 void	ft_export(t_data **data, char *arg)
 {
 	t_list	*envp;
-					
+
 	if (!arg)
 		return (print_sorted(*data));
+	else if (ft_tokencount((*data)->tokens, PIPE) > 0)
+		return ;
 	else if (ft_strstartswith(arg, "=") || !is_exportable(arg))
 		return (ft_strerror(data, 1, BAD_ASSIGNMENT));
 	envp = get_env_as_lst(*data);
@@ -175,15 +177,14 @@ void	ft_export(t_data **data, char *arg)
 		else
 		{
 			modify_var(envp, arg);
-			update_env(envp, *data);
+			update_env(envp, data);
 			return ;
 		}
 	}
 	if (ft_strcontains(arg, "+="))
 		arg = rm_first_occur(arg, '+');
-	t_list *new = ft_lstnew(arg);
-	ft_lstadd_back(&envp, new);
-	update_env(envp, *data);
+	ft_lstadd_back(&envp, ft_lstnew(arg));
+	update_env(envp, data);
 	ft_lstclear(&envp);
 }
 				

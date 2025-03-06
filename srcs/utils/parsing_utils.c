@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 23:02:57 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:58:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,9 @@ int	has_invalid_syntax(t_data *data)
 		if (tokens->type == UNDEFINED)
 			return (1);
 		else if (!tokens->next && tokens->type == PIPE)
+			return (1);
+		else if (tokens->type == PIPE && tokens->next
+			&& tokens->next->type == PIPE)
 			return (1);
 		tokens = tokens->next;
 	}
