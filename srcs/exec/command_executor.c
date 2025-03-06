@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/06 14:21:58 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 23:08:26 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,12 +22,22 @@ static int	global_free(t_data *data)
 
 static char	**delete_cmd_quotes(char **cmd)
 {
-	int	i;
+	int		i;
+	int		is_printf;
+	char	*tmp;
 
 	i = 0;
+	is_printf = (ft_strcmp(cmd[0], "printf") == 0);
 	while (cmd[i])
 	{
-		cmd[i] = delete_quotes(cmd[i], 1);
+		if (is_printf && i && cmd[i] && cmd[i][0] == '$'
+			&& (cmd[i][1] == '\"' || cmd[i][1] == '\''))
+		{
+			tmp = ft_substr(cmd[i], 1, ft_strlen(cmd[i]));
+			free(cmd[i]);
+			cmd[i] = tmp;
+		}
+		cmd[i] = delete_quotes(cmd[i], 1, -1);
 		i++;
 	}
 	return (cmd);
@@ -61,6 +71,7 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 	pid = fork();
 	if (pid == 0)
 	{
+		rl_clear_history();
 		if (dup2(data->in, STDIN_FILENO) == -1
 			|| dup2(data->out, STDOUT_FILENO) == -1)
 			return (global_free(data));

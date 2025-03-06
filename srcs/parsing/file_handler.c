@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 22:00:48 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 20:37:44 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static int	handle_outfile(t_data **data, t_token *tokens, t_type type)
 {
 	int	o_flags;
 
-	tokens->arg = delete_quotes(tokens->arg, 1);
+	tokens->arg = delete_quotes(tokens->arg, 1, -1);
 	safe_close((*data)->out);
 	if (type == OUTFILE)
 		o_flags = O_WRONLY | O_TRUNC | O_CREAT;
@@ -28,7 +28,7 @@ static int	handle_outfile(t_data **data, t_token *tokens, t_type type)
 
 static int	handle_infile(t_data **data, t_token *tokens, t_type type)
 {
-	tokens->arg = delete_quotes(tokens->arg, 1);
+	tokens->arg = delete_quotes(tokens->arg, 1, -1);
 	safe_close((*data)->in);
 	if (type == HEREDOC)
 		ft_heredoc(tokens->arg, data);

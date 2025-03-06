@@ -8,7 +8,6 @@ NAME				=	minishell
 
 # Sources & Includes
 SRCS				= 	srcs/main.c \
-						srcs/debug.c \
 						srcs/built-ins/ft_cd.c \
 						srcs/built-ins/ft_echo.c \
 						srcs/built-ins/ft_env.c \
@@ -31,6 +30,7 @@ SRCS				= 	srcs/main.c \
 						srcs/tokenizer/tokenizer.c \
 						srcs/utils/commands_utils.c \
 						srcs/utils/data_utils.c \
+						srcs/utils/export_utils.c \
 						srcs/utils/minishell_utils.c \
 						srcs/utils/misc_utils.c \
 						srcs/utils/parsing_utils.c \

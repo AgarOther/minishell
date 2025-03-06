@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:21:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/01 22:28:07 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/07 00:18:36 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_sepindex(char *str)
+int	get_sepindex(char *str)
 {
 	int	i;
 
@@ -32,7 +32,7 @@ static void	handle_values(int *value, char *var, int *i, char *command)
 	*i = *i + get_sepindex(&command[*i + 1]) - 1;
 }
 
-static int	get_alloc_size(t_data *data, char *command, int i, int value)
+int	get_alloc_size(t_data *data, char *command, int i, int value)
 {
 	char	*tmp;
 	char	*var;
@@ -61,7 +61,7 @@ static int	get_alloc_size(t_data *data, char *command, int i, int value)
 	return (value);
 }
 
-static int	get_expanded(t_data *data, char *value, char *new)
+int	get_expanded(t_data *data, char *value, char *new)
 {
 	char	*var;
 	char	*tmp;
@@ -77,9 +77,9 @@ static int	get_expanded(t_data *data, char *value, char *new)
 	}
 	else
 		var = grep_var_as_string(data->envp, tmp);
+	free(tmp);
 	if (!var)
 		return (-1);
-	free(tmp);
 	new = ft_strcat(new, var);
 	if (exit_code && var)
 	{

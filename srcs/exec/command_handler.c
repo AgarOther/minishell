@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 16:57:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 23:09:49 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,14 @@ static void	free_and_exit(char **cmd, t_data *data, char *raw_cmd, char *path)
 
 int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
 {
-	rl_clear_history();
 	if (!ft_strcmp(cmd[0], "echo"))
 		ft_echo(&data, &raw_cmd[4], 0);
 	else if (!ft_strcmp(cmd[0], "env"))
 		ft_env(&data);
 	else if (!ft_strcmp(cmd[0], "pwd"))
 		ft_pwd(&data);
+	else if (!ft_strcmp(cmd[0], "export"))
+		ft_export(&data, NULL);
 	else
 	{
 		if (!path)
@@ -51,7 +52,7 @@ void	handle_commands(t_data *data)
 		return (ft_strerror(&data, 2, INVALID_SYNTAX));
 	else if (data->tokens)
 	{
-		data->nb_cmds = ft_tokencount(data->tokens, COMMAND);
+		data->nb_cmds = ft_tokencount(data->tokens, PIPE) + 1;
 		data->cmd_count = 0;
 		data->in = 0;
 		data->out = 1;
@@ -60,5 +61,6 @@ void	handle_commands(t_data *data)
 		if (data->nb_cmds)
 			data = fill_data(data);
 		process_tokens(&data);
+		unlink_heredocs(data);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:14:58 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 14:33:19 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 20:37:50 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	ft_exit(t_data **data, char **cmd, unsigned char code, char *raw_cmd)
 	}
 	if (ft_tablen(cmd) > 2 && ft_stratoiable(cmd[1]))
 		return (ft_strerror(data, 1, TOO_MANY_ARGS));
-	tmp = delete_quotes(cmd[1], 0);
+	tmp = delete_quotes(cmd[1], 0, -1);
 	res = ft_safe_atoll(tmp, &has_overflow, 0);
 	if (has_overflow || !ft_stratoiable(tmp))
 	{

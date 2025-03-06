@@ -6,11 +6,22 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 22:01:41 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 00:52:34 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 20:44:34 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_blacklist(char c)
+{
+	return (c == '-' || c == '~'
+		|| c == '/' || c == '*' || c == '`' || c == '>'
+		|| c == ':' || c == ';' || c == '{' || c == '+'
+		|| c == '}' || c == '(' || c == ')' || c == '&'
+		|| c == '^' || c == '%' || c == '$' || c == '#'
+		|| c == '@' || c == '!' || c == '<' || c == '?'
+		|| c == ',' || c == '.' || c == 92);
+}
 
 char	*get_tmp_filepath(int cmd_count)
 {
@@ -23,6 +34,27 @@ char	*get_tmp_filepath(int cmd_count)
 	filepath = ft_strjoin(TMP_FILEPATH, count);
 	free(count);
 	return (filepath);
+}
+
+void	unlink_heredocs(t_data *data)
+{
+	t_token	*tmp;
+	int		i;
+	char	*filename;
+
+	tmp = data->tokens;
+	i = 0;
+	while (tmp)
+	{
+		if (tmp->type == HEREDOC)
+		{
+			filename = get_tmp_filepath(i);
+			unlink(filename);
+			free(filename);
+			i++;
+		}
+		tmp = tmp->next;
+	}
 }
 
 int	is_directory(char *path)
