@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 14:15:26 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 23:23:05 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ char	*get_cmd_path(char **envp, char *cmd, int i, char **paths)
 {
 	char	*path;
 
-	if (!access(cmd, X_OK))
-		return (ft_strdup(cmd));
 	while (envp[++i])
 	{
 		if (ft_strncmp(envp[i], "PATH=", 5) == 0)
@@ -58,6 +56,8 @@ char	*get_cmd_path(char **envp, char *cmd, int i, char **paths)
 	}
 	if (paths)
 		ft_tabfree(paths, ft_tablen(paths));
+	if (!access(cmd, X_OK))
+		return (ft_strdup(cmd));
 	return (NULL);
 }
 

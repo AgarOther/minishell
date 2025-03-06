@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 13:20:43 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 21:17:54 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ char		**ft_splitfirst(char *s, char c);
 char		**ft_split_quote(char const *s, char c);
 int			ft_intlen(int n);
 int			ft_countsplits(const char *str, char c);
+int			ft_countsplits_quote(const char *str, char c);
 int			ft_countwords(const char *str);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
 char		*ft_strjoin(char const *s1, char const *s2);

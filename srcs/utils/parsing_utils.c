@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 16:58:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 23:55:08 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	get_alloc_size(char *str)
+static int	get_alloc_len(char *str)
 {
 	int	quote;
 	int	i;
@@ -34,20 +34,22 @@ static int	get_alloc_size(char *str)
 	return (size);
 }
 
-char	*delete_quotes(char *str, int needs_free)
+char	*delete_quotes(char *str, int needs_free, int i)
 {
 	int		quote;
-	int		i;
 	int		j;
 	char	*new;
 
 	quote = 0;
-	i = 0;
 	j = 0;
-	new = ft_calloc(get_alloc_size(str) + 1, 1);
+	new = ft_calloc(get_alloc_len(str) + 1, 1);
 	if (!new)
+	{
+		if (needs_free)
+			free(str);
 		return (NULL);
-	while (str[i])
+	}
+	while (str[++i])
 	{
 		if (!quote && (str[i] == '\"' || str[i] == '\''))
 			quote = str[i];
@@ -55,7 +57,6 @@ char	*delete_quotes(char *str, int needs_free)
 			quote = 0;
 		else
 			new[j++] = str[i];
-		i++;
 	}
 	if (needs_free)
 		free(str);

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 14:31:06 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/07 00:20:36 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 	char	*path;
 
 	len = ft_tablen(cmd);
-	path = delete_quotes(cmd[1], 0);
 	if (len < 2)
 		return ;
 	else if (len > 2)
@@ -55,6 +54,7 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 		ft_strerror(data, 1, TOO_MANY_ARGS);
 		return ;
 	}
+	path = delete_quotes(cmd[1], 0, -1);
 	old_pwd = grep_var_as_string((*data)->envp, "PWD=");
 	if (chdir(path) == -1)
 	{

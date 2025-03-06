@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 17:11:58 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/07 00:13:39 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,35 @@ void	ft_cd(t_data **data, char **cmd, char *pwd);
 void	ft_env(t_data **data);
 void	ft_exit(t_data **data, char **cmd, unsigned char code, char *raw_cmd);
 void	ft_unset(t_data **data, char *var);
-void	ft_export(t_data **data, char *arg, t_list	*envp, char *tmparg);
+void	ft_export(t_data **data, char **args);
+
+// Execution
+void	handle_commands(t_data *data);
+void	process_tokens(t_data **data);
+pid_t	forkit(t_data *data, char **cmds, char *raw_cmd);
+int		ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd);
+
+// File handling
+int		set_file_descriptors(t_data **data, t_token *tokens);
+
+// Parsing
+char	*expand_command(t_data *data, char *command, int i, int j);
+void	ft_heredoc(char *limiter, t_data **data);
+int		get_expanded(t_data *data, char *value, char *new);
+int		get_sepindex(char *str);
+int		get_alloc_size(t_data *data, char *command, int i, int value);
+
+// Signals
+void	intercept_signals(void);
+void	get_cmd_sigquit(void);
+
+// Tokens
+t_token	*ft_newtoken(char *arg, t_type type, int need_alloc);
+void	ft_tokenadd_back(t_token **token, t_token *new);
+void	ft_tokenclear(t_token **token);
+int		ft_tokencount(t_token *tokens, t_type type);
+int		ft_tokensize(t_token *token);
+void	get_tokens(t_data **data, int i);
 
 // Utils - Commands
 void	ft_strerror(t_data **data, int error, char *msg);
@@ -78,6 +106,12 @@ int		free_data(t_data *data, int free_envp);
 t_data	*fill_data(t_data *data);
 t_data	*setup_data(char **envp);
 
+// Utils - Export
+char	*rm_first_occur(char *arg, char c);
+void	ft_lstprint_export(t_list *lst);
+int		is_exportable(char *arg);
+void	print_sorted(t_data *data);
+
 // Utils - Minishell
 void	safe_close(int fd);
 void	update_env(t_list *lst, t_data **data);
@@ -88,9 +122,11 @@ char	**grep_var(char **envp, char *to_grep);
 // Utils - Misc
 int		is_directory(char *path);
 char	*get_tmp_filepath(int cmd_count);
+void	unlink_heredocs(t_data *data);
+int		is_blacklist(char c);
 
 // Utils - Parsing
-char	*delete_quotes(char *str, int needs_free);
+char	*delete_quotes(char *str, int needs_free, int i);
 int		has_invalid_quotes(char *str);
 t_list	*get_env_as_lst(t_data *data);
 int		has_invalid_syntax(t_data *data);
@@ -100,33 +136,5 @@ t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
 t_type	get_type(char *str, int *i);
 int		get_token_length(char *str);
 int		is_token(char c);
-
-// File handling
-int		set_file_descriptors(t_data **data, t_token *tokens);
-
-// Signals
-void	intercept_signals(void);
-void	get_cmd_sigquit(void);
-
-// Execution
-void	handle_commands(t_data *data);
-void	process_tokens(t_data **data);
-pid_t	forkit(t_data *data, char **cmds, char *raw_cmd);
-int		ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd);
-
-// Tokens
-t_token	*ft_newtoken(char *arg, t_type type, int need_alloc);
-void	ft_tokenadd_back(t_token **token, t_token *new);
-void	ft_tokenclear(t_token **token);
-int		ft_tokencount(t_token *tokens, t_type type);
-int		ft_tokensize(t_token *token);
-void	get_tokens(t_data **data, int i);
-
-// Parsing
-char	*expand_command(t_data *data, char *command, int i, int j);
-void	ft_heredoc(char *limiter, t_data **data);
-
-// Debug --------------------------------------------------------------------------------
-void	print_tokens(t_token *tokens);
 
 #endif

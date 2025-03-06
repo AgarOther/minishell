@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_split.c                                         :+:      :+:    :+:   */
+/*   ft_split_quote.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/07 19:35:43 by scraeyme          #+#    #+#             */
-/*   Updated: 2024/10/11 09:35:45 by scraeyme         ###   ########.fr       */
+/*   Created: 2025/03/06 21:14:22 by scraeyme          #+#    #+#             */
+/*   Updated: 2025/03/06 21:14:22 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_char(char *str, char c, int quote)
+static int	count_char(char *str, char c)
 {
 	int	i;
 	int	chars;
+	int	quote;
 
 	i = 0;
 	chars = 0;
-	while ((str[i] != c || quote) && str[i])
+	quote = 0;
+	while (str[i])
 	{
-		if (i && str[i] == quote)
+		if (!quote && (str[i] == '\"' || str[i] == '\''))
+			quote = str[i];
+		else if (quote && str[i] == quote)
 			quote = 0;
 		chars++;
 		i++;
+		if (str[i] && str[i] == c && !quote)
+			break ;
 	}
 	return (chars);
 }
@@ -43,26 +49,15 @@ static char	**free_all(char **tab, int index)
 	return (NULL);
 }
 
-static void	loop_on_quote(char *str, int *i, int quote, int *is_spaced)
-{
-	while (str[*i + 1] && quote)
-	{
-		if (str[*i + 1] == quote)
-			quote = 0;
-		*i = *i + 1;
-	}
-	*is_spaced = 0;
-}
-
 static char	**fill_tab(char **tab, char *str, char c, int i)
 {
 	int	j;
-	int	quote;
 	int	is_spaced;
+	int	quote;
 
 	j = 0;
-	quote = 0;
 	is_spaced = 1;
+	quote = 0;
 	while (str[++i])
 	{
 		if (!quote && (str[i] == '\"' || str[i] == '\''))
@@ -71,13 +66,13 @@ static char	**fill_tab(char **tab, char *str, char c, int i)
 			quote = 0;
 		if (is_spaced && str[i] != c)
 		{
-			tab[j] = ft_calloc(count_char(&str[i], c, quote) + 1, 1);
+			tab[j] = ft_calloc(count_char(&str[i], c) + 1, 1);
 			if (!tab[j])
 				return (free_all(tab, j));
-			ft_strlcpy(tab[j++], &str[i], count_char(&str[i], c, quote) + 1);
-			loop_on_quote(str, &i, quote, &is_spaced);
+			ft_strlcpy(tab[j++], &str[i], count_char(&str[i], c) + 1);
+			is_spaced = 0;
 		}
-		else if (!is_spaced && str[i] == c)
+		else if (!is_spaced && str[i] == c && !quote)
 			is_spaced = 1;
 	}
 	return (tab);
@@ -89,7 +84,8 @@ char	**ft_split_quote(char const *s, char c)
 
 	if (!s)
 		return (NULL);
-	tab = ft_calloc(sizeof(char *) * (ft_countsplits((char *)s, c) + 1), 1);
+	tab = ft_calloc(sizeof(char *) * (ft_countsplits_quote
+				((char *)s, c) + 1), 1);
 	if (!tab)
 		return (NULL);
 	tab = fill_tab(tab, (char *)s, c, -1);
