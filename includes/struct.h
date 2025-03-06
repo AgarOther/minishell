@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/03 15:30:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 16:44:46 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct s_token
 typedef struct s_data
 {
 	char	**envp;
+	char	**tmp_envp;
 	char	*input;
 	int		**pipes;
 	int		in;
