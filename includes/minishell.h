@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 01:48:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:48:31 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@
 // Includes Minishell
 # include "struct.h"
 
+extern int	g_signal;
+
 // Built-ins
 void	ft_echo(t_data **data, char *str, int i);
 void	ft_pwd(t_data **data);
@@ -95,12 +97,14 @@ int		has_invalid_syntax(t_data *data);
 
 // Utils - Tokenizer
 t_list	*ft_list_remove_if(char *var, t_list *current, int free_var);
+t_type	get_type(char *str, int *i);
+int		get_token_length(char *str);
+int		is_token(char c);
 
 // File handling
 int		set_file_descriptors(t_data **data, t_token *tokens);
 
 // Signals
-void	change_signal_value(int value);
 void	intercept_signals(void);
 void	get_cmd_sigquit(void);
 
@@ -117,9 +121,6 @@ void	ft_tokenclear(t_token **token);
 int		ft_tokencount(t_token *tokens, t_type type);
 int		ft_tokensize(t_token *token);
 void	get_tokens(t_data **data, int i);
-int		is_token(char c);
-int		get_token_length(char *str);
-t_type	get_type(char *str);
 
 // Parsing
 char	*expand_command(t_data *data, char *command, int i, int j);

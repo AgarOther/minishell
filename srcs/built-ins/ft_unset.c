@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 14:49:28 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/05 00:02:40 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:22:10 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,10 @@ void	ft_unset(t_data **data, char *var)
 {
 	t_list		*current;
 
-	(*data)->nb_cmds--;
 	if (!var)
 		return ;
+	else if (var && var[0] == '-')
+		return (ft_strerror(data, 2, INVALID_PARAM));
 	else if (!ft_stralnum(var))
 		return ;
 	var = ft_strjoin(var, "=");

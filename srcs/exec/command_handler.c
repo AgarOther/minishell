@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 23:29:36 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:22:21 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ static void	free_and_exit(char **cmd, t_data *data, char *raw_cmd, char *path)
 
 int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
 {
+	rl_clear_history();
 	if (!ft_strcmp(cmd[0], "echo"))
 		ft_echo(&data, &raw_cmd[4], 0);
 	else if (!ft_strcmp(cmd[0], "env"))
@@ -36,7 +37,6 @@ int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
 	{
 		if (!path)
 			return (-1);
-		get_cmd_sigquit();
 		return (execve(path, cmd, data->envp));
 	}
 	free_and_exit(cmd, data, raw_cmd, path);

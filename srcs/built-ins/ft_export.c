@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/13 16:30:02 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 23:48:29 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 13:22:46 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ void	ft_export(t_data **data, char *arg)
 	if (!arg)
 		return (print_sorted(*data));
 	else if (ft_strstartswith(arg, "=") || !is_exportable(arg))
-		return (ft_strerror(data, 2, BAD_ASSIGNMENT));
+		return (ft_strerror(data, 1, BAD_ASSIGNMENT));
 	envp = get_env_as_lst(*data);
 	arg = delete_quotes(arg, 1);
 	if (already_exists(envp, arg))

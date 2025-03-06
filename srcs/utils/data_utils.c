@@ -6,16 +6,23 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/07 15:54:11 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/03 21:55:31 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:34:33 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
+
 void	close_fd(t_data *data)
 {
 	safe_close(data->in);
 	safe_close(data->out);
+}
+
+static void	free_null(pid_t	**pids)
+{
+	free(*pids);
+	*pids = NULL;
 }
 
 int	free_data(t_data *data, int free_envp)
@@ -30,10 +37,7 @@ int	free_data(t_data *data, int free_envp)
 	if (data->pipes)
 		free_pipes(data);
 	if (data->pids)
-	{
-		free(data->pids);
-		data->pids = NULL;
-	}
+		free_null(&data->pids);
 	if (data->input)
 		free(data->input);
 	if (data->list)
@@ -43,7 +47,10 @@ int	free_data(t_data *data, int free_envp)
 	if (free_envp && data->envp)
 		ft_tabfree(data->envp, ft_tablen(data->envp));
 	if (free_envp)
+	{
 		free(data);
+		rl_clear_history();
+	}
 	return (exit_code);
 }
 

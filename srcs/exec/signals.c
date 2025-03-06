@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 23:26:05 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 23:42:23 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:15:37 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	get_cmd_sigquit(void)
 static void	signal_handler(int sig)
 {
 	(void) sig;
-	change_signal_value(130);
+	g_signal = 130;
 	ft_putchar_fd('\n', 1);
 	rl_on_new_line();
 	rl_replace_line("", 0);

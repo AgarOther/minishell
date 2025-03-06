@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/04 16:40:59 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:47:08 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,11 @@
 static int	is_redirection(t_token *tmp, t_token *last_cmd)
 {
 	while (last_cmd->next != tmp)
+	{
+		if (last_cmd->type == PIPE)
+			return (0);
 		last_cmd = last_cmd->next;
+	}
 	return (last_cmd->type == INFILE || last_cmd->type == HEREDOC);
 }
 
@@ -34,7 +38,7 @@ static void	set_command_tokens(t_token **tokens)
 				|| (prev && prev->type != ARG && prev->type != COMMAND)))
 		{
 			if ((tmp->type != INFILE && tmp->type != OUTFILE
-				&& tmp->type != APPENDFILE && tmp->type != HEREDOC)
+					&& tmp->type != APPENDFILE && tmp->type != HEREDOC)
 				&& (!last_cmd || !is_redirection(tmp, last_cmd))
 				&& tmp->type != UNDEFINED)
 			{
@@ -54,14 +58,14 @@ static t_token	*get_token(char *str, int *i, int *len, char *tmp)
 	int		token_len;
 	int		is_allocable;
 
-	type = get_type(str);
+	type = get_type(str, i);
 	if (type != PIPE)
 	{
-		while ((is_token(str[*i]) || ft_isspace(str[*i])) && str[*i])
+		while (ft_isspace(str[*i]) && str[*i])
 			*i = *i + 1;
 		token_len = get_token_length(&str[*i]);
 		*len = token_len;
-		if (!token_len || !str[*i])
+		if (!token_len || !str[*i] || is_token(str[*i]))
 			type = UNDEFINED;
 		tmp = ft_substr(&str[*i], 0, *len);
 		is_allocable = 0;
@@ -106,7 +110,7 @@ void	get_tokens(t_data **data, int i)
 {
 	t_token	*tokens;
 	char	*input;
-	char	quote;
+	int		quote;
 
 	input = (*data)->input;
 	quote = 0;
@@ -125,6 +129,7 @@ void	get_tokens(t_data **data, int i)
 				quote = 0;
 		}
 		i += tokenize(&tokens, &input[i], quote);
+		quote = 0;
 	}
 	set_command_tokens(&tokens);
 	(*data)->tokens = tokens;

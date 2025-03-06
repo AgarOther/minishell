@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 01:42:41 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/06 14:48:57 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_list	*ft_list_remove_if(char *var, t_list *current, int free_var)
 	while (current)
 	{
 		if (!ft_strncmp(var, current->str,
-			ft_strcharindex(current->str, '=') + 1))
+				ft_strcharindex(current->str, '=') + 1))
 		{
 			if (prev == NULL)
 				head = current->next;
@@ -68,18 +68,30 @@ int	get_token_length(char *str)
 	return (i);
 }
 
-t_type	get_type(char *str)
+static int	get_type_len(t_type type)
 {
-	if (!ft_strncmp(str, "<<", 2))
-		return (HEREDOC);
-	else if (!ft_strncmp(str, ">>", 2))
-		return (APPENDFILE);
-	else if (!ft_strncmp(str, ">", 1))
-		return (OUTFILE);
-	else if (!ft_strncmp(str, "<", 1))
-		return (INFILE);
-	else if (!ft_strncmp(str, "|", 1))
-		return (PIPE);
+	if (type == HEREDOC || type == APPENDFILE)
+		return (2);
 	else
-		return (ARG);
+		return (1);
+}
+
+t_type	get_type(char *str, int *i)
+{
+	t_type	type;
+
+	if (!ft_strncmp(str, "<<", 2))
+		type = HEREDOC;
+	else if (!ft_strncmp(str, ">>", 2))
+		type = APPENDFILE;
+	else if (!ft_strncmp(str, ">", 1))
+		type = OUTFILE;
+	else if (!ft_strncmp(str, "<", 1))
+		type = INFILE;
+	else if (!ft_strncmp(str, "|", 1))
+		type = PIPE;
+	else
+		type = ARG;
+	*i = *i + get_type_len(type);
+	return (type);
 }
