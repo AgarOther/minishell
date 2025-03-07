@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 18:37:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 20:55:52 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/07 14:07:23 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	is_exportable(char *arg)
 
 	if (!ft_isalpha(arg[0]))
 	{
-		if (arg[0] != '\"' && arg[0] != '\'' && arg[0] != '_' && arg[0] != '`')
+		if (arg[0] != '\"' && arg[0] != '\'' && arg[0] != '`' && arg[0] != '_')
 			return (0);
 	}
 	i = 0;
@@ -83,6 +83,11 @@ void	ft_lstprint_export(t_list *lst)
 	tmp = lst;
 	while (tmp)
 	{
+		if (tmp->str[0] == '_' && tmp->str[1] == '=')
+		{
+			tmp = tmp->next;
+			continue ;
+		}	
 		if (tmp->str[ft_strlen(tmp->str) - 1] == '=')
 			ft_printf("declare -x %s\"\"\n", tmp->str);
 		else if (!ft_strchr(tmp->str, '='))

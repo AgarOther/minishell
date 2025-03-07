@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
+/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 00:13:22 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/07 12:57:11 by maregnie         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	main(int ac, char **av, char **envp)
 		data->input = readline_and_signal(&data);
 		if (!data->input)
 			break ;
-		else if (!data->input[0] || ft_isfilled(data->input, ' ', NULL))
+		else if (!data->input[0])
 			continue ;
 		add_history(data->input);
 		if (has_invalid_quotes(data->input))
