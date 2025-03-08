@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 18:37:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 00:46:02 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:00:58 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	print_sorted(t_data *data)
 			ft_lstadd_back(&sorted, ft_lstnew(to_add));
 		envp = ft_list_remove_if(highest->str, envp, 0);
 	}
+	signal(SIGPIPE, SIG_IGN);
 	ft_lstprint_export(sorted);
 	ft_lstclear(&sorted);
 	ft_lstclear(&envp);

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 00:57:33 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:09:11 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@
 // Includes Minishell
 # include "struct.h"
 
+// Global Variable
 extern int	g_signal;
 
 // Built-ins
@@ -86,7 +87,7 @@ int		get_alloc_size(t_data *data, char *command, int i, int value);
 
 // Signals
 void	intercept_signals(void);
-void	get_cmd_sigquit(void);
+void	prevent_signals(void);
 
 // Tokens
 t_token	*ft_newtoken(char *arg, t_type type, int need_alloc);

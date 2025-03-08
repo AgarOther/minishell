@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 00:21:51 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:00:18 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ void	ft_echo(t_data **data, char *str)
 	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	while (has_option(&str[i], &i))
+	while (str[i] && has_option(&str[i], &i))
 		;
 	has_newline = (i < 2);
 	tmp = delete_quotes(str, 0, -1);
 	if (!tmp)
 		return ;
+	signal(SIGPIPE, SIG_IGN);
 	ft_putstr_fd(&tmp[i], 1);
 	if (!tmp || has_newline)
 		ft_putchar_fd('\n', 1);

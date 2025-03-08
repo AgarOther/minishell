@@ -3,29 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 12:57:11 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/08 13:08:06 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal = 0;
-
-static char	*readline_and_signal(t_data **data)
-{
-	char	*str;
-
-	str = readline(PROMPT);
-	if (g_signal)
-	{
-		(*data)->exit_code = g_signal;
-		g_signal = 0;
-	}
-	return (str);
-}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -34,10 +21,16 @@ int	main(int ac, char **av, char **envp)
 	data = setup_data(envp);
 	if (!data)
 		return (1);
-	intercept_signals();
 	while (1 && ac != ((int)**av) + ac)
 	{
-		data->input = readline_and_signal(&data);
+		intercept_signals();
+		data->input = readline(PROMPT);
+		if (g_signal)
+		{
+			if (g_signal == SIGINT)
+				data->exit_code = 130;
+			g_signal = 0;
+		}
 		if (!data->input)
 			break ;
 		else if (!data->input[0])

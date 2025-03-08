@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:21:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 13:02:16 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:47:30 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ char	*expand_command(t_data *data, char *command, int i, int j)
 	{
 		if (command[i] == '\'' && !quotes[1])
 			quotes[0] = !quotes[0];
-		else if (command[i] == '\"')
+		else if (command[i] == '\"' && !quotes[0])
 			quotes[1] = !quotes[1];
 		j++;
 		if (!quotes[0] && command[i] == '$' && command[i + 1]

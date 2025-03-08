@@ -8,7 +8,7 @@ NAME				=	minishell
 
 # Sources & Includes
 SRCS				= 	srcs/main.c \
-						srcs/signals.c \
+						srcs/signals/signals.c \
 						srcs/built-ins/ft_cd.c \
 						srcs/built-ins/ft_echo.c \
 						srcs/built-ins/ft_env.c \

@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 13:47:36 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 23:23:05 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 12:41:04 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,14 @@ void	ft_strerror(t_data **data, int error, char *msg)
 
 int	get_error_code(int status)
 {
+	int	sig;
+
 	if (WIFSIGNALED(status))
 	{
-		g_signal = 131;
-		return (WTERMSIG(status) + 128);
+		sig = WTERMSIG(status) + 128;
+		if (sig == 131)
+			ft_putendl_fd("Quit", 2);
+		return (sig);
 	}
 	else if (WIFEXITED(status))
 		return (WEXITSTATUS(status));
