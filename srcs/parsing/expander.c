@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 23:21:42 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 14:47:30 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:28:07 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ char	*expand_command(t_data *data, char *command, int i, int j)
 			quotes[1] = !quotes[1];
 		j++;
 		if (!quotes[0] && command[i] == '$' && command[i + 1]
-			&& !ft_isspace(command[i + 1]) && command[i + 1] != '$'
+			&& !ft_isspace(command[i + 1]) && is_expandable(command[i + 1])
 			&& command[i + 1] != '\'' && command[i + 1] != '\"')
 		{
 			j += get_expanded(data, &command[i], new);
