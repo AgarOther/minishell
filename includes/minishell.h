@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 16:07:16 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 21:25:47 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,10 +124,10 @@ char	*grep_var_as_string(char **envp, char *to_grep);
 char	**grep_var(char **envp, char *to_grep);
 
 // Utils - Misc
-int		is_directory(char *path);
 char	*get_tmp_filepath(int cmd_count);
 void	unlink_heredocs(t_data *data);
 int		is_blacklist(char c);
+int		is_expandable(char c);
 
 // Utils - Parsing
 char	*delete_quotes(char *str, int needs_free, int i);
