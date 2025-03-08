@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 00:20:36 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:40:36 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 	char	*path;
 
 	len = ft_tablen(cmd);
-	if (len < 2)
+	if (len < 2 || ft_tokencount((*data)->tokens, PIPE))
 		return ;
 	else if (len > 2)
 	{

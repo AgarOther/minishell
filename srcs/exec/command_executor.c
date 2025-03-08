@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/06 23:08:26 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:45:47 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,15 @@ static char	**delete_cmd_quotes(char **cmd)
 	return (cmd);
 }
 
-static void	free_forkit(char *raw_cmd, char **cmd, t_data *data)
+static void	free_forkit(char *raw_cmd, char **cmd, t_data *data, int err_cmd)
 {
 	int	exit_code;
 
-	if ((errno == ENOENT && ft_strncmp(raw_cmd, "./", 2))
-		|| ((!ft_strncmp(raw_cmd, "./", 1) || !ft_strncmp(raw_cmd, "/", 1))
-			&& is_directory(raw_cmd))
-		|| (!ft_strncmp(raw_cmd, "./", 2) && !access(raw_cmd, F_OK)
-			&& access(raw_cmd, X_OK) == -1))
+	if (!err_cmd && ((errno == ENOENT && ft_strncmp(raw_cmd, "./", 2))
+			|| ((!ft_strncmp(raw_cmd, "./", 1) || !ft_strncmp(raw_cmd, "/", 1))
+				&& is_directory(raw_cmd))
+			|| (!ft_strncmp(raw_cmd, "./", 2) && !access(raw_cmd, F_OK)
+				&& access(raw_cmd, X_OK) == -1)))
 		exit_code = 126;
 	else
 		exit_code = 127;
@@ -59,6 +59,29 @@ static void	free_forkit(char *raw_cmd, char **cmd, t_data *data)
 	ft_tabfree(cmd, ft_tablen(cmd));
 	free_data(data, 1);
 	exit(exit_code);
+}
+
+static void	handle_failure(char *path, char *raw_cmd, t_data *data, char **cmd)
+{
+	if (path)
+	{
+		free(path);
+		perror(raw_cmd);
+		free_forkit(raw_cmd, cmd, data, 0);
+	}
+	else
+	{
+		if (!access(raw_cmd, F_OK) && access(raw_cmd, X_OK) == -1)
+		{
+			ft_strerror(&data, 127, PERM_DENIED);
+			free_forkit(raw_cmd, cmd, data, 0);
+		}
+		else
+		{
+			ft_strerror(&data, 127, INVALID_COMMAND);
+			free_forkit(raw_cmd, cmd, data, 1);
+		}
+	}
 }
 
 pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
@@ -79,12 +102,7 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 		path = get_cmd_path(data->envp, cmd[0], -1, NULL);
 		global_free(data);
 		if (ft_execve(path, cmd, data, raw_cmd) == -1)
-		{
-			if (path)
-				free(path);
-			perror(raw_cmd);
-			free_forkit(raw_cmd, cmd, data);
-		}
+			handle_failure(path, raw_cmd, data, cmd);
 	}
 	close_fd(data);
 	return (pid);

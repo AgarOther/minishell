@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/06 18:37:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 14:07:23 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:46:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,7 @@ void	ft_lstprint_export(t_list *lst)
 		{
 			tmp = tmp->next;
 			continue ;
-		}	
+		}
 		if (tmp->str[ft_strlen(tmp->str) - 1] == '=')
 			ft_printf("declare -x %s\"\"\n", tmp->str);
 		else if (!ft_strchr(tmp->str, '='))

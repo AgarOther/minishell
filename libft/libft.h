@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/02 20:21:22 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 21:17:54 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:42:20 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@ int			ft_strlencmp(const char *s1, const char *s2, int s2_crop);
 char		*ft_strnstr(const char *big, const char *little, size_t len);
 char		*ft_strrchr(const char *s, int c);
 char		*ft_strcrop(char *src, int to_crop);
+int			ft_strhasquote(char *str);
 int			ft_tolower(int c);
 int			ft_toupper(int c);
 char		*ft_itoa(int n);

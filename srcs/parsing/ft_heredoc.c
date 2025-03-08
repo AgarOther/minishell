@@ -6,31 +6,33 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 18:36:37 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 00:02:52 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:57:39 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	handle_heredoc(char *str, int tmp_fd, t_data **data, char *path)
+static void	handle_heredoc(char *str, int tmp_fd)
 {
 	if (str)
 		free(str);
+	else
+		ft_putendl_fd(WARN_EOF, 2);
 	close(tmp_fd);
-	if (path)
-	{
-		(*data)->in = open(path, O_RDONLY);
-		free(path);
-	}
 }
 
 void	list_to_file(t_list *lst, int tmp_fd)
 {
-	while (lst)
+	t_list	*tmp;
+
+	tmp = lst;
+	while (tmp)
 	{
-		write(tmp_fd, lst->str, ft_strlen(lst->str));
-		lst = lst->next;
+		write(tmp_fd, tmp->str, ft_strlen(tmp->str));
+		tmp = tmp->next;
 	}
+	if (lst)
+		ft_lstclear(&lst);
 }
 
 char	*expand_heredoc(t_data *data, char *str)
@@ -59,7 +61,7 @@ char	*expand_heredoc(t_data *data, char *str)
 	return (new);
 }
 
-void	execute_heredoc(int tmp_fd, char *limiter, char *path, t_data **data)
+void	execute_heredoc(int tmp_fd, char *limiter, t_data **data, int quoted)
 {
 	t_list	*lst;
 	t_list	*new;
@@ -72,7 +74,8 @@ void	execute_heredoc(int tmp_fd, char *limiter, char *path, t_data **data)
 		str = readline("> ");
 		if (!str || ft_strcmp(str, limiter) == 0)
 			break ;
-		str = expand_heredoc(*data, str);
+		if (!quoted)
+			str = expand_heredoc(*data, str);
 		if (!str)
 			break ;
 		str = ft_strjoin_free(str, "\n");
@@ -83,12 +86,10 @@ void	execute_heredoc(int tmp_fd, char *limiter, char *path, t_data **data)
 			ft_lstadd_back(&lst, new);
 	}
 	list_to_file(lst, tmp_fd);
-	if (lst)
-		ft_lstclear(&lst);
-	handle_heredoc(str, tmp_fd, data, path);
+	handle_heredoc(str, tmp_fd);
 }
 
-void	ft_heredoc(char *limiter, t_data **data)
+void	ft_heredoc(char *limiter, t_data **data, int quoted)
 {
 	static int	count = 0;
 	char		*path;
@@ -101,5 +102,10 @@ void	ft_heredoc(char *limiter, t_data **data)
 		free(path);
 		exit(-1);
 	}
-	execute_heredoc(tmp_fd, limiter, path, data);
+	execute_heredoc(tmp_fd, limiter, data, quoted);
+	if (path)
+	{
+		(*data)->in = open(path, O_RDONLY);
+		free(path);
+	}
 }

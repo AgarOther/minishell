@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:12:46 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/05 00:09:08 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:21:51 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ static int	has_option(char *str, int *index)
 	i = 0;
 	while (str[i] && ft_isspace(str[i]))
 		i++;
-	if (!ft_strncmp(&str[i], "-n", 2))
+	if (str && !ft_strncmp(&str[i], "-n", 2))
 	{
 		i++;
 		while (str[i] && str[i] == 'n')
@@ -33,30 +33,25 @@ static int	has_option(char *str, int *index)
 	return (0);
 }
 
-void	ft_echo(t_data **data, char *str, int i)
+void	ft_echo(t_data **data, char *str)
 {
-	int	has_newline;
-	int	quote;
+	int		i;
+	int		has_newline;
+	char	*tmp;
 
+	i = 0;
+	while (str[i] && ft_isspace(str[i]))
+		i++;
 	while (has_option(&str[i], &i))
 		;
-	has_newline = (i == 0);
-	quote = 0;
-	while (str[i])
-	{
-		if ((!quote && (str[i] == '\'' || str[i] == '\"'))
-			|| (quote && str[i] == quote))
-		{
-			if (!quote)
-				quote = str[i];
-			else
-				quote = 0;
-		}
-		else if (i)
-			write(1, &str[i], 1);
-		i++;
-	}
-	if (!str || has_newline)
+	has_newline = (i < 2);
+	tmp = delete_quotes(str, 0, -1);
+	if (!tmp)
+		return ;
+	ft_putstr_fd(&tmp[i], 1);
+	if (!tmp || has_newline)
 		ft_putchar_fd('\n', 1);
+	if (tmp)
+		free(tmp);
 	(*data)->exit_code = 0;
 }
