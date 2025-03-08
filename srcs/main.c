@@ -6,13 +6,27 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:06 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 13:08:06 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:40:30 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int	g_signal = 0;
+
+static char	*readline_and_signals(t_data **data)
+{
+	char	*str;
+
+	str = readline(PROMPT);
+	if (g_signal)
+	{
+		if (g_signal == SIGINT)
+			(*data)->exit_code = 130;
+		g_signal = 0;
+	}
+	return (str);
+}
 
 int	main(int ac, char **av, char **envp)
 {
@@ -24,13 +38,7 @@ int	main(int ac, char **av, char **envp)
 	while (1 && ac != ((int)**av) + ac)
 	{
 		intercept_signals();
-		data->input = readline(PROMPT);
-		if (g_signal)
-		{
-			if (g_signal == SIGINT)
-				data->exit_code = 130;
-			g_signal = 0;
-		}
+		data->input = readline_and_signals(&data);
 		if (!data->input)
 			break ;
 		else if (!data->input[0])

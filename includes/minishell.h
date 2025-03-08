@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 13:09:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:39:46 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ int		get_alloc_size(t_data *data, char *command, int i, int value);
 // Signals
 void	intercept_signals(void);
 void	prevent_signals(void);
+void	handle_forkit_signals(int sig);
 
 // Tokens
 t_token	*ft_newtoken(char *arg, t_type type, int need_alloc);

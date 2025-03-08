@@ -6,11 +6,19 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/04 23:26:05 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 13:13:05 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:39:38 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+void	handle_forkit_signals(int sig)
+{
+	if (sig == SIGQUIT)
+		exit(131);
+	else
+		exit(130);
+}
 
 static void	newline_on_signal(int sig)
 {
