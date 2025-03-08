@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 22:39:21 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:45:28 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,14 @@ static void	execute_command(t_data *data, char *raw_cmd, t_token *tokens)
 {
 	char		**cmd;
 
+	data->raw_cmd = raw_cmd;
 	cmd = ft_split_quote(raw_cmd, ' ');
 	if (cmd && !ft_strcmp(cmd[0], "exit"))
-		ft_exit(&data, cmd, 0, raw_cmd);
+		ft_exit(&data, cmd, 0, 0);
 	else if (cmd && !ft_strcmp(cmd[0], "cd"))
 		ft_cd(&data, cmd, NULL);
 	else if (cmd && !ft_strcmp(cmd[0], "unset"))
-		ft_unset(&data, cmd[1]);
+		ft_unset(&data, &cmd[1]);
 	else if (cmd && !ft_strcmp(cmd[0], "export") && cmd[1])
 		ft_export(&data, &cmd[1]);
 	else
@@ -75,7 +76,8 @@ static char	*construct_command(t_token *tokens)
 	while (tokens)
 	{
 		if (tokens->type == INFILE || tokens->type == HEREDOC
-			|| tokens->type == APPENDFILE || tokens->type == OUTFILE)
+			|| tokens->type == APPENDFILE || tokens->type == OUTFILE
+			|| tokens->type == HEREDOC_QUOTE)
 		{
 			tokens = tokens->next;
 			continue ;
@@ -117,7 +119,7 @@ void	process_tokens(t_data **data)
 	{
 		if (tokens->type == COMMAND || tokens->type == HEREDOC
 			|| tokens->type == INFILE || tokens->type == OUTFILE
-			|| tokens->type == APPENDFILE)
+			|| tokens->type == APPENDFILE || tokens->type == HEREDOC_QUOTE)
 		{
 			(*data)->pipeline_error = 0;
 			cmd = construct_command(tokens);

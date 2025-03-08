@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 22:42:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 20:37:44 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:44:03 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	handle_infile(t_data **data, t_token *tokens, t_type type)
 {
 	tokens->arg = delete_quotes(tokens->arg, 1, -1);
 	safe_close((*data)->in);
-	if (type == HEREDOC)
-		ft_heredoc(tokens->arg, data);
+	if (type == HEREDOC || type == HEREDOC_QUOTE)
+		ft_heredoc(tokens->arg, data, (type == HEREDOC_QUOTE));
 	else
 		(*data)->in = open(tokens->arg, O_RDONLY);
 	return ((*data)->in);
@@ -41,7 +41,8 @@ int	set_file_descriptors(t_data **data, t_token *tokens)
 {
 	while (tokens && tokens->type != PIPE)
 	{
-		if (tokens->type == INFILE || tokens->type == HEREDOC)
+		if (tokens->type == INFILE || tokens->type == HEREDOC
+			|| tokens->type == HEREDOC_QUOTE)
 		{
 			if (handle_infile(data, tokens, tokens->type) == -1)
 			{

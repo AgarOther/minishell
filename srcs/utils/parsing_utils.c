@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:24:15 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 23:55:08 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/07 23:26:23 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	get_alloc_len(char *str)
 	int	i;
 	int	size;
 
+	if (!str)
+		return (0);
 	quote = 0;
 	i = 0;
 	size = 0;
@@ -49,7 +51,7 @@ char	*delete_quotes(char *str, int needs_free, int i)
 			free(str);
 		return (NULL);
 	}
-	while (str[++i])
+	while (str && str[++i])
 	{
 		if (!quote && (str[i] == '\"' || str[i] == '\''))
 			quote = str[i];
