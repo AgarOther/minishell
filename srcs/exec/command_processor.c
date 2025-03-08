@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/24 23:15:29 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 12:56:11 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:08:15 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void	process_tokens(t_data **data)
 	t_token	*tokens;
 
 	tokens = (*data)->tokens;
-	while (tokens)
+	while (tokens && !g_signal)
 	{
 		if (tokens->type == COMMAND || tokens->type == HEREDOC
 			|| tokens->type == INFILE || tokens->type == OUTFILE

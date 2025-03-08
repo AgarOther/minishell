@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 18:36:37 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 13:12:21 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 16:17:17 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ void	execute_heredoc(int tmp_fd, char *limiter, t_data **data, int quoted)
 
 	lst = NULL;
 	str = NULL;
+	intercept_signals();
 	while (1)
 	{
 		str = readline("> ");
@@ -108,4 +109,5 @@ void	ft_heredoc(char *limiter, t_data **data, int quoted)
 		(*data)->in = open(path, O_RDONLY);
 		free(path);
 	}
+	prevent_signals();
 }
