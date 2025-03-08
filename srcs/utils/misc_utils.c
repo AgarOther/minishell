@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 22:01:41 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 00:44:32 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:56:28 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,4 @@ void	unlink_heredocs(t_data *data)
 		}
 		tmp = tmp->next;
 	}
-}
-
-int	is_directory(char *path)
-{
-	DIR	*dir;
-	int	val;
-
-	dir = opendir(path);
-	if (!dir)
-		val = 0;
-	else
-		val = 1;
-	if (val)
-		closedir(dir);
-	return (val);
 }

@@ -6,13 +6,13 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 23:40:36 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 14:41:22 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static void	change_env(t_data **data, char *env, char *new, int needs_free)
+static void	change_env(t_data **data, char *env, char *new)
 {
 	int		i;
 	int		j;
@@ -22,21 +22,21 @@ static void	change_env(t_data **data, char *env, char *new, int needs_free)
 	i = 0;
 	j = 0;
 	k = ft_strlen(env);
-	while (ft_strncmp((*data)->envp[i], env, k) != 0)
+	while ((*data)->envp[i] && ft_strncmp((*data)->envp[i], env, k) != 0)
 		i++;
+	if (!(*data)->envp[i])
+	{
+		free(new);
+		return ;
+	}
 	tmp = ft_strdup((*data)->envp[i]);
 	free((*data)->envp[i]);
 	(*data)->envp[i] = ft_calloc(k + ft_strlen(new) + 1, 1);
 	ft_strlcpy((*data)->envp[i], tmp, ft_strlen(env) + 1);
 	free(tmp);
 	while (new[j])
-	{
-		(*data)->envp[i][k] = new[j];
-		j++;
-		k++;
-	}
-	if (needs_free)
-		free(new);
+		(*data)->envp[i][k++] = new[j++];
+	free(new);
 	(*data)->exit_code = 0;
 }
 
@@ -55,7 +55,7 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 		return ;
 	}
 	path = delete_quotes(cmd[1], 0, -1);
-	old_pwd = grep_var_as_string((*data)->envp, "PWD=");
+	old_pwd = ft_strdup(grep_var_as_string((*data)->envp, "PWD="));
 	if (chdir(path) == -1)
 	{
 		free(path);
@@ -63,8 +63,8 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 		return ;
 	}
 	free(path);
-	change_env(data, "OLDPWD=", old_pwd, 0);
+	if (old_pwd)
+		change_env(data, "OLDPWD=", old_pwd);
 	pwd = getcwd(pwd, 0);
-	if (pwd)
-		change_env(data, "PWD=", pwd, 1);
+	change_env(data, "PWD=", pwd);
 }

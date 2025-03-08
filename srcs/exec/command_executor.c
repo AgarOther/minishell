@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/08 00:45:47 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:56:24 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ static void	free_forkit(char *raw_cmd, char **cmd, t_data *data, int err_cmd)
 	int	exit_code;
 
 	if (!err_cmd && ((errno == ENOENT && ft_strncmp(raw_cmd, "./", 2))
-			|| ((!ft_strncmp(raw_cmd, "./", 1) || !ft_strncmp(raw_cmd, "/", 1))
-				&& is_directory(raw_cmd))
+			|| ((!ft_strncmp(raw_cmd, "./", 1) || !ft_strncmp(raw_cmd, "/", 1)))
 			|| (!ft_strncmp(raw_cmd, "./", 2) && !access(raw_cmd, F_OK)
 				&& access(raw_cmd, X_OK) == -1)))
 		exit_code = 126;
@@ -89,12 +88,15 @@ pid_t	forkit(t_data *data, char **cmd, char *raw_cmd)
 	pid_t	pid;
 	char	*path;
 
+	prevent_signals();
 	if (!raw_cmd)
 		return (0);
 	pid = fork();
 	if (pid == 0)
 	{
 		rl_clear_history();
+		signal(SIGINT, handle_forkit_signals);
+		signal(SIGQUIT, handle_forkit_signals);
 		if (dup2(data->in, STDIN_FILENO) == -1
 			|| dup2(data->out, STDOUT_FILENO) == -1)
 			return (global_free(data));

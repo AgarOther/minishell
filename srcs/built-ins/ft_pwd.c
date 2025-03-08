@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 17:32:59 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 01:44:03 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:01:05 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 void	ft_pwd(t_data **data)
 {
-	int		i;
-	t_data	*tmp;
+	char	*pwd;
 
-	i = 0;
-	tmp = *data;
-	while (tmp->envp[i] && ft_strncmp(tmp->envp[i], "PWD=", 4))
-		i++;
-	if (tmp->envp[i])
-		ft_putendl_fd(&tmp->envp[i][4], 1);
+	pwd = NULL;
+	pwd = getcwd(pwd, 0);
+	if (pwd)
+	{
+		signal(SIGPIPE, SIG_IGN);
+		ft_putendl_fd(pwd, 1);
+		free(pwd);
+	}
 	(*data)->exit_code = 0;
 }
