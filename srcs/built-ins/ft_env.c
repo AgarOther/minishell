@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/10 15:57:28 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/02 13:23:49 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 15:00:30 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void	ft_tabprint_if(char **tab, char c, int endl)
 
 void	ft_env(t_data **data)
 {
+	signal(SIGPIPE, SIG_IGN);
 	ft_tabprint_if((*data)->envp, '=', 1);
 	(*data)->exit_code = 0;
 }
