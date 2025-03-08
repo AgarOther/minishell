@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tokenizer.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 16:50:54 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 13:14:13 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:00:13 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	is_redirection(t_token *tmp, t_token *last_cmd)
 			return (0);
 		last_cmd = last_cmd->next;
 	}
-	return (last_cmd->type == INFILE || last_cmd->type == HEREDOC);
+	return (last_cmd->type == INFILE || last_cmd->type == HEREDOC
+		|| last_cmd->type == HEREDOC_QUOTE);
 }
 
 static void	set_command_tokens(t_token **tokens)
@@ -38,7 +39,8 @@ static void	set_command_tokens(t_token **tokens)
 				|| (prev && prev->type != ARG && prev->type != COMMAND)))
 		{
 			if ((tmp->type != INFILE && tmp->type != OUTFILE
-					&& tmp->type != APPENDFILE && tmp->type != HEREDOC)
+					&& tmp->type != APPENDFILE && tmp->type != HEREDOC
+					&& tmp->type != HEREDOC_QUOTE)
 				&& (!last_cmd || !is_redirection(tmp, last_cmd))
 				&& tmp->type != UNDEFINED)
 			{

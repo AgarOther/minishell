@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/22 23:20:49 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 23:09:49 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 01:01:01 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	free_and_exit(char **cmd, t_data *data, char *raw_cmd, char *path)
 int	ft_execve(char *path, char **cmd, t_data *data, char *raw_cmd)
 {
 	if (!ft_strcmp(cmd[0], "echo"))
-		ft_echo(&data, &raw_cmd[4], 0);
+		ft_echo(&data, &raw_cmd[4]);
 	else if (!ft_strcmp(cmd[0], "env"))
 		ft_env(&data);
 	else if (!ft_strcmp(cmd[0], "pwd"))

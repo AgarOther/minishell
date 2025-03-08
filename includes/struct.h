@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 13:37:32 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/06 16:44:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:34:21 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ typedef enum e_type
 	INFILE,
 	OUTFILE,
 	HEREDOC,
+	HEREDOC_QUOTE,
 	APPENDFILE
 }	t_type;
 
@@ -39,6 +40,7 @@ typedef struct s_data
 	char	**envp;
 	char	**tmp_envp;
 	char	*input;
+	char	*raw_cmd;
 	int		**pipes;
 	int		in;
 	int		out;

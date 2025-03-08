@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/21 00:44:56 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/06 15:20:46 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:59:34 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ int	get_token_length(char *str)
 
 static int	get_type_len(t_type type)
 {
-	if (type == HEREDOC || type == APPENDFILE)
+	if (type == HEREDOC || type == HEREDOC_QUOTE || type == APPENDFILE)
 		return (2);
 	return (type != ARG);
 }
@@ -80,7 +80,12 @@ t_type	get_type(char *str, int *i)
 	t_type	type;
 
 	if (!ft_strncmp(str, "<<", 2))
-		type = HEREDOC;
+	{
+		if (ft_strhasquote(&str[2]))
+			type = HEREDOC_QUOTE;
+		else
+			type = HEREDOC;
+	}
 	else if (!ft_strncmp(str, ">>", 2))
 		type = APPENDFILE;
 	else if (!ft_strncmp(str, ">", 1))

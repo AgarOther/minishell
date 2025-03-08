@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   misc_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maregnie <maregnie@student.42.fr>          +#+  +:+       +#+        */
+/*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 22:01:41 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 15:56:09 by maregnie         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:44:32 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	unlink_heredocs(t_data *data)
 	i = 0;
 	while (tmp)
 	{
-		if (tmp->type == HEREDOC)
+		if (tmp->type == HEREDOC || tmp->type == HEREDOC_QUOTE)
 		{
 			filename = get_tmp_filepath(i);
 			unlink(filename);

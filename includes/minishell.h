@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/07 00:13:39 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/08 00:57:33 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # define INVALID_INFILE "Error: Invalid infile."
 # define INVALID_OUTFILE "Error: Invalid outfile."
 # define INVALID_SYNTAX "Error: Invalid syntax."
+# define INVALID_COMMAND "Error: Invalid command."
 # define INVALID_PARAM "Error: Invalid parameter name."
 # define NOT_A_DIR "Error: Not a directory."
 # define DIR_NOT_FOUND "Error: Directory not found."
@@ -31,6 +32,7 @@
 # define INVALID_IDENTIFIER "Error: Not a valid identifier."
 # define IS_DIR "Error: Is a directory."
 # define PERM_DENIED "Error: Permission denied."
+# define WARN_EOF "Warning: End Of File (EOF) detected instead of delimiter."
 
 // Includes S-Lib
 # include <sys/wait.h>
@@ -58,12 +60,12 @@
 extern int	g_signal;
 
 // Built-ins
-void	ft_echo(t_data **data, char *str, int i);
+void	ft_echo(t_data **data, char *str);
 void	ft_pwd(t_data **data);
 void	ft_cd(t_data **data, char **cmd, char *pwd);
 void	ft_env(t_data **data);
-void	ft_exit(t_data **data, char **cmd, unsigned char code, char *raw_cmd);
-void	ft_unset(t_data **data, char *var);
+void	ft_exit(t_data **data, char **cmd, unsigned char code, long long res);
+void	ft_unset(t_data **data, char **vars);
 void	ft_export(t_data **data, char **args);
 
 // Execution
@@ -77,7 +79,7 @@ int		set_file_descriptors(t_data **data, t_token *tokens);
 
 // Parsing
 char	*expand_command(t_data *data, char *command, int i, int j);
-void	ft_heredoc(char *limiter, t_data **data);
+void	ft_heredoc(char *limiter, t_data **data, int quoted);
 int		get_expanded(t_data *data, char *value, char *new);
 int		get_sepindex(char *str);
 int		get_alloc_size(t_data *data, char *command, int i, int value);
