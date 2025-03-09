@@ -12,6 +12,24 @@
 
 #include "minishell.h"
 
+static void	delete_old_pwd(t_data **data, char *env)
+{
+	t_list	*envp;
+	char	*oldpwd;
+	char	*tmp;
+
+	if (ft_strcmp(env, "PWD="))
+		return ;
+	tmp = grep_var_as_string((*data)->envp, "OLDPWD=");
+	if (!tmp)
+		return ;
+	oldpwd = "OLDPWD=";
+	envp = get_env_as_lst(*data);
+	envp = ft_list_remove_if(oldpwd, envp, 0);
+	update_env(envp, data);
+	ft_lstclear(&envp);
+}
+
 static void	change_env(t_data **data, char *env, char *new)
 {
 	int		i;
@@ -26,6 +44,7 @@ static void	change_env(t_data **data, char *env, char *new)
 		i++;
 	if (!(*data)->envp[i])
 	{
+		delete_old_pwd(data, env);
 		free(new);
 		return ;
 	}
