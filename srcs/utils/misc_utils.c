@@ -6,11 +6,24 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/03/01 22:01:41 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 21:27:20 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/09 02:24:03 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+int	is_directory(char *path)
+{
+	DIR	*dir;
+
+	dir = opendir(path);
+	if (dir)
+	{
+		closedir(dir);
+		return (1);
+	}
+	return (0);
+}
 
 int	is_expandable(char c)
 {
