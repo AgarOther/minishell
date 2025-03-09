@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 13:38:10 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 14:41:22 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/09 02:33:02 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,16 @@ static void	change_env(t_data **data, char *env, char *new)
 	(*data)->exit_code = 0;
 }
 
+static void	handle_error(t_data **data, char *path, char *old_pwd)
+{
+	if (!access(path, F_OK) && !is_directory(path))
+		ft_strerror(data, 1, NOT_A_DIR);
+	else
+		ft_strerror(data, 1, NO_SUCH_FILE_DIR);
+	if (old_pwd)
+		free(old_pwd);
+}
+
 void	ft_cd(t_data **data, char **cmd, char *pwd)
 {
 	int		len;
@@ -58,8 +68,8 @@ void	ft_cd(t_data **data, char **cmd, char *pwd)
 	old_pwd = ft_strdup(grep_var_as_string((*data)->envp, "PWD="));
 	if (chdir(path) == -1)
 	{
+		handle_error(data, path, old_pwd);
 		free(path);
-		ft_strerror(data, 1, NO_SUCH_FILE_DIR);
 		return ;
 	}
 	free(path);
