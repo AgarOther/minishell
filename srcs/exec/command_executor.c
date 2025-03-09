@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 14:22:04 by maregnie          #+#    #+#             */
-/*   Updated: 2025/03/08 15:56:24 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/09 02:27:45 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,22 +64,27 @@ static void	handle_failure(char *path, char *raw_cmd, t_data *data, char **cmd)
 {
 	if (path)
 	{
+		if (!is_directory(path) || !ft_strchr(raw_cmd, '/'))
+			ft_putendl_fd(INVALID_COMMAND, 2);
+		else
+			ft_putendl_fd(IS_DIR, 2);
 		free(path);
-		perror(raw_cmd);
 		free_forkit(raw_cmd, cmd, data, 0);
 	}
 	else
 	{
-		if (!access(raw_cmd, F_OK) && access(raw_cmd, X_OK) == -1)
+		if (!access(raw_cmd, F_OK) && access(raw_cmd, X_OK) == -1
+			&& raw_cmd[0] == '.')
 		{
-			ft_strerror(&data, 127, PERM_DENIED);
+			ft_putendl_fd(PERM_DENIED, 2);
 			free_forkit(raw_cmd, cmd, data, 0);
 		}
+		else if (access(raw_cmd, F_OK) == -1 && (raw_cmd[0] == '/'
+				|| !ft_strncmp(raw_cmd, "./", 2)))
+			ft_putendl_fd(NO_SUCH_FILE_DIR, 2);
 		else
-		{
-			ft_strerror(&data, 127, INVALID_COMMAND);
-			free_forkit(raw_cmd, cmd, data, 1);
-		}
+			ft_putendl_fd(INVALID_COMMAND, 2);
+		free_forkit(raw_cmd, cmd, data, 1);
 	}
 }
 

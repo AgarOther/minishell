@@ -6,7 +6,7 @@
 /*   By: scraeyme <scraeyme@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/06 10:41:03 by scraeyme          #+#    #+#             */
-/*   Updated: 2025/03/08 21:25:47 by scraeyme         ###   ########.fr       */
+/*   Updated: 2025/03/09 02:30:27 by scraeyme         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,9 @@
 # define INVALID_INFILE "Error: Invalid infile."
 # define INVALID_OUTFILE "Error: Invalid outfile."
 # define INVALID_SYNTAX "Error: Invalid syntax."
-# define INVALID_COMMAND "Error: Invalid command."
+# define INVALID_COMMAND "Error: Command not found."
 # define INVALID_PARAM "Error: Invalid parameter name."
 # define NOT_A_DIR "Error: Not a directory."
-# define DIR_NOT_FOUND "Error: Directory not found."
 # define BAD_ASSIGNMENT "Error: Bad assignment."
 # define NO_SUCH_FILE_DIR "Error: No such file or directory."
 # define INVALID_IDENTIFIER "Error: Not a valid identifier."
@@ -128,6 +127,7 @@ char	*get_tmp_filepath(int cmd_count);
 void	unlink_heredocs(t_data *data);
 int		is_blacklist(char c);
 int		is_expandable(char c);
+int		is_directory(char *path);
 
 // Utils - Parsing
 char	*delete_quotes(char *str, int needs_free, int i);
